@@ -1,11 +1,11 @@
 import Vue from 'vue'
+import firebase from '../firebase-init'
 import Router from 'vue-router'
 import Container from '@/containers/Container'
 import Home from '@/containers/Home'
 import Signin from '@/containers/Signin'
 import Signup from '@/containers/Signup'
 import Wait from '@/containers/Wait'
-import firebase from '../firebase-init'
 // import Err from '@/containers/Error'
 
 Vue.use(Router)
@@ -53,11 +53,8 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log({to})
-  console.log({from})
-  console.log(to.path.includes('sign'))
   let currentUser = firebase.auth().currentUser
-  console.log('currentUser', currentUser)
+  console.log('currentUser in route', currentUser)
   if (to.path.includes('sign')) {
     if (currentUser) next('/home')
   } else {

@@ -62,15 +62,18 @@ export default {
   //   }
   // },
   methods: {
-    onClickSignOutBtn () {
-      console.log('sign out pushed!')
-      this.$emit('user-login')
+    async onClickSignOutBtn () {
+      await this.$firebase.auth().signOut()
+      this.$router.push('/signin')
     }
   }
 }
 </script>
 
 <style scoped>
+a:hover {
+  cursor: pointer;
+}
 .header {
   color: white;
   text-align: right;

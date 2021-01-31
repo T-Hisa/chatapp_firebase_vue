@@ -59,4 +59,3 @@ firebase.auth().onAuthStateChanged(user => {
     template: '<App/>'
   })
 })
-

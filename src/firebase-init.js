@@ -16,14 +16,14 @@ firebase.initializeApp(firebaseConfig)
 console.log('firebase in firebase-init', firebase)
 Vue.prototype.$firebase = firebase
 Vue.prototype.$currentUser = firebase.auth().currentUser
-firebase.auth().onAuthStateChanged(user => {
-  console.log('auth state channged!!')
-  if (user) {
-    Vue.prototype.$currentUser = user
-  } else {
-    Vue.prototype.$currentUser = null
-  }
-})
+// firebase.auth().onAuthStateChanged(user => {
+//   console.log('auth state channged!!')
+//   if (user) {
+//     Vue.prototype.$currentUser = user
+//   } else {
+//     Vue.prototype.$currentUser = null
+//   }
+// })
 // firebase.initializeApp({
 //   credential: admin.credential.applicationDefault()
 //   // credential: admin.credential.cert(serviceAccount)
