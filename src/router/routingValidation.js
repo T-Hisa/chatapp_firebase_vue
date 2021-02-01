@@ -23,13 +23,22 @@ function validation (to, next) {
     } else {
       next('/signin')
     }
-  } else if (isRequiredAuth) {
+  } else if (isRequiredEmailValidation) {
     if (currentUser) {
       if (currentUser.emailVerified) {
         if (currentUser.displayName) next('/home')
         else next()
       } else {
         next('/confirm')
+      }
+    }
+  } else if (isRequiredAuth) {
+    if (currentUser) {
+      if (currentUser.emailVerified) {
+        if (currentUser.displayName) next('/home')
+        else next('/setup-profile')
+      } else {
+        next()
       }
     } else {
       next('/signin')

@@ -7,6 +7,8 @@ import Signin from '@/containers/Signin'
 import Signup from '@/containers/Signup'
 import Confirm from '@/containers/Confirm'
 import SetUpProfile from '@/containers/SetUpProfile'
+import ProfileUpdate from '@/containers/ProfileUpdate'
+
 import validation from './routingValidation'
 // import Err from '@/containers/Error'
 
@@ -17,16 +19,21 @@ const router = new Router({
     {
       path: '/',
       name: 'Container',
-      // redirect: '/',
+      redirect: '/home',
       component: Container,
       meta: {
-        isRequiredProfile: true
+        isRequiredProfile: true // isRequiredProfile は プロフィール設定したユーザーのみを通す
       },
       children: [
         {
           path: '/home',
           name: 'Home',
           component: Home
+        },
+        {
+          path: '/profile-update',
+          name: 'ProfileUpdate',
+          component: ProfileUpdate
         }
       ]
     },
@@ -45,7 +52,7 @@ const router = new Router({
       name: 'Confirm',
       component: Confirm,
       meta: {
-        isRequiredEmailValidation: true
+        isRequiredAuth: true // isRequiredAuth は ユーザー登録(but yet メール認証) のユーザのみ通す
       }
     },
     {
@@ -53,7 +60,7 @@ const router = new Router({
       name: 'SetUpProfile',
       component: SetUpProfile,
       meta: {
-        isRequiredAuth: true
+        isRequiredEmailValidation: true // isRequiredEmailValidation は、ユーザ登録・メール認証を終えたユーザのみ通す
       }
     },
     {
@@ -69,6 +76,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, _, next) => {
+  console.log({to})
   validation(to, next)
 })
 

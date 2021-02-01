@@ -1,33 +1,19 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-// import firebase from './firebase-init'
 import firebase from 'firebase/app'
-// import firebaseConfig from './firebase-init'
 import App from './App'
 import router from './router'
 import Vuex from 'vuex'
 import BootstrapVue from 'bootstrap-vue'
 import VueI18n from 'vue-i18n'
-import store from './stores/vuex'
+import store from './stores/store'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-// Vue.prototype.$firebase = firebase
-
+console.log('environment', process.env)
 Vue.use(Vuex)
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
-// Vue.prototype.$currentUser = firebase.auth().currentUser
-// firebase.auth().onAuthStateChanged(user => {
-//   console.log('auth state channged!!')
-//   if (user) {
-//     Vue.prototype.$currentUser = user
-//   } else {
-//     Vue.prototype.$currentUser = null
-//   }
-// })
 Vue.use(VueI18n)
 
 // const messages = {

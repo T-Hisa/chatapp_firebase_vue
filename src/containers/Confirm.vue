@@ -3,18 +3,7 @@
     <div class="wrapper">
       <p>入力されたメールアドレスに認証用URLを送信しました。</p>
       <p>メールアドレスを誤って登録した場合は、お手数をおかけしますが再登録をお願いします。</p>
-      <p>※ 同じメールアドレスでは登録できません。</p>
-      <!-- <p>※画面遷移せずにメールをご確認ください。</p> -->
-      <!-- <div class="form-group confirmation-form">
-        <label for="code">認証コード</label>
-        <input id="code" type="text" v-model="code">
-        <button class="btn btn-light border-dark confirm-btn" @click="onClickConfirmBtn">認証</button>
-      </div> -->
-      <!-- <div class="resend-form">
-        <label for="name">登録した名前: </label>
-        <input id="name" type="text" v-model="username">
-        <a href="#" @click="onClickResendBtn">コード再送</a>
-      </div> -->
+      <p>※ その際は同じメールアドレスでは登録できません。</p>
     </div>
     <div class="re-register-btn">
       <a href="#" @click="onClickResendBtn">メール再送信</a>
@@ -33,10 +22,6 @@ export default {
   name: 'Confirm',
   data () {
     return {
-      code: '',
-      username: '',
-      password: '',
-      isMemorizePassword: false
     }
   },
   created () {

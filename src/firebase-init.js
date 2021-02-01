@@ -9,26 +9,13 @@ let firebaseConfig = {
   projectId: 'chat-app-db732',
   storageBucket: 'chat-app-db732.appspot.com',
   messagingSenderId: '639039700405',
+  databaseURL: 'https://chat-app-db732-default-rtdb.firebaseio.com/',
   appId: '1:639039700405:web:1a067e6775486600842dfc',
   measurementId: 'G-KPG0Y0XY15'
 }
 firebase.initializeApp(firebaseConfig)
-console.log('firebase in firebase-init', firebase)
+
 Vue.prototype.$firebase = firebase
 Vue.prototype.$currentUser = firebase.auth().currentUser
-// firebase.auth().onAuthStateChanged(user => {
-//   console.log('auth state channged!!')
-//   if (user) {
-//     Vue.prototype.$currentUser = user
-//   } else {
-//     Vue.prototype.$currentUser = null
-//   }
-// })
-// firebase.initializeApp({
-//   credential: admin.credential.applicationDefault()
-//   // credential: admin.credential.cert(serviceAccount)
-//   // databaseURL: 'https://<DATABASE_NAME>.firebaseio.com'
-// });
-// export const auth = firebase.auth()
+// Vue.prototype.$db = firebase.database()
 export default firebase
-// export default firebaseConfig

@@ -19,7 +19,9 @@ export default {
     console.log('currentUser in Home', this.$currentUser)
   },
   methods: {
-    onClick () {
+    onClick (e) {
+      e.preventDefault()
+      this.$router.push('/profile-update')
       // this.sample()zsz
     }
     // sample () {

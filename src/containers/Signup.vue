@@ -16,10 +16,13 @@
       </div>
       <button class="btn btn-light border-dark border register-btn" v-on:click="onClickSignUp">登録</button>
     </form>
+    <a href="#" @click="onClickSendBtn">Sample</a>
+    <a href="#" @click="sample">get</a>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Signup',
   data () {
@@ -34,9 +37,23 @@ export default {
   mounted () {
     console.log('this.firebase.auth() in Signup', this.$firebase.auth())
   },
+  computed: {
+    ...mapGetters('users/', [
+      'getUserName'
+    ])
+  },
   methods: {
+    ...mapActions('users/', [
+      'registerProfileAction'
+    ]),
     onClickSendBtn (e) {
       e.preventDefault()
+      const profileValue = {
+        uid: 'something',
+        name: this.name,
+        email: this.email
+      }
+      this.registerProfileAction(profileValue)
     },
     async onClickSignUp (e) {
       e.preventDefault()
@@ -47,6 +64,11 @@ export default {
       } catch (e) {
         console.log('error', e)
       }
+    },
+    sample (e) {
+      e.preventDefault()
+      let name = this.getUserName('something')
+      console.log('name in store', name)
     }
   }
 }
