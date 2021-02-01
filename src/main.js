@@ -57,5 +57,8 @@ firebase.auth().onAuthStateChanged(user => {
     store,
     components: { App },
     template: '<App/>'
+    // updated () {
+    //   if (firebase.auth().currentUser)
+    // }
   })
 })

@@ -12,7 +12,7 @@
       </div>
       <div class="form-group form-wrapper">
         <label class="form-label" for="password">パスワード</label>
-        <input class="form-control" id="password" type="password" v-model="password" value="登録">
+        <input class="form-control" id="password" type="password" v-model="password">
       </div>
       <button class="btn btn-light border-dark border register-btn" v-on:click="onClickSignUp">登録</button>
     </form>
@@ -26,10 +26,7 @@ export default {
     return {
       email: '',
       name: '',
-      password: '',
-      msg: 'Welcome to Your Vue.js App',
-      user: Object,
-      authState: Object
+      password: ''
     }
   },
   created () {
@@ -43,10 +40,10 @@ export default {
     },
     async onClickSignUp (e) {
       e.preventDefault()
+      console.log('this.name', this.name)
       try {
-        let user = await this.$firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-        console.log('user', user)
-        this.$router.push('/home')
+        await this.$firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+        this.$router.push('/confirm')
       } catch (e) {
         console.log('error', e)
       }

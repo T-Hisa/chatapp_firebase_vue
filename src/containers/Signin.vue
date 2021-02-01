@@ -41,15 +41,18 @@ export default {
     async onClickSignIn (e) {
       e.preventDefault()
       try {
-        let user = await this.$firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        let { user } = await this.$firebase.auth().signInWithEmailAndPassword(this.email, this.password)
         console.log('user', user)
-        this.$router.push('/home')
+        if (user.displayName) this.$router.push('/home')
+        else if (user.emailVerified) this.$router.push('/setup-profile')
+        else this.$router.push('/confirm')
       } catch (e) {
         console.log('Error', e)
       }
     },
     sample (e) {
       e.preventDefault()
+      console.log(window.history)
     }
   }
 }

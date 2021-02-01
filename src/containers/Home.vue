@@ -19,8 +19,19 @@ export default {
     console.log('currentUser in Home', this.$currentUser)
   },
   methods: {
-    async onClick () {
+    onClick () {
+      // this.sample()zsz
     }
+    // sample () {
+    //   var myNotification = new Notify('Yo dawg!', {
+    //     body: 'This is an awesome notification',
+    //     notifyShow: this.onNotifyShow
+    //   });
+    //   myNotification.show()
+    // },
+    // onNotifyShow () {
+    //   console.log('notification')
+    // }
   }
 }
 </script>

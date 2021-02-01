@@ -18,10 +18,12 @@
             </b-navbar-nav>
           </b-collapse>
         </div>
-        <a v-if="$currentUser" class="f-black" @click="onClickSignOutBtn">Sign Out</a>
+        <div v-if="$currentUser" class="" >
+          <a @click="onClickSignOutBtn">Sign Out</a>
+        </div>
         <div v-else>
-          <router-link v-if="isPathSignin" class="f-black" to="/signup">Signup</router-link>
-          <router-link v-else class="f-black" to="/signin">SignIn</router-link>
+          <router-link v-if="isPathSignin" class="f-black" to="/signup">Sign Up</router-link>
+          <router-link v-else class="f-black" to="/signin">Sign In</router-link>
         </div>
       </div>
     </b-navbar>
@@ -31,11 +33,11 @@
 <script>
 export default {
   name: 'TopView',
-  // data () {
-  //   return {
-  //     isPathSignin: false
-  //   }
-  // },
+  data () {
+    return {
+      popUpMessage: '管理者の操作を待つまで、同じメールアドレスでは登録できません。よろしいですか？'
+    }
+  },
   props: {
     isUserSignin: {
       type: Boolean,
@@ -48,7 +50,6 @@ export default {
   },
   created () {
     console.log('created in Top')
-    console.log('currentUser in Top', this.$currentUser)
   },
   mounted () {
     console.log('mounted in Top')
@@ -56,24 +57,26 @@ export default {
   updated () {
     console.log('updated in Top')
   },
-  // computed: {
-  //   isPathSignin () {
-  //     return !!this.$route.path.includes('signin')
-  //   }
-  // },
+  computed: {
+    isPathConfirm () {
+      const flag = this.$route.path.includes('confirm')
+      return flag
+    }
+  },
   methods: {
     async onClickSignOutBtn () {
       await this.$firebase.auth().signOut()
-      this.$router.push('/signin')
+      this.$router.go(-1) || this.$router.push('/signin')
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
 a:hover {
   cursor: pointer;
 }
+
 .header {
   color: white;
   text-align: right;
@@ -108,4 +111,4 @@ a:hover {
   font-size: 30px;
   margin-left: 30px;
 }
-</style>
+</style>z

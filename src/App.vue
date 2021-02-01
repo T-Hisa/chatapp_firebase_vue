@@ -19,7 +19,8 @@ export default {
   data () {
     return {
       isUserSignin: false,
-      isPathSignin: false
+      isPathSignin: false,
+      passPassword: ''
     }
   },
   created () {

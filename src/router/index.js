@@ -1,11 +1,13 @@
 import Vue from 'vue'
-import firebase from '../firebase-init'
+// import firebase from '../firebase-init'
 import Router from 'vue-router'
 import Container from '@/containers/Container'
 import Home from '@/containers/Home'
 import Signin from '@/containers/Signin'
 import Signup from '@/containers/Signup'
-import Wait from '@/containers/Wait'
+import Confirm from '@/containers/Confirm'
+import SetUpProfile from '@/containers/SetUpProfile'
+import validation from './routingValidation'
 // import Err from '@/containers/Error'
 
 Vue.use(Router)
@@ -15,8 +17,11 @@ const router = new Router({
     {
       path: '/',
       name: 'Container',
-      redirect: '/signin',
+      // redirect: '/',
       component: Container,
+      meta: {
+        isRequiredProfile: true
+      },
       children: [
         {
           path: '/home',
@@ -36,13 +41,24 @@ const router = new Router({
       component: Signup
     },
     {
-      path: '/wait',
-      name: 'Wait',
-      component: Wait
+      path: '/confirm',
+      name: 'Confirm',
+      component: Confirm,
+      meta: {
+        isRequiredEmailValidation: true
+      }
+    },
+    {
+      path: '/setup-profile',
+      name: 'SetUpProfile',
+      component: SetUpProfile,
+      meta: {
+        isRequiredAuth: true
+      }
     },
     {
       path: '*',
-      redirect: '/home'
+      redirect: ''
     }
     // {
     //   path: '*',
@@ -52,21 +68,8 @@ const router = new Router({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  let currentUser = firebase.auth().currentUser
-  console.log('currentUser in route', currentUser)
-  if (to.path.includes('sign')) {
-    if (currentUser) next('/home')
-  } else {
-    if (!currentUser) next('/signin')
-  }
-  // if ('true') {
-  //   next()
-  // } else {
-  //   next({path: '/signin'})
-  // }
-  next()
-  // console.log({})
+router.beforeEach((to, _, next) => {
+  validation(to, next)
 })
 
 export default router
