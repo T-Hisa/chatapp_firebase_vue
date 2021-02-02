@@ -76,7 +76,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, _, next) => {
-  console.log({to})
+  console.log('routing start')
   validation(to, next)
 })
 

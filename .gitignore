@@ -17,3 +17,7 @@ selenium-debug.log
 *.sln
 
 .env*
+
+src/firebase-init.js
+.firebaserc
+firebase.json

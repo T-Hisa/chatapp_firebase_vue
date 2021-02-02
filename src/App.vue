@@ -4,9 +4,8 @@
       v-bind:is-user-signin="isUserSignin"
       v-bind:is-path-signin="isPathSignin"
     />
-    <router-view
-      @user-login="userLogin"
-    />
+    <router-view/>
+    <div @click="sample">sample</div>
   </div>
 </template>
 
@@ -38,9 +37,15 @@ export default {
     TopView
   },
   methods: {
-    userLogin () {
-      this.isUserSignin = true
-      console.log('userLogin!!!')
+    sample () {
+      console.log('now invoke hello-world function!')
+      let firebaseFunctions = this.$firebase.functions()
+      let addMessage = firebaseFunctions.httpsCallable('addMessage')
+      addMessage({ sample: 'sample' }).then(val => {
+        console.log(val)
+      }).catch(err => {
+        console.log('error', err)
+      })
     }
   }
 }

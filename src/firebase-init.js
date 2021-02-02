@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import 'firebase/firestore'
+// import 'firebase/firestore'
+import 'firebase/database'
+import 'firebase/functions'
 
 let firebaseConfig = {
   apiKey: 'AIzaSyBxjMCa_zsIBYui9TBMSdLk9CLM5R56OYI',

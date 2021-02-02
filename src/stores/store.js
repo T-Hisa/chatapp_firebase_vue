@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import users from './modules/user'
-
+import users from './modules/users'
+// import { firebaseMutations, firebaseAction } from 'vuexfire'
+// import db from './firebasedb'
 // import { SOME_MUTATION } from './mutation-types'
 
 // import { DataStore } from '@aws-amplify/datastore'

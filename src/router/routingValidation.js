@@ -1,7 +1,6 @@
 import firebase from '../firebase-init'
 
 function validation (to, next) {
-  console.log('routing start')
   let currentUser = firebase.auth().currentUser
   let isRequiredEmailValidation = to.matched.some(value => value.meta.isRequiredEmailValidation)
   let isRequiredAuth = to.matched.some(value => value.meta.isRequiredAuth)

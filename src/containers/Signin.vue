@@ -42,7 +42,6 @@ export default {
       e.preventDefault()
       try {
         let { user } = await this.$firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-        console.log('user', user)
         if (user.displayName) this.$router.push('/home')
         else if (user.emailVerified) this.$router.push('/setup-profile')
         else this.$router.push('/confirm')
