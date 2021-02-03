@@ -1,11 +1,59 @@
+<template>
+  <div class="container">
+    <form class="wrapper form-container bg-skyblue" method="POST">
+      <span class="title inner-wrapper">表示名</span>
+      <div class="form-group form-wrapper">
+        <label class="form-label" for="name">名前</label><span class="text-danger font-weight-bold" v-if="errorMessage">{{ errorMessage }}</span>
+        <input @input="handleNameError" class="form-control" id="name" type="text" v-model="name">
+      </div>
+      <div class="form-group form-wrapper">
+        <div>
+          <label for="photoURL" style="font-weight: bold;" class="file-label">
+            <i class="fas fa-portrait fa-2x" style="padding: 10px;"></i>
+            <span style="margin: auto 0;">サムネイル設定（※ 設定しない場合は下のデフォルトのものになります。)</span>
+          </label>
+          <input type="file" accept="image/*" @change="onSelectProfilePhoto" id="photoURL" style="display: none;"/>
+          <p class="img-wrapper">
+            <span class="img-wrapper" v-if="imgUrl">
+              <img v-bind:src="imgUrl" alt="サムネイル" width="100px" height="100px" >
+              <span class="reset-btn" v-on:click="onClickResetBtn">元に戻す</span>
+            </span>
+            <img v-else src="../assets/images/default.jpg" alt="サムネイル" width="100px" height="100px" >
+          </p>
+        </div>
+      </div>
+      <div class="btn-wrapper">
+        <button class="btn btn-light border-dark border profile-register-btn" v-on:click="onClickSetProfile">プロフィール設定</button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script>
 import { required, maxLength } from 'vuelidate/lib/validators'
 import { mapActions } from 'vuex'
-const profileUpdate = {
+
+export default {
+  name: 'ChangeProfile',
+  data () {
+    return {
+      photoURL: '',
+      name: '',
+      imgUrl: '',
+      image: File,
+      errorMessage: ''
+    }
+  },
   validations: {
     name: {
       required,
       maxLength: maxLength(20)
     }
+  },
+  created () {
+  },
+  mounted () {
+    this.imgUrl = this.$currentUser.photoURL
   },
   methods: {
     ...mapActions('users/', [
@@ -76,5 +124,45 @@ const profileUpdate = {
     }
   }
 }
+</script>
 
-export default profileUpdate
+<style>
+.file-label {
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+}
+
+.none-display {
+  display: none;
+}
+
+.profile-register-btn {
+  margin: 0 auto 20px auto;
+}
+
+.img-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.img-wrapper img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.btn-wrapper {
+  display: flex;
+}
+
+.reset-btn {
+  margin: auto 0;
+  margin-left: 10px;
+}
+
+.reset-btn:hover {
+  cursor: pointer;
+}
+
+</style>

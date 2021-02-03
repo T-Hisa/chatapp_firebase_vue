@@ -1,5 +1,6 @@
 import { vuexfireMutations, firestoreAction } from 'vuexfire'
-import db from '../firebasedb'
+import firebase from 'firebase/app'
+const db = firebase.database()
 const usersRef = db.ref('users')
 
 const userModule = {

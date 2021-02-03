@@ -5,13 +5,16 @@ import router from './router'
 import Vuex from 'vuex'
 import BootstrapVue from 'bootstrap-vue'
 import VueI18n from 'vue-i18n'
+import Vuelidate from 'vuelidate'
 import store from './stores/store'
+
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 console.log('firebase', firebase)
 console.log('environment', process.env)
 Vue.use(Vuex)
 Vue.use(BootstrapVue)
+Vue.use(Vuelidate)
 Vue.config.productionTip = false
 
 Vue.use(VueI18n)

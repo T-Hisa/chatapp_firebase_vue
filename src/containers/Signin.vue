@@ -12,11 +12,6 @@
       </div>
       <button class="btn btn-light border-dark border register-btn" v-on:click="onClickSignIn">ログイン</button>
     </form>
-    <div class="form-group form-wrapper">
-      <label class="form-label" for="name">名前</label>
-      <input class="form-control" id="name" type="text" v-model="name">
-    </div>
-    <a @click="sample">aaa</a>
   </div>
 </template>
 
@@ -25,12 +20,8 @@ export default {
   name: 'Signin',
   data () {
     return {
-      name: '',
       email: '',
-      password: '',
-      msg: 'Welcome to Your Vue.js App',
-      user: Object,
-      authState: Object
+      password: ''
     }
   },
   created () {
@@ -48,10 +39,6 @@ export default {
       } catch (e) {
         console.log('Error', e)
       }
-    },
-    sample (e) {
-      e.preventDefault()
-      console.log(window.history)
     }
   }
 }

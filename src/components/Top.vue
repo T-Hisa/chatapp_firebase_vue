@@ -2,36 +2,37 @@
   <div class='header bg-info'>
     <b-navbar class="custom-nav-bar" toggleable="lg" type="dark" variant="info">
       <span class="title">ChatApp</span>
-      <div class="flex-display">
-        <div v-if="isUserSignin" class="notify-wrapper">
+      <div v-if="$currentUser && $currentUser.displayName" class='flex-display'>
+        <div v-if="$currentUser && $currentUser.displayName" class="notify-wrapper">
           <i class="fas fa-bell custom-font"></i>
           <span>0
             <i class="fas fa-angle-down"></i>
           </span>
         </div>
-        <div v-if="$currentUser && $currentUser.displayName">
-          <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-          <b-collapse id="nav-collapse" is-nav>
-            <b-navbar-nav>
-              <b-nav-item href="#" @click="onClickSignOutBtn">Sign Out</b-nav-item>
-              <b-nav-item ><router-link to="/profile-update">プロフィール変更</router-link></b-nav-item>
-            </b-navbar-nav>
-          </b-collapse>
+        <div v-if="$currentUser && $currentUser.displayName" class="top-btn-wrapper">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="onClickSignOutBtn">Sign Out</a>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/profile-update">プロフィール変更</router-link>
+            </li>
+          </ul>
         </div>
-        <div v-else-if="$currentUser">
-          <a @click="onClickSignOutBtn">Sign Out</a>
-        </div>
-        <div v-else>
-          <router-link v-if="isPathSignin" class="f-black" to="/signup">Sign Up</router-link>
-          <router-link v-else class="f-black" to="/signin">Sign In</router-link>
-        </div>
-        <!-- <div v-if="$currentUser" class="" >
-        </div>
-        <div v-else>
-          <router-link v-if="isPathSignin" class="f-black" to="/signup">Sign Up</router-link>
-          <router-link v-else class="f-black" to="/signin">Sign In</router-link>
-        </div> -->
       </div>
+      <div v-else-if="$currentUser">
+        <a @click="onClickSignOutBtn">Sign Out</a>
+      </div>
+      <div v-else>
+        <router-link v-if="isPathSignin" class="f-black" to="/signup">Sign Up</router-link>
+        <router-link v-else class="f-black" to="/signin">Sign In</router-link>
+      </div>
+      <!-- <div v-if="$currentUser" class="" >
+      </div>
+      <div v-else>
+        <router-link v-if="isPathSignin" class="f-black" to="/signup">Sign Up</router-link>
+        <router-link v-else class="f-black" to="/signin">Sign In</router-link>
+      </div> -->
     </b-navbar>
   </div>
 </template>
@@ -55,13 +56,10 @@ export default {
     }
   },
   created () {
-    console.log('created in Top')
   },
   mounted () {
-    console.log('mounted in Top')
   },
   updated () {
-    console.log('updated in Top')
   },
   computed: {
     isPathConfirm () {
@@ -117,4 +115,9 @@ a:hover {
   font-size: 30px;
   margin-left: 30px;
 }
-</style>z
+
+.top-btn-wrapper {
+  display: flex;
+  align-items: center;
+}
+</style>

@@ -1,73 +1,55 @@
 <template>
-  <div class="container">
-    <form class="wrapper form-container bg-skyblue" method="POST">
-      <span class="title inner-wrapper">表示名</span>
-      <div class="form-group form-wrapper">
-        <label class="form-label" for="name">名前</label>
-        <input class="form-control" id="name" type="text" v-model="name">
-      </div>
-      <div class="form-group form-wrapper">
-        <label class="form-label" for="photoUrl">サムネイル(※ 設定しなくてもOK)</label>
-        <input type="file" @change="sample" class="form-control" id="photoUrl">
-      </div>
-      <button class="btn btn-light border-dark border register-btn" v-on:click="onClickUpdateProfile">プロフィール設定</button>
-    </form>
-  </div>
+  <change-profile />
 </template>
 
 <script>
-import ProfileUpdateMixin from '@/mixins/ProfileUpdateMixin'
+import ChangeProfile from '@/components/ChangeProfile'
 
 export default {
   name: 'ProfileUpdate',
-  data () {
-    return {
-      name: '',
-      photoURL: ''
-    }
-  },
-  mixins: [
-    ProfileUpdateMixin
-  ],
-  created () {
-    // console.log(this.authState)
-  },
-  mounted () {
-    this.name = this.$currentUser.displayName
-    this.photoURL = this.$currentUser.photoURL
-    console.log('mounted in ProfileUpdate', this.name, this.photoURL)
-  },
-  methods: {
-    async onClickUpdateProfile (e) {
-      e.preventDefault()
-      let currentUserId = this.$currentUser.uid
-      let updateValue = {
-        uid: currentUserId,
-        username: this.name,
-        photoURL: this.photoURL
-      }
-      this.updateProfile(updateValue) // mixin より
-    },
-    sample (e) {
-      e.preventDefault()
-      console.log(!!this.$router.go(-1))
-    }
+  components: {
+    ChangeProfile
   }
 }
 </script>
 
 <style>
-.confirm-btn {
-  height: 30px;
-  padding: 3px 10px;
+.file-label {
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+}
+
+.none-display {
+  display: none;
+}
+
+.profile-register-btn {
+  margin: 0 auto 20px auto;
+}
+
+.img-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.img-wrapper img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.btn-wrapper {
+  display: flex;
+}
+
+.reset-btn {
+  margin: auto 0;
   margin-left: 10px;
 }
-.confirmation-form {
-  margin-top: 50px;
-  float: right;
+
+.reset-btn:hover {
+  cursor: pointer;
 }
-.resend-form {
-  float: right;
-  margin-top: 40px;
-}
+
 </style>
