@@ -9,22 +9,28 @@
             <i class="fas fa-angle-down"></i>
           </span>
         </div>
-        <div v-if="$currentUser && $currentUser.emailVerified">
+        <div v-if="$currentUser && $currentUser.displayName">
           <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
           <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
-              <b-nav-item href="#">Logout</b-nav-item>
-              <b-nav-item href="#" disabled>Disabled</b-nav-item>
+              <b-nav-item href="#" @click="onClickSignOutBtn">Sign Out</b-nav-item>
+              <b-nav-item ><router-link to="/profile-update">プロフィール変更</router-link></b-nav-item>
             </b-navbar-nav>
           </b-collapse>
         </div>
-        <div v-if="$currentUser" class="" >
+        <div v-else-if="$currentUser">
           <a @click="onClickSignOutBtn">Sign Out</a>
         </div>
         <div v-else>
           <router-link v-if="isPathSignin" class="f-black" to="/signup">Sign Up</router-link>
           <router-link v-else class="f-black" to="/signin">Sign In</router-link>
         </div>
+        <!-- <div v-if="$currentUser" class="" >
+        </div>
+        <div v-else>
+          <router-link v-if="isPathSignin" class="f-black" to="/signup">Sign Up</router-link>
+          <router-link v-else class="f-black" to="/signin">Sign In</router-link>
+        </div> -->
       </div>
     </b-navbar>
   </div>

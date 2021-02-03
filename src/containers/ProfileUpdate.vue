@@ -46,7 +46,7 @@ export default {
         username: this.name,
         photoURL: this.photoURL
       }
-      this.updateProfile(updateValue)
+      this.updateProfile(updateValue) // mixin より
     },
     sample (e) {
       e.preventDefault()
