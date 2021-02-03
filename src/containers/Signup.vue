@@ -16,6 +16,7 @@
       </div>
       <button class="btn btn-light border-dark border register-btn" v-on:click="onClickSignUp">登録</button>
     </form>
+    <button href="#" @click="sample">sample</button>
   </div>
 </template>
 
@@ -42,17 +43,18 @@ export default {
     async onClickSignUp (e) {
       e.preventDefault()
       try {
-        const { user } = await this.$firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-        this.registerProfileAction({
-          uid: user.uid,
-          email: this.email
-        })
+        await this.$firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
         this.$router.push('/confirm')
       } catch (e) {
         console.log('error', e)
       }
     },
     sample () {
+      console.log('now create user state!')
+      this.registerProfileAction({
+        uid: 'something',
+        email: 'email'
+      })
     }
   }
 }

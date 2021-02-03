@@ -3,11 +3,12 @@
     <div class="wrapper">
       <p>入力されたメールアドレスに認証用URLを送信しました。</p>
       <p>メールアドレスを誤って登録した場合は、お手数をおかけしますが再登録をお願いします。</p>
-      <p>※ その際は同じメールアドレスでは登録できません。SignIn画面からログインしてください</p>
+      <p>※ その際は同じメールアドレスでは登録できません。</p>
     </div>
     <div class="btn-container">
       <button class='simple-btn' @click="onClickResendBtn">メール再送信</button>
       <button class='simple-btn' @click="onClickReregisterBtn">再登録する</button>
+      <button class='simple-btn' @click="onClickConfirmBtn">確認したらここをクリック</button>
     </div>
   </div>
 </template>
@@ -27,18 +28,11 @@ export default {
   },
   methods: {
     onClickConfirmBtn () {
+      this.$router.go({path: this.$router.currentRoute.path, force: true})
     },
     onClickResendBtn () {
       let currentUser = this.$currentUser
-      currentUser.sendEmailVerification().then(() => {
-        this.$firebase.auth().onAuthStateChanged(user => {
-          if (user.emailVerified) {
-            this.$router.push('/home')
-          } else {
-            console.log('an error has occured!')
-          }
-        })
-      })
+      currentUser.sendEmailVerification()
       console.log('currentUser', this.$currentUser)
     },
     async onClickReregisterBtn () {

@@ -1,4 +1,4 @@
-import firebase from '../firebase-init'
+import firebase from '../firebase-setup'
 
 function validation (to, next) {
   let currentUser = firebase.auth().currentUser

@@ -21,4 +21,6 @@ selenium-debug.log
 src/firebase-init.js
 .firebaserc
 firebase.json
-chat-app-db*
+**/chat-app-db*
+**/serviceAccount*
+**/firebaseConfig*

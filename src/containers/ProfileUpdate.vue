@@ -16,30 +16,37 @@
 </template>
 
 <script>
+import ProfileUpdateMixin from '@/mixins/ProfileUpdateMixin'
+
 export default {
   name: 'ProfileUpdate',
   data () {
     return {
       name: '',
-      photoUrl: ''
+      photoURL: ''
     }
   },
+  mixins: [
+    ProfileUpdateMixin
+  ],
   created () {
     // console.log(this.authState)
   },
   mounted () {
     this.name = this.$currentUser.displayName
-    this.photoUrl = this.$currentUser.photoURL
-    console.log('mounted in ProfileUpdate', this.name, this.photoUrl)
+    this.photoURL = this.$currentUser.photoURL
+    console.log('mounted in ProfileUpdate', this.name, this.photoURL)
   },
   methods: {
     async onClickUpdateProfile (e) {
       e.preventDefault()
-      await this.$currentUser.updateProfile({
-        displayName: this.name,
-        photoURL: this.photoUrl
-      })
-      this.$router.go(-1) || this.$router.push('/home')
+      let currentUserId = this.$currentUser.uid
+      let updateValue = {
+        uid: currentUserId,
+        username: this.name,
+        photoURL: this.photoURL
+      }
+      this.updateProfile(updateValue)
     },
     sample (e) {
       e.preventDefault()

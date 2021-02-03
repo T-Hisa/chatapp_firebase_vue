@@ -37,13 +37,18 @@ const userModule = {
     registerProfileAction: firestoreAction((_, value) => {
       console.log('value in Action', value)
       const uid = value.uid
-      let saveValue = {}
-      saveValue[uid] = {
-        email: value.email
+      let saveValue
+      if (value.photoURL) {
+        saveValue = {
+          username: value.username,
+          photoURL: value.photoURL
+        }
+      } else {
+        saveValue = { username: value.username }
       }
       console.log('saveValue', saveValue)
       // usersRef.set(saveValue)
-      usersRef.update(saveValue)
+      usersRef.child(`${uid}`).update(saveValue)
     })
   }
 }

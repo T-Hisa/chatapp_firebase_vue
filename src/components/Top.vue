@@ -9,7 +9,7 @@
             <i class="fas fa-angle-down"></i>
           </span>
         </div>
-        <div v-if="isUserSignin">
+        <div v-if="$currentUser && $currentUser.emailVerified">
           <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
           <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
