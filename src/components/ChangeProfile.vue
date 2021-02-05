@@ -18,7 +18,7 @@
               <img v-bind:src="imgUrl" alt="サムネイル">
               <span class="reset-btn" v-on:click="onClickResetBtn">取り消し</span>
             </span>
-            <img v-else src="../assets/images/default.jpg" alt="サムネイル" width="100px" height="100px" >
+            <img v-else src="../assets/images/default.png" alt="サムネイル" width="100px" height="100px" >
           </p>
         </div>
       </div>
