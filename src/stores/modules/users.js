@@ -1,4 +1,4 @@
-import { vuexfireMutations, firestoreAction } from 'vuexfire'
+import { firebaseAction } from 'vuexfire'
 import firebase from 'firebase/app'
 const db = firebase.database()
 const usersRef = db.ref('users')
@@ -26,7 +26,6 @@ const userModule = {
     }
   },
   mutations: {
-    ...vuexfireMutations
     // state.users[uid].email = profile.email
     // state.users[uid].name = profile.name
   },
@@ -34,8 +33,10 @@ const userModule = {
     // registerProfileAction (context, profile) {
     //   console.log('value in action', profile)
     //   context.commit('registerProfileMutation', profile)
-    // }
-    registerProfileAction: firestoreAction((_, value) => {
+    // },
+    getUserInfo: firebaseAction(({ bindFirestoreRef }) => {
+    }),
+    registerProfileAction: firebaseAction((_, value) => {
       console.log('value in Action', value)
       const uid = value.uid
       let saveValue

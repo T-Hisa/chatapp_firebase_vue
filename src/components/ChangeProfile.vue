@@ -15,8 +15,8 @@
           <input type="file" accept="image/*" @change="onSelectProfilePhoto" id="photoURL" style="display: none;"/>
           <p class="img-wrapper">
             <span class="img-wrapper" v-if="imgUrl">
-              <img v-bind:src="imgUrl" alt="サムネイル" width="100px" height="100px" >
-              <span class="reset-btn" v-on:click="onClickResetBtn">元に戻す</span>
+              <img v-bind:src="imgUrl" alt="サムネイル">
+              <span class="reset-btn" v-on:click="onClickResetBtn">取り消し</span>
             </span>
             <img v-else src="../assets/images/default.jpg" alt="サムネイル" width="100px" height="100px" >
           </p>
@@ -53,7 +53,11 @@ export default {
   created () {
   },
   mounted () {
-    this.imgUrl = this.$currentUser.photoURL
+    console.log('mounted!!')
+    if (this.$currentUser) {
+      this.name = this.$currentUser.displayName
+      this.imgUrl = this.$currentUser.photoURL
+    }
   },
   methods: {
     ...mapActions('users/', [
@@ -62,11 +66,11 @@ export default {
     onClickSetProfile (e) {
       e.preventDefault()
       if (this.$v.name.required && this.$v.name.maxLength) {
-        if (this.image) {
+        if (this.imgUrl) {
           this.setPhotoUrl().then((url) => {
             this.photoURL = url
             this.updateProfileTask()
-            window.URL.revokeObjectURL(this.image) // 一応ローカルで作成したURLを解放
+            window.URL.revokeObjectURL(this.imgUrl) // 一応ローカルで作成したURLを解放
           })
         } else {
           this.updateProfileTask()
@@ -75,13 +79,31 @@ export default {
         this.handleNameError()
       }
     },
+    updateProfile (value) {
+      this.registerProfileAction(value)
+      console.log('photoURL', value.photoURL)
+      this.$currentUser.updateProfile({
+        displayName: value.username,
+        photoURL: value.photoURL
+      }).then(() => {
+        this.$emit('redraw-flag')
+        this.$router.push('/home')
+        // 遅くなってしまうが、Top の描画の変更がされないので下記のように実装
+        // this.$router.go({path: this.$router.currentRoute.path, force: true})
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     updateProfileTask () {
       let currentUserId = this.$currentUser.uid
       let updateValue = {
         uid: currentUserId,
-        username: this.name
+        username: this.name,
+        photoURL: this.photoURL
       }
-      if (this.photoURL) updateValue['photoURL'] = this.photoURL
+      // if (this.photoURL) {
+      //   updateValue['photoURL'] = this.photoURL
+      // }
       this.updateProfile(updateValue)
     },
     setPhotoUrl () {
@@ -98,18 +120,9 @@ export default {
       })
     },
     onClickResetBtn () {
+      window.URL.revokeObjectURL(this.imgUrl)
+      this.photoURL = ''
       this.imgUrl = null
-      window.URL.revokeObjectURL(this.image)
-    },
-    updateProfile (value) {
-      this.registerProfileAction(value)
-      this.$currentUser.updateProfile({
-        displayName: value.username
-      }).then(() => {
-        this.$router.push('/home')
-      }).catch(err => {
-        console.log(err)
-      })
     },
     handleNameError () {
       if (!this.$v.name.required) this.errorMessage = '入力してください'
@@ -117,7 +130,7 @@ export default {
       else this.errorMessage = ''
     },
     onSelectProfilePhoto (e) {
-      if (this.image) window.URL.revokeObjectURL(this.image)
+      if (this.image) window.URL.revokeObjectURL(this.imgUrl)
       let file = e.target.files[0]
       this.image = file
       this.imgUrl = window.URL.createObjectURL(file)
@@ -150,6 +163,7 @@ export default {
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  margin-right: 10px;
 }
 
 .btn-wrapper {

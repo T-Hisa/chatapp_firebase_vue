@@ -8,7 +8,7 @@
     <div class="btn-container">
       <button class='simple-btn' @click="onClickResendBtn">メール再送信</button>
       <button class='simple-btn' @click="onClickReregisterBtn">再登録する</button>
-      <button class='simple-btn' @click="onClickConfirmBtn">確認したらここをクリック</button>
+      <button class='simple-btn' @click="onClickConfirmBtn">確認したらここをクリック（更新）</button>
     </div>
   </div>
 </template>
@@ -33,7 +33,6 @@ export default {
     onClickResendBtn () {
       let currentUser = this.$currentUser
       currentUser.sendEmailVerification()
-      console.log('currentUser', this.$currentUser)
     },
     async onClickReregisterBtn () {
       await this.$firebase.auth().signOut()

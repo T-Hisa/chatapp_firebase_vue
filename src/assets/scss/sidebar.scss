@@ -1,5 +1,20 @@
 .sidebar {
   flex-basis: 20%;
+  background-color: deepskyblue;
+}
+
+.sidebar-list .sidebar-anchor {
+  display: inline-block;
+  width: 100%;
+}
+
+.sidebar-list .sidebar-anchor li {
+  text-align: center;
+  padding: 10px;
+  margin: 0 0 10px 0;
+  margin: 0;
+  width: 100%;
+  background: radial-gradient(deepskyblue, lightblue);
 }
 
 ul {
@@ -13,10 +28,3 @@ ul {
   color: black;
 }
 
-.sidebar-list li {
-  text-align: center;
-  padding: 10px;
-  margin: 5px;
-  width: 100%;
-  background: radial-gradient(deepskyblue, lightblue);
-}

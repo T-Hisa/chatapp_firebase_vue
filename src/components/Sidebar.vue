@@ -1,13 +1,15 @@
 <template>
   <div class="sidebar">
-    <div class="skyblue">
+    <div class="nav-bar">
       <ul class="sidebar-list">
-        <router-link :to ="'/chat'">
+        <profile
+        />
+        <router-link class="sidebar-anchor" :to ="'/home'">
           <li>
             <span class="menu">Chat</span>
           </li>
         </router-link>
-        <router-link :to ="'/chat'">
+        <router-link class="sidebar-anchor" :to ="'/home'">
           <li>
             <span class="menu">Chat</span>
           </li>
@@ -18,12 +20,16 @@
 </template>
 
 <script>
+import Profile from './Profile'
+
 export default {
   name: 'Sidebar',
   data () {
     return {
-      sample: 'Sample'
     }
+  },
+  components: {
+    Profile
   }
 }
 </script>

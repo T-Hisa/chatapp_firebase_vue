@@ -6,7 +6,7 @@ import Vuex from 'vuex'
 import BootstrapVue from 'bootstrap-vue'
 import VueI18n from 'vue-i18n'
 import Vuelidate from 'vuelidate'
-import store from './stores/store'
+import store from './stores'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
