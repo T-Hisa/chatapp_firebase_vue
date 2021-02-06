@@ -1,0 +1,46 @@
+@import './components/sidebar';
+@import './components/confirm';
+@import './components/top';
+@import './components/relatedSign';
+@import './components/profile';
+@import './components/change-profile';
+
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: left;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+
+  .f-black {
+    color: black !important;
+  }
+
+  h1, h2 {
+    font-weight: normal;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
+
+  .flex-display {
+    display: flex;
+  }
+
+  .container .wrapper {
+    padding: 10px 20px;
+    margin: 10px;
+  }
+
+  .bg-skyblue {
+    background-color: #87ceeb;
+  }
+}

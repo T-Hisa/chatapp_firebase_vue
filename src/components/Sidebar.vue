@@ -33,7 +33,3 @@ export default {
   }
 }
 </script>
-
-<style>
-@import "../assets/scss/sidebar.scss";
-</style>

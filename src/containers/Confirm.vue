@@ -44,8 +44,3 @@ export default {
   }
 }
 </script>
-
-<style>
-@import "../assets/scss/confirm.scss";
-
-</style>

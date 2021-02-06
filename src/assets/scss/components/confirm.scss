@@ -1,0 +1,16 @@
+.btn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  .simple-btn {
+    color: deepskyblue;
+    background: none;
+    border: none;
+    width: 300px;
+
+    &:hover {
+      color:red;
+    }
+  }
+}

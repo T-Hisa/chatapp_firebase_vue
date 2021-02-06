@@ -1,0 +1,30 @@
+.sidebar {
+  flex-basis: 20%;
+  background-color: deepskyblue;
+
+  .sidebar-list {
+    padding: 0;
+
+    .sidebar-anchor {
+     display: inline-block;
+     width: 100%;
+
+       li {
+         text-align: center;
+         padding: 10px;
+         margin: 0;
+         width: 100%;
+         background: radial-gradient(deepskyblue, lightblue);
+
+         .menu {
+           font-size: 25px;
+           font-weight: 600;
+           color: black;
+         }
+       }
+     }
+  }
+}
+
+
+

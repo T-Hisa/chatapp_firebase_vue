@@ -25,7 +25,3 @@ export default {
   }
 }
 </script>
-
-<style>
-@import "../assets/scss/error.scss";
-</style>
