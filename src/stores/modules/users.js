@@ -17,10 +17,16 @@ const userModule = {
   }),
   // state.users[userId]
   getters: {
-    getUserName: (state) => (id) => {
-      console.log('debug in getter', id)
-      return state.users[id].name
+    getUsers: (state) => {
+      return state.users
     },
+    getUserInfo: (state) => (id) => {
+      return state.users[id]
+    },
+    // getUserName: (state) => (id) => {
+    //   console.log('debug in getter', id)
+    //   return state.users[id].name
+    // },
     getUserEmail: (state) => (id) => {
       return state.users[id].email
     }
@@ -34,7 +40,11 @@ const userModule = {
     //   console.log('value in action', profile)
     //   context.commit('registerProfileMutation', profile)
     // },
-    getUserInfo: firebaseAction(({ bindFirestoreRef }) => {
+    getUsersData: firebaseAction(({ bindFirebaseRef }) => {
+      // console.log('getUsersData')
+      bindFirebaseRef('users', usersRef, { wait: true })
+    }),
+    getUserInfoData: firebaseAction(({ bindFirestoreRef }) => {
     }),
     registerProfileAction: firebaseAction((_, value) => {
       console.log('value in Action', value)
@@ -43,10 +53,11 @@ const userModule = {
       if (value.photoURL) {
         saveValue = {
           username: value.username,
+          emailVerified: true,
           photoURL: value.photoURL
         }
       } else {
-        saveValue = { username: value.username }
+        saveValue = { username: value.username, emailVerified: true }
       }
       console.log('saveValue', saveValue)
       // usersRef.set(saveValue)

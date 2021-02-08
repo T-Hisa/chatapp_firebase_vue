@@ -1,18 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import users from './modules/users'
+import chat from './modules/chat'
 // import { firebaseAction, vuexfireMutations } from 'vuexfire'
 import { vuexfireMutations } from 'vuexfire'
 // import db from './firebasedb'
 // import { SOME_MUTATION } from './mutation-types'
 
-// import { DataStore } from '@aws-amplify/datastore'
-// import { SampleModel } from '../models'
-
 Vue.use(Vuex)
 const store = new Vuex.Store({
   modules: {
-    users
+    users,
+    chat
   },
   state: {
   },
@@ -36,8 +35,13 @@ const store = new Vuex.Store({
     // store.dispatch('sampleAction') で実行
     sampleAction (context, n) {
       context.commit('sampleMutation', n)
+    },
+    catchFire (context) {
+      this.dispatch('users/getUsersData')
     }
-  },
-  strict: process.env.NODE_ENV === 'development'
+  }
+  // strict: process.env.NODE_ENV === 'development'
 })
+
+store.dispatch('users/getUsersData')
 export default store

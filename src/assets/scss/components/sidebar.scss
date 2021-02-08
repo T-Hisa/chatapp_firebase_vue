@@ -1,30 +1,37 @@
 .sidebar {
   flex-basis: 20%;
-  background-color: deepskyblue;
 
-  .sidebar-list {
+  .sidebar-ul {
     padding: 0;
 
     .sidebar-anchor {
      display: inline-block;
      width: 100%;
 
-       li {
-         text-align: center;
-         padding: 10px;
-         margin: 0;
-         width: 100%;
-         background: radial-gradient(deepskyblue, lightblue);
+      li {
+        text-align: center;
+        padding: 10px 0;
+        margin: 0 !important;
+        width: 100%;
+        background: azure;
+        border-bottom: 4px solid #17a2b8;
 
-         .menu {
-           font-size: 25px;
-           font-weight: 600;
-           color: black;
-         }
-       }
-     }
+        .menu {
+          font-size: 25px;
+          font-weight: 600;
+          color: black;
+
+          .arrow {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            margin: 0 10px;
+            border-top: 4px solid #000;
+            border-right: 4px solid #000;
+            transform: rotate(45deg);
+          }
+        }
+      }
+    }
   }
 }
-
-
-

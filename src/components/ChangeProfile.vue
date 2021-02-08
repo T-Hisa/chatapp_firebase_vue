@@ -32,6 +32,7 @@
 <script>
 import { required, maxLength } from 'vuelidate/lib/validators'
 import { mapActions } from 'vuex'
+import EventBus from '@/event'
 
 export default {
   name: 'ChangeProfile',
@@ -47,7 +48,7 @@ export default {
   validations: {
     name: {
       required,
-      maxLength: maxLength(20)
+      maxLength: maxLength(8)
     }
   },
   created () {
@@ -86,7 +87,7 @@ export default {
         displayName: value.username,
         photoURL: value.photoURL
       }).then(() => {
-        this.$emit('redraw-flag')
+        EventBus.$emit('redraw-flag')
         this.$router.push('/home')
         // 遅くなってしまうが、Top の描画の変更がされないので下記のように実装
         // this.$router.go({path: this.$router.currentRoute.path, force: true})
@@ -126,7 +127,7 @@ export default {
     },
     handleNameError () {
       if (!this.$v.name.required) this.errorMessage = '入力してください'
-      else if (!this.$v.name.maxLength) this.errorMessage = '20文字以内で入力してください'
+      else if (!this.$v.name.maxLength) this.errorMessage = '8文字以内で入力してください'
       else this.errorMessage = ''
     },
     onSelectProfilePhoto (e) {

@@ -1,13 +1,19 @@
 import Vue from 'vue'
-// import firebase from '../firebase-init'
 import Router from 'vue-router'
+
 import Container from '@/containers/Container'
-import Home from '@/containers/Home'
-import Signin from '@/containers/Signin'
-import Signup from '@/containers/Signup'
-import Confirm from '@/containers/Confirm'
-import SetUpProfile from '@/containers/SetUpProfile'
-import ProfileUpdate from '@/containers/ProfileUpdate'
+
+import Home from '@/views/Home'
+import ProfileUpdate from '@/views/ProfileUpdate'
+import Group from '@/views/Group'
+import SelectUser from '@/views/SelectUser'
+import DirectMessage from '@/views/DirectMessage'
+import NotifyContainer from '@/views/Notification'
+
+import Signin from '@/views/Signin'
+import Signup from '@/views/Signup'
+import SetUpProfile from '@/views/SetUpProfile'
+import Confirm from '@/views/Confirm'
 
 import validation from './routingValidation'
 // import Err from '@/containers/Error'
@@ -34,6 +40,26 @@ const router = new Router({
           path: '/profile-update',
           name: 'ProfileUpdate',
           component: ProfileUpdate
+        },
+        {
+          path: 'group',
+          name: 'Group',
+          component: Group
+        },
+        {
+          path: '/direct',
+          name: SelectUser,
+          component: SelectUser
+        },
+        {
+          path: '/direct/:uid',
+          name: DirectMessage,
+          component: DirectMessage
+        },
+        {
+          path: '/notification',
+          name: NotifyContainer,
+          component: NotifyContainer
         }
       ]
     },

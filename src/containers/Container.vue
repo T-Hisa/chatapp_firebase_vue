@@ -1,6 +1,8 @@
 <template>
-  <div class="flex-display">
-    <sidebar/>
+  <div class="flex-display" style="border-top: 2px solid darkslateblue;" >
+    <sidebar
+      :key="redrawFlag"
+    />
     <div class="container">
       <div class="wrapper">
         <router-view/>
@@ -11,21 +13,25 @@
 
 <script>
 import Sidebar from '@/components/Sidebar'
+import EventBus from '@/event'
+
 export default {
   name: 'Container',
+  data () {
+    return {
+      redrawFlag: 0
+    }
+  },
   components: {
     Sidebar
   },
-  // created () {
-  //   console.log('created in Container')
-  // },
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+  created () {
   },
   mounted () {
-    console.log('Home')
+    EventBus.$on('redraw-flag', () => {
+      console.log('catch redrawFlag in Container')
+      this.redrawFlag++
+    })
   }
 }
 </script>

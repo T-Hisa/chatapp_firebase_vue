@@ -5,7 +5,7 @@ const adminConfig = JSON.parse(process.env.FIREBASE_CONFIG);
 const serviceAccount = require("./serviceAccount.json");
 adminConfig.credential = admin.credential.cert(serviceAccount);
 const adminApp = admin.initializeApp(adminConfig);
-const db = functions.database.instance("chat-app-db732-default-rtdb");
+// const db = functions.database.instance("chat-app-db732-default-rtdb");
 const adminDb = adminApp.database();
 const auth = functions.auth;
 // const auth = functions.auth;
@@ -22,7 +22,7 @@ exports.addMessage = functions.https.onCall(() => {
 //   // console.log("context", context);
 //   console.log("invoked!!");
 // });
-exports.onUserCreated = auth.user().onCreate((user) => {
+exports.onCreatedUser = auth.user().onCreate((user) => {
   console.log("userCreated!");
   const usersRef = adminDb.ref("users");
   const saveVal = {};
@@ -30,7 +30,5 @@ exports.onUserCreated = auth.user().onCreate((user) => {
   saveVal[uid] = {
     email: user.email,
   };
-  return usersRef.set(saveVal).then((val) => {
-    console.log("retVal", val);
-  });
+  return usersRef.update(saveVal);
 });

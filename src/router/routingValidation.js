@@ -5,9 +5,6 @@ function validation (to, next) {
   let isRequiredEmailValidation = to.matched.some(value => value.meta.isRequiredEmailValidation)
   let isRequiredAuth = to.matched.some(value => value.meta.isRequiredAuth)
   let isRequiredProfile = to.matched.some(value => value.meta.isRequiredProfile)
-  console.log('isRequiredAuth', isRequiredAuth)
-  console.log('isRequiredEmailValidation', isRequiredEmailValidation)
-  console.log('currentUser', currentUser)
   // if (to.path.includes('home')) {
   //   next('./home')
   // }

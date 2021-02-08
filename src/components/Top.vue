@@ -54,7 +54,6 @@ export default {
   mounted () {
   },
   updated () {
-    console.log('updated at Top')
   },
   computed: {
     isPathConfirm () {
@@ -62,8 +61,6 @@ export default {
       return flag
     },
     isUserPropsSet () {
-      console.log(this.$currentUser)
-      console.log(this.$currentUser.displayName)
       return !!(this.$currentUser && this.$currentUser.displayName)
     }
     // isUserPropsSet () {
@@ -72,7 +69,6 @@ export default {
   },
   methods: {
     async onClickSignOutBtn () {
-      console.log('isUserPropsSet', this.isUserPropsSet)
       await this.$firebase.auth().signOut()
       this.$router.go(-1) || this.$router.push('/signin')
     }

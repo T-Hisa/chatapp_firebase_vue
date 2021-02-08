@@ -1,8 +1,10 @@
 <template>
   <div class="nav-link profile-container">
-    <img v-if="photoURL" v-bind:src="photoURL" alt="サムネイル">
-    <img v-else src="../assets/images/default.png" alt="サムネイル" width="100" height="100">
-    <p class="profile-name">{{ displayName($currentUser.displayName) }}</p>
+    <router-link class="none-style" :to='"/profile-update"'>
+      <img v-if="photoURL" v-bind:src="photoURL" alt="サムネイル">
+      <img v-else src="../assets/images/default.png" alt="サムネイル">
+      <p class="profile-name">{{ displayName }}</p>
+    </router-link>
   </div>
 </template>
 
@@ -16,14 +18,13 @@ export default {
   },
   computed: {
     photoURL () {
-      return this.$currentUser.photoURL
+      if (this.$currentUser) return this.$currentUser.photoURL
+    },
+    displayName () {
+      if (this.$currentUser) return this.$currentUser.displayName
     }
   },
   methods: {
-    displayName (value) {
-      if (value.length > 7) value = value.substr(0, 5) + '...'
-      return value
-    }
   }
 }
 </script>
