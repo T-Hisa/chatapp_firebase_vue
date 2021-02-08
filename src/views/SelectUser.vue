@@ -9,7 +9,7 @@
               <img v-if="getUserInfo(uid).photoURL" v-bind:src="getUserInfo(uid).photoURL" alt="サムネイル">
               <img v-else src="../assets/images/default.png" alt="サムネイル">
               <div class="user-info">
-                {{getUserInfo(uid).username}}
+                {{ getUserInfo(uid).username }}
               </div>
             </div>
           </div>

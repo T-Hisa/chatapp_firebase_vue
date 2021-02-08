@@ -3,10 +3,8 @@
     <sidebar
       :key="redrawFlag"
     />
-    <div class="container">
-      <div class="wrapper">
-        <router-view/>
-      </div>
+    <div class="container relative-container">
+      <router-view/>
     </div>
   </div>
 </template>

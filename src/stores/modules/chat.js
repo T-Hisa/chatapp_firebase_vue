@@ -19,13 +19,16 @@ const chatModule = {
   }),
   // state.users[userId]
   getters: {
+    getDirectChatData: (state) => (user) => {
+      return state.chat.direct[user.currentUid][user.otherUid]
+    }
     // getUserName: (state) => (id) => {
     //   console.log('debug in getter', id)
     //   return state.users[id].name
     // },
-    getUserEmail: (state) => (id) => {
-      return state.users[id].email
-    }
+    // getUserEmail: (state) => (id) => {
+    //   return state.users[id].email
+    // }
   },
   mutations: {
     // state.users[uid].email = profile.email
@@ -33,6 +36,7 @@ const chatModule = {
   },
   actions: {
     getChatData: firebaseAction(({ bindFirebaseRef }) => {
+      console.log('getChatData')
       bindFirebaseRef('chat', chatRef, { wait: true })
     }),
     // getDirectChatData: firebaseAction(({ bindFirebaseRef }) => {
@@ -57,7 +61,8 @@ const chatModule = {
         time: new Date().getTime(),
         which: 'me'
       }
-      sendChatRefWithType.update(sendValue)
+      let newCommentKey = sendChatRefWithType.push().key
+      sendChatRefWithType.child(newCommentKey).update(sendValue)
     })
     // registerProfileAction: firebaseAction((_, value) => {
     //   console.log('value in Action', value)

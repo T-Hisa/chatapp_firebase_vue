@@ -44,4 +44,5 @@ const store = new Vuex.Store({
 })
 
 store.dispatch('users/getUsersData')
+store.dispatch('chat/getChatData')
 export default store

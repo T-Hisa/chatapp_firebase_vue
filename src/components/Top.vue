@@ -52,6 +52,7 @@ export default {
   created () {
   },
   mounted () {
+    console.log('isPathSignin', this.isPathSignin)
   },
   updated () {
   },

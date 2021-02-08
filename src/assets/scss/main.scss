@@ -5,7 +5,7 @@
 @import './components/profile';
 @import './components/change-profile';
 @import './components/user';
-@import './components/direct';
+@import './components/chat';
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -37,12 +37,11 @@
     display: flex;
   }
 
-  .container .wrapper {
-    padding: 10px 20px;
-    margin: 10px;
-  }
-
   .bg-skyblue {
     background-color: #87ceeb;
+  }
+
+  .relative-container {
+    position: relative;
   }
 }
