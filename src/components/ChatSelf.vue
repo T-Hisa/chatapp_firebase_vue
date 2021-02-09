@@ -4,7 +4,7 @@
       <img v-if="photoURL" v-bind:src="photoURL" alt="サムネイル">
       <img v-else src="../assets/images/default.png" alt="サムネイル">
     </div>
-    <div class="chat-me">
+    <div class="chat-me chat-common">
       <p class="chat-wrapper"><span class="triangle"/>{{body}}</p>
     </div>
   </div>
@@ -22,16 +22,6 @@ export default {
     photoURL: String,
     uid: String,
     body: String
-  },
-  created () {
-  },
-  mounted () {
-  },
-  updated () {
-  },
-  computed: {
-  },
-  methods: {
   }
 }
 </script>

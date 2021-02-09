@@ -1,7 +1,7 @@
 <template>
   <div class="chat-container">
-    <div class="chat-wrapper">
-      <p class="chat-content">{{body}}<span class="triangle"/></p>
+    <div class="chat-other chat-common">
+      <p class="chat-wrapper">{{body}}<span class="triangle"/></p>
     </div>
     <div class="img-other">
       <img v-if="photoURL" v-bind:src="photoURL" alt="サムネイル">

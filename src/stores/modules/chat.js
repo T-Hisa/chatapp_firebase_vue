@@ -19,8 +19,12 @@ const chatModule = {
   }),
   // state.users[userId]
   getters: {
-    getDirectChatData: (state) => (user) => {
-      return state.chat.direct[user.currentUid][user.otherUid]
+    getDirectChatData: (state, _, __, rootGetters) => (otherUid) => {
+      const currentUid = rootGetters.getCurrentUid
+      if (state.chat.direct && state.chat.direct[currentUid] && state.chat.direct[currentUid][otherUid]) {
+        return state.chat.direct[currentUid][otherUid]
+      }
+      return {}
     }
     // getUserName: (state) => (id) => {
     //   console.log('debug in getter', id)
@@ -58,11 +62,11 @@ const chatModule = {
       }
       const sendValue = {
         body: value.body,
-        time: new Date().getTime(),
+        timestamp: new Date().getTime(),
         which: 'me'
       }
       let newCommentKey = sendChatRefWithType.push().key
-      sendChatRefWithType.child(newCommentKey).update(sendValue)
+      sendChatRefWithType.child(newCommentKey).set(sendValue)
     })
     // registerProfileAction: firebaseAction((_, value) => {
     //   console.log('value in Action', value)

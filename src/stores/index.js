@@ -14,8 +14,12 @@ const store = new Vuex.Store({
     chat
   },
   state: {
+    currentUserId: ''
   },
   getters: {
+    getCurrentUid: (state) => {
+      return state.currentUserId
+    },
     sampleGetter: (state, getters, rootState, rootGetters) => (id) => {
       return state.filter(state.id === id)
     }
@@ -26,6 +30,9 @@ const store = new Vuex.Store({
     // store.commit({ type: 'sampleMutation', amount: 10})
     sampleMutation (state, n) {
       state.count += n // 後者の場合 n.amount でアクセス可
+    },
+    setCurrentUid (state, uid) {
+      state.currentUserId = uid
     }
     // [SOME_MUTATION] (state) {
     //   something
@@ -33,6 +40,9 @@ const store = new Vuex.Store({
   },
   actions: {
     // store.dispatch('sampleAction') で実行
+    setCurrentUid (context, uid) {
+      context.commit('setCurrentUid', uid)
+    },
     sampleAction (context, n) {
       context.commit('sampleMutation', n)
     },

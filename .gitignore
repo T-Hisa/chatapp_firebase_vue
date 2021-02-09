@@ -24,3 +24,4 @@ firebase.json
 **/chat-app-db*
 **/serviceAccount*
 **/firebaseConfig*
+**/dbInstance*

@@ -2,99 +2,112 @@
   margin: 20px 0;
   padding: 15px;
   background-color: aliceblue;
+  height: 100%;
 
-  .chat-container {
-    display: flex;
-    align-items: center;
+  .direct {
+    text-align: center;
 
-    .img-me img {
-      margin-right: 10px;
-    }
-
-    .img-other img {
-      margin-left: 10px;
-    }
-
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
+    .userName {
+      font-weight: bold;
     }
   }
 
-  .chat-me {
-    position: relative;
-    display: inline-block;
-    margin: 1.5em 0 1.5em 15px;
-    padding: 7px 10px;
-    min-width: 120px;
-    max-width: 100%;
-    color: #555;
-    font-size: 16px;
-    background: #e0edff;
+  .chat-whole-container {
+    height: calc(100vh - 200px);
+    overflow: scroll;
 
-    .chat-wrapper {
-      margin: 0;
-      padding: 0;
+    .chat-container {
+      display: flex;
+      align-items: center;
+
+      .img-me img {
+        margin-right: 10px;
+      }
+
+      .img-other img {
+        margin-left: 10px;
+      }
+
+      img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+    }
+
+    .chat-common {
+      position: relative;
+      display: inline-block;
+      padding: 7px 10px;
+      min-width: 120px;
+      max-width: 100%;
+      color: #555;
+      font-size: 16px;
+      background: #e0edff;
+
+      .chat-wrapper {
+        margin: 0;
+        padding: 0;
+
+        .triangle {
+          position: absolute;
+          top: 50%;
+          margin-top: -15px;
+        }
+      }
+    }
+
+    .chat-me {
+      margin: 1.5em 0 1.5em 15px;
 
       .triangle {
-        position: absolute;
-        top: 50%;
         left: -30px;
-        margin-top: -15px;
         border: 15px solid transparent;
         border-right: 15px solid #e0edff;
       }
     }
-  }
 
-  .chat-other {
-    position: relative;
-    display: inline-block;
-    margin: 1.5em 15px 1.5em 0;
-    padding: 7px 10px;
-    min-width: 120px;
-    max-width: 100%;
-    color: #555;
-    font-size: 16px;
-    background: #e0edff;
+    .chat-other {
+      margin: 1.5em 15px 1.5em 0;
+      margin-left: auto;
 
-    .chat-wrapper {
-      margin: 0;
-      padding: 0;
-    }
-
-    .triangle {
-      position: absolute;
-      top: 50%;
-      left: 100%;
-      margin-top: -15px;
-      border: 15px solid transparent;
-      border-left: 15px solid #e0edff;
+      .triangle {
+        left: 100%;
+        border: 15px solid transparent;
+        border-left: 15px solid #e0edff;
+      }
     }
   }
-  
-  
-  
 
-  .textarea-wrapper {
+  .chat-form-container {
     position: absolute;
-    width: 90%;
+    width: 100%;
     bottom: 0;
     display: flex;
-    align-items: center;
+    flex-direction: column;
 
-    .chat-textarea {
-      flex-grow: 15;
-      margin-right: 15px;
-      min-height: 32px;
+    .label-text {
+      font-size: 12px;
+      margin: 0;
     }
 
-    .chat-submit-btn {
-      padding: 0 5px;
-      flex-grow: 1;
-      height: 30px;
-      line-height: 30px;
+    .chat-form-wrapper {
+      display: flex;
+      align-items: center;
+      width: 90%;
+
+      .chat-form {
+        flex-grow: 15;
+        margin-right: 15px;
+        min-height: 32px;
+      }
+
+      .chat-submit-btn {
+        padding: 0 5px;
+        flex-grow: 1;
+        height: 30px;
+        line-height: 30px;
+      }
     }
   }
 }

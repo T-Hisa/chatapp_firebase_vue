@@ -63,7 +63,6 @@ export default {
   },
   methods: {
     onClickUser (uid) {
-      console.log('uid', uid)
       this.isUserSelected = true
       this.selectUserId = uid
       this.$router.push(`/direct/${uid}`)
