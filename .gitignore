@@ -25,3 +25,4 @@ firebase.json
 **/serviceAccount*
 **/firebaseConfig*
 **/dbInstance*
+function-*

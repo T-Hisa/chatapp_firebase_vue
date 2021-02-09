@@ -14,8 +14,9 @@
           </label>
           <input type="file" accept="image/*" @change="onSelectProfilePhoto" id="photoURL" style="display: none;"/>
           <p class="img-wrapper">
-            <span class="img-wrapper" v-if="imgUrl">
-              <img v-bind:src="imgUrl" alt="サムネイル">
+            <span class="img-wrapper" v-if="imgUrl || originPhotoURL">
+              <img v-if="imgUrl" v-bind:src="imgUrl" alt="サムネイル">
+              <img v-else-if="originPhotoURL" v-bind:src="originPhotoURL" alt="サムネイル">
               <span class="reset-btn" v-on:click="onClickResetBtn">取り消し</span>
             </span>
             <img v-else src="../assets/images/default.png" alt="サムネイル" width="100px" height="100px" >
@@ -38,6 +39,7 @@ export default {
   name: 'ChangeProfile',
   data () {
     return {
+      originPhotoURL: '',
       photoURL: '',
       name: '',
       imgUrl: '',
@@ -57,7 +59,7 @@ export default {
     console.log('mounted!!')
     if (this.$currentUser) {
       this.name = this.$currentUser.displayName
-      this.imgUrl = this.$currentUser.photoURL
+      this.originPhotoURL = this.$currentUser.photoURL
     }
   },
   methods: {
@@ -80,32 +82,28 @@ export default {
         this.handleNameError()
       }
     },
-    updateProfile (value) {
-      this.registerProfileAction(value)
-      console.log('photoURL', value.photoURL)
-      this.$currentUser.updateProfile({
-        displayName: value.username,
-        photoURL: value.photoURL
-      }).then(() => {
-        EventBus.$emit('redraw-flag')
-        this.$router.push('/home')
-        // 遅くなってしまうが、Top の描画の変更がされないので下記のように実装
-        // this.$router.go({path: this.$router.currentRoute.path, force: true})
-      }).catch(err => {
-        console.log(err)
-      })
-    },
     updateProfileTask () {
       let currentUserId = this.$currentUser.uid
+      if (this.originPhotoURL && !this.photoURL) this.photoURL = this.originPhotoURL
       let updateValue = {
         uid: currentUserId,
         username: this.name,
         photoURL: this.photoURL
       }
-      // if (this.photoURL) {
-      //   updateValue['photoURL'] = this.photoURL
-      // }
       this.updateProfile(updateValue)
+    },
+    updateProfile (value) {
+      this.registerProfileAction(value)
+      let updateValue = {
+        displayName: value.username,
+        photoURL: value.photoURL
+      }
+      this.$currentUser.updateProfile(updateValue).then(() => {
+        EventBus.$emit('redraw-flag')
+        this.$router.push('/home')
+      }).catch(err => {
+        console.log(err)
+      })
     },
     setPhotoUrl () {
       let [ baseFileName, fileType ] = this.image.name.split('.')
@@ -122,7 +120,8 @@ export default {
     },
     onClickResetBtn () {
       window.URL.revokeObjectURL(this.imgUrl)
-      this.photoURL = ''
+      this.photoURL = null
+      this.originPhotoURL = null
       this.imgUrl = null
     },
     handleNameError () {
