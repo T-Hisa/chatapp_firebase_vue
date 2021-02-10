@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+
 import users from './modules/users'
 import chat from './modules/chat'
 import groups from './modules/groups'
+import notifications from './modules/notifications'
 // import { firebaseAction, vuexfireMutations } from 'vuexfire'
 import { vuexfireMutations } from 'vuexfire'
 // import db from './firebasedb'
@@ -13,7 +15,8 @@ const store = new Vuex.Store({
   modules: {
     users,
     chat,
-    groups
+    groups,
+    notifications
   },
   state: {
     currentUserId: ''
@@ -58,4 +61,5 @@ const store = new Vuex.Store({
 store.dispatch('users/getUsersData')
 store.dispatch('chat/getChatData')
 store.dispatch('groups/getGroups')
+// store.dispatch('notifications/getNotification')
 export default store

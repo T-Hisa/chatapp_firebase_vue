@@ -28,7 +28,6 @@ const chatModule = {
   },
   actions: {
     getChatData: firebaseAction(({ bindFirebaseRef }) => {
-      console.log('getChatData')
       bindFirebaseRef('chat', chatRef, { wait: true })
     }),
     sendChatData: firebaseAction((_, value) => {

@@ -64,6 +64,11 @@
   }
 
   .group-create-btn-wrapper {
+    margin-top: 60px;
     text-align: center;
+
+    .btn-wrapper {
+      justify-content: space-evenly;
+    }
   }
 }

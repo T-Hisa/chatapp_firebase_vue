@@ -42,10 +42,11 @@
         </ul>
       </div>
       <div class="group-create-btn-wrapper">
-        <button @click="onClickCreateGroupBtn" class="btn btn-dark">
-          <span v-if="gid">グループ更新</span>
-          <span v-else>グループ作成</span>
-        </button>
+        <div class="btn-wrapper" v-if="gid">
+          <button class="btn btn-outline-secondary" @click="onClickCancelBtn">取り消す</button>
+          <button class="btn btn-dark" @click="onClickCreateGroupBtn">グループ更新</button>
+        </div>
+        <button v-else class="btn btn-dark" @click="onClickCreateGroupBtn">グループ作成</button>
       </div>
     </div>
 </template>
@@ -133,6 +134,9 @@ export default {
       } else {
         alert('グループ名を入力してください')
       }
+    },
+    onClickCancelBtn () {
+      this.$router.go(-1) || this.$router.push('/groups')
     }
   }
 }

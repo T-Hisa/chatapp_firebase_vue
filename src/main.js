@@ -39,6 +39,7 @@ firebase.auth().onAuthStateChanged(user => {
     Vue.prototype.$currentUser = null
     Vue.prototype.$currentUserId = null
   }
+
   new Vue({
     el: '#app',
     // i18n: i18n,
