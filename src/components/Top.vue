@@ -3,11 +3,25 @@
     <b-navbar class="custom-nav-bar" toggleable="lg" type="dark" variant="info">
       <span class="title">ChatApp</span>
       <div v-if="$currentUser && $currentUser.displayName" class='flex-display'>
-        <div v-if="$currentUser && $currentUser.displayName" class="notify-wrapper">
+        <div v-if="$currentUser && $currentUser.displayName" @click="onClickDropdown" class="notify-display-wrapper">
           <i class="fas fa-bell custom-font"></i>
-          <span class="notify-number">0
+          <span class="notify-number">{{notificationCount}}
             <i class="fas fa-angle-down"></i>
           </span>
+          <div class="notify-detail-wrapper bg-info"
+               v-bind:class="{ active: dropdownFlag}"
+               v-for="nid in notificationIds"
+               :key="nid.id"
+          >
+            <!-- <div class="notify-wrapper"> -->
+            <notification-card
+              v-bind:nid="nid"
+              v-bind:fromId="getFromId(nid)"
+              v-bind:type="getType(nid)"
+            />
+            <span @click="sample(nid)">sample</span>
+          </div>
+          <!-- </div> -->
         </div>
         <ul v-if="isUserPropsSet" class="top-btn-wrapper navbar-nav">
           <li class="nav-item">
@@ -36,11 +50,14 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+import NotificationCard from '@/components/NotificationCard'
+
 export default {
   name: 'TopView',
   data () {
     return {
-      popUpMessage: '管理者の操作を待つまで、同じメールアドレスでは登録できません。よろしいですか？'
+      dropdownFlag: false
     }
   },
   props: {
@@ -48,6 +65,9 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  components: {
+    NotificationCard
   },
   created () {
   },
@@ -57,21 +77,55 @@ export default {
   updated () {
   },
   computed: {
+    ...mapGetters('users', [
+      'getUserInfo'
+    ]),
+    ...mapGetters('notifications', [
+      'getUserNotification',
+      'getNotificationDetail'
+    ]),
     isPathConfirm () {
       const flag = this.$route.path.includes('confirm')
       return flag
     },
     isUserPropsSet () {
       return !!(this.$currentUser && this.$currentUser.displayName)
+    },
+    notificationCount () {
+      console.log('notification', this.getUserNotification)
+      return this.notificationIds.length
+    },
+    notificationIds () {
+      return Object.keys((this.getUserNotification) || {}).slice(0, 10)
     }
-    // isUserPropsSet () {
-    //   return !!(this.$currentUser && this.$currentUser.displayName)
-    // }
   },
   methods: {
+    ...mapActions('notifications', [
+      'removeNotification'
+    ]),
     async onClickSignOutBtn () {
       await this.$firebase.auth().signOut()
       this.$router.go(-1) || this.$router.push('/signin')
+    },
+    getFromId (nid) {
+      return this.getUserNotification[nid].fromId
+    },
+    getType (nid) {
+      return this.getUserNotification[nid].type
+    },
+    onClickDropdown () {
+      console.log('clicked!!')
+      if (this.dropdownFlag) {
+        const removeVal = {
+          currentUid: this.$currentUserId,
+          notificationIds: this.notificationIds
+        }
+        this.removeNotification(removeVal)
+      }
+      this.dropdownFlag = !this.dropdownFlag
+    },
+    sample (nid) {
+      console.log('notificationDetail', this.getNotificationDetail(nid))
     }
   }
 }

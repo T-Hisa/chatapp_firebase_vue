@@ -35,6 +35,8 @@ firebase.auth().onAuthStateChanged(user => {
     Vue.prototype.$currentUser = user
     Vue.prototype.$currentUserId = user.uid
     store.dispatch('setCurrentUid', user.uid)
+    store.dispatch('notifications/getNotification')
+    console.log('currentUserId', user.uid)
   } else {
     Vue.prototype.$currentUser = null
     Vue.prototype.$currentUserId = null

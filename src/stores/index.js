@@ -61,5 +61,4 @@ const store = new Vuex.Store({
 store.dispatch('users/getUsersData')
 store.dispatch('chat/getChatData')
 store.dispatch('groups/getGroups')
-// store.dispatch('notifications/getNotification')
 export default store

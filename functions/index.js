@@ -35,25 +35,62 @@ exports.onCreateUser = auth.user().onCreate((user) => {
   return usersRef.update(saveVal);
 });
 
-exports.onWriteDirectChat =db.ref("/chat/direct/{userId}/{partnerId}/{chatId}")
-    .onWrite((snapshot, context) => {
-      console.log("onCreateChat!!");
-      const value = snapshot.after.val();
+exports.onWriteDirectChat = db.ref("/chat/direct/{userId}/{partnerId}/{chatId}")
+    .onWrite((change, context) => {
+      console.log("onWriteDirectChat!!");
+      const value = change.after.val();
       if (value.which === "you") {
         return null;
       }
-      console.log("snapshot", JSON.stringify(snapshot));
+      console.log("change", JSON.stringify(change));
       console.log("context", JSON.stringify(context));
-      const userId = context.params.userId;
-      const partnerId = context.params.partnerId;
-      const chatId = context.params.chatId;
+      const {userId, partnerId, chatId} = context.params;
       const {body, timestamp} = value;
       const saveVal = {
-        body: body,
-        timestamp: timestamp,
+        body,
+        timestamp,
         which: "you",
       };
+      const promises = [];
+      const notifyParams = {
+        fromId: userId,
+        toId: partnerId,
+      };
+      promises.push(notifyChat("direct", notifyParams));
+      // promises.push(notifyChat("direct", context.params));
       const pairChatRef = adminDb
           .ref(`/chat/direct/${partnerId}/${userId}/${chatId}`);
-      return pairChatRef.set(saveVal);
+      promises.push(pairChatRef.set(saveVal));
+      return Promise.all(promises);
     });
+
+exports.onWriteGroupsChat = db.ref("chat/groups/{groupId}/{chatId}")
+    .onWrite((_, context) => {
+      console.log("onWriteDirectChat!!");
+      const {uid} = context.auth;
+      const {groupId} = context.params;
+      const promises = [];
+      return adminDb.ref(`groups/${groupId}`).once("value", (snapshot) => {
+        const value = snapshot.val();
+        const {memberIds} = value;
+        for (const memberId of Object.keys(memberIds)
+            .filter((id) => id !== uid)) {
+          const notifyParams = {
+            toId: memberId,
+            fromId: groupId,
+          };
+          promises.push(notifyChat("groups", notifyParams));
+        }
+        return Promise.all(promises);
+      });
+    });
+
+const notifyChat = (type, params) => {
+  const {fromId, toId} = params;
+  const notifyRef = adminDb.ref(`notifications/${toId}`);
+  const newNotifyKey = notifyRef.push().key;
+  return notifyRef.child(newNotifyKey).set({
+    type,
+    fromId,
+  });
+};

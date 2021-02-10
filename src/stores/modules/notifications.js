@@ -9,16 +9,26 @@ const notificationsModule = {
     notifications: {}
   },
   getters: {
-    getUserEmail: (state) => (id) => {
-      return state.users[id].email
+    getUserNotification: (state, _, rootState) => {
+      const { currentUserId } = rootState
+      return state.notifications[currentUserId]
+    },
+    getNotificationDetail: (state, _, rootState) => nid => {
+      const { currentUserId } = rootState
+      return state.notifications[currentUserId][nid]
     }
   },
   mutations: {
   },
   actions: {
-    getNotification: firebaseAction(({ bindFirebaseRef, rootState }) => {
-      const userNotificationRef = notificationsRef.child(rootState.currentUserId)
-      bindFirebaseRef('notifications', userNotificationRef, { wait: true })
+    getNotification: firebaseAction(({bindFirebaseRef, rootState}) => {
+      bindFirebaseRef(`notifications`, notificationsRef, { wait: true })
+    }),
+    removeNotification: firebaseAction((_, value) => {
+      const userNotificationsRef = notificationsRef.child(`${value.currentUid}`)
+      for (const nid of value.notificationIds) {
+        userNotificationsRef.child(nid).remove()
+      }
     })
     // getUserInfoData: firebaseAction(({ bindFirestoreRef }) => {
     // })
