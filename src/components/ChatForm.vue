@@ -54,6 +54,10 @@ export default {
         if (this.otherUserId) sendData['partner'] = this.otherUserId
         if (this.groupId) sendData['gid'] = this.groupId
         this.sendChatData(sendData)
+        this.comment = ''
+        // const textarea = this.$refs.textarea
+        this.$refs.textarea.style.height = 'auto'
+        // this.$refs.textarea.style.height = 'auto'
       } else {
         this.handleCommentError()
       }

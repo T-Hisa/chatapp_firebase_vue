@@ -49,6 +49,11 @@ const groupsModule = {
     }),
     // getUserInfoData: firebaseAction(({ bindFirestoreRef }) => {
     // }),
+    updateGroup: firebaseAction((_, value) => {
+      console.log('update group')
+      let updateGroupRef = groupsRef.child(value.gid)
+      updateGroupRef.update(value.value)
+    }),
     createGroup: firebaseAction((_, value) => {
       let newGroupKey = groupsRef.push().key
       groupsRef.child(newGroupKey).set(value)

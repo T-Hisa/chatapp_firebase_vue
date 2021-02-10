@@ -91,14 +91,10 @@ export default {
       return chat.which === 'me' ? this.photoURL : this.otherUserPhotoURL
     },
     sample () {
-      // console.log(this.$refs.textarea)
-      // console.log(this.comment)
-      // console.log('getChatData', this.getChatData())
       let chatData = this.getDirectChatData({ currentUid: this.$currentUserId, otherUid: this.otherUserId })
       console.log('chatData', chatData)
       let reverse = chatData.reverse()
       console.log('reverse', reverse)
-      // console.log(this.getDirectChatData({ currentUid: this.$currentUserId, otherUid: this.otherUserId }))
     }
   }
 }

@@ -42,7 +42,10 @@
         </ul>
       </div>
       <div class="group-create-btn-wrapper">
-        <button @click="onClickCreateGroupBtn" class="btn btn-dark">グループ作成</button>
+        <button @click="onClickCreateGroupBtn" class="btn btn-dark">
+          <span v-if="gid">グループ更新</span>
+          <span v-else>グループ作成</span>
+        </button>
       </div>
     </div>
 </template>
@@ -56,7 +59,8 @@ export default {
   data () {
     return {
       groupName: '',
-      selectedUserIds: []
+      selectedUserIds: [],
+      gid: ''
     }
   },
   validations: {
@@ -69,6 +73,13 @@ export default {
   created () {
   },
   mounted () {
+    if (this.$route.params.gid) {
+      this.gid = this.$route.params.gid
+      const groupInfo = this.getGroupInfo(this.gid)
+      console.log('groupInfo', groupInfo)
+      this.groupName = groupInfo.groupName
+      this.selectedUserIds = Object.keys(groupInfo.memberIds).filter(uid => uid !== this.$currentUserId)
+    }
   },
   updated () {
   },
@@ -76,6 +87,9 @@ export default {
     ...mapGetters('users', [
       'getUsers',
       'getUserInfo'
+    ]),
+    ...mapGetters('groups', [
+      'getGroupInfo'
     ]),
     getOtherUserIds () {
       let otherUserIds = Object.keys(this.getUsers).filter(uid => {
@@ -86,7 +100,8 @@ export default {
   },
   methods: {
     ...mapActions('groups/', [
-      'createGroup'
+      'createGroup',
+      'updateGroup'
     ]),
     onClicKUser (uid) {
       this.selectedUserIds.push(uid)
@@ -105,7 +120,15 @@ export default {
           value['memberIds'][memberId] = 0
         }
         value['memberIds'][this.$currentUserId] = 0
-        this.createGroup(value)
+        if (this.gid) {
+          const sendValue = {
+            gid: this.gid,
+            value: value
+          }
+          this.updateGroup(sendValue)
+        } else {
+          this.createGroup(value)
+        }
         this.$router.push('/groups')
       } else {
         alert('グループ名を入力してください')

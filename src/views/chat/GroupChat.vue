@@ -62,7 +62,6 @@ export default {
     this.group = this.getGroupInfo(this.gid)
     const memberIds = Object.keys(this.group.memberIds)
     this.members = this.getUsersInfo(memberIds)
-    console.log('group', this.group)
   },
   computed: {
     ...mapGetters('groups', [
@@ -76,7 +75,6 @@ export default {
       'getUserInfo'
     ]),
     memberIds () {
-      console.log('memberIds', Object.keys(this.group.memberIds))
       return Object.keys(this.group.memberIds)
     }
   },
@@ -88,7 +86,6 @@ export default {
       return this.getUserInfo(uid).username
     },
     getPhotoURL (uid) {
-      console.log('userInfo', this.getUserInfo(uid))
       return this.getUserInfo(uid) ? this.getUserInfo(uid).photoURL : null
     },
     sample (member) {

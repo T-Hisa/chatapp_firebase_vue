@@ -3,8 +3,11 @@
     <span class="group-title">グループ一覧</span>
     <ul v-if="getBelongGroupIds.length > 0">
       <li class="group-list" v-for="gid of getBelongGroupIds" :key="gid.id">
-        <div @click="onClickGroup(gid)" class="group-wrapper">
+        <div class="group-wrapper">
+          <div @click="onClickGroup(gid)" class="group-name-wrapper">
             {{ getGroupInfo(gid).groupName }}
+          </div>
+          <button @click="onClickEditBtn(gid)" class="group-edit-btn btn btn-outline-dark">編集</button>
         </div>
       </li>
     </ul>
@@ -35,6 +38,10 @@ export default {
   methods: {
     onClickGroup (gid) {
       this.$router.push(`groupchat/${gid}`)
+    },
+    onClickEditBtn (gid) {
+      console.log('clicked!!')
+      this.$router.push({ name: `CreateGroup`, params: { gid: gid } })
     }
   }
 }

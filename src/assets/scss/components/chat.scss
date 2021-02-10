@@ -60,7 +60,7 @@
       font-weight: bold;
       background: white;
       padding: 5px;
-      border-radius: 10px;
+      border-radius: 15px;
       margin: 2.5px !important;
     }
   }
@@ -68,6 +68,7 @@
   .chat-whole-wrapper {
     height: calc(100vh - 200px);
     overflow: scroll;
+    margin-bottom: 20px;
 
     .chat-container {
       display: flex;
@@ -92,11 +93,11 @@
       position: relative;
       display: inline-block;
       padding: 7px 10px;
-      min-width: 120px;
       max-width: 100%;
       color: #555;
       font-size: 16px;
       background: #e0edff;
+      border-radius: 10px;
 
       .chat-wrapper {
         margin: 0;
@@ -110,7 +111,7 @@
       }
     }
 
-    .chat-me {
+    .chat-other {
       margin: 1.5em 0 1.5em 15px;
 
       .triangle {
@@ -120,14 +121,15 @@
       }
     }
 
-    .chat-other {
+    .chat-me {
       margin: 1.5em 15px 1.5em 0;
       margin-left: auto;
+      background-color: lightgreen;
 
       .triangle {
-        left: 100%;
+        left: 99%;
         border: 15px solid transparent;
-        border-left: 15px solid #e0edff;
+        border-left: 15px solid lightgreen;
       }
     }
   }
