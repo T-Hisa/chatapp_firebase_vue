@@ -21,6 +21,14 @@
         align-items: center;
         position: relative;
 
+        .badge-custom {
+          position: absolute;
+          font-size: 20px;
+          border-radius: 50%;
+          right: 10px;
+          z-index: 10;
+        }
+
         .menu {
           font-size: 25px;
           font-weight: 600;

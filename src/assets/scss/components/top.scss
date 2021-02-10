@@ -24,6 +24,10 @@ a:hover {
     .notify-display-wrapper {
       margin-right: 10px;
 
+      &:hover {
+        cursor: pointer;
+      }
+
       .custom-font {
         line-height: 40px;
         font-size: 20px;
@@ -38,6 +42,9 @@ a:hover {
 
     .notify-detail-wrapper {
       position: absolute;
+      z-index: 10;
+      right: 100px;
+      text-align: center;
 
       &.active {
         .notify-dropdown {
@@ -46,6 +53,11 @@ a:hover {
       }
       .notify-dropdown {
         display: none;
+        border: 0.5px solid white;
+
+        .type-wrapper:hover {
+          cursor: pointer;
+        }
       }
     }
 

@@ -1,6 +1,6 @@
 <template>
   <div class='notify-dropdown'>
-    <div class="type-wrapper">
+    <div @click="onClickNotify" class="type-wrapper">
       {{displayWord}}
     </div>
   </div>
@@ -30,7 +30,7 @@ export default {
     ...mapGetters('users', [
       'getUserInfo'
     ]),
-    ...mapGetters('groups',[
+    ...mapGetters('groups', [
       'getGroupInfo'
     ]),
     ...mapGetters('notifications', [
@@ -60,8 +60,17 @@ export default {
     }
   },
   methods: {
-    sample (nid) {
-      console.log('notificationDetail', this.getNotificationDetail(nid))
+    onClickNotify () {
+      switch (this.type) {
+        case 'direct':
+          this.$router.push(`/direct/${this.fromId}`)
+          break
+        case 'groups':
+          this.$router.push(`/groupchat/${this.fromId}`)
+          break
+        default:
+          return {}
+      }
     }
   }
 }

@@ -3,9 +3,12 @@
     <top-view
       v-bind:is-path-signin="isPathSignin"
       :key="redrawFlag"
+      ref="top"
     />
-    <router-view
-    />
+    <div @click="handleClickEvent">
+      <router-view
+      />
+    </div>
     <div @click="sample">sample</div>
   </div>
 </template>
@@ -52,6 +55,11 @@ export default {
   methods: {
     redrawTopView () {
       this.redrawFlag++
+    },
+    handleClickEvent () {
+      if (this.$refs.top.dropdownFlag) {
+        this.$refs.top.onClickDropdown()
+      }
     },
     sample () {
       console.log('getUsers', this.getUsers)

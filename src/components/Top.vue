@@ -8,18 +8,18 @@
           <span class="notify-number">{{notificationCount}}
             <i class="fas fa-angle-down"></i>
           </span>
-          <div class="notify-detail-wrapper bg-info"
-               v-bind:class="{ active: dropdownFlag}"
-               v-for="nid in notificationIds"
-               :key="nid.id"
-          >
-            <!-- <div class="notify-wrapper"> -->
-            <notification-card
-              v-bind:nid="nid"
-              v-bind:fromId="getFromId(nid)"
-              v-bind:type="getType(nid)"
-            />
-            <span @click="sample(nid)">sample</span>
+          <div class="notify-detail-wrapper bg-info" v-bind:class="{ active: dropdownFlag }" >
+            <div
+                v-for="nid in notificationIds"
+                :key="nid.id"
+            >
+              <!-- <div class="notify-wrapper"> -->
+              <notification-card
+                v-bind:nid="nid"
+                v-bind:fromId="getFromId(nid)"
+                v-bind:type="getType(nid)"
+              />
+            </div>
           </div>
           <!-- </div> -->
         </div>
@@ -57,7 +57,8 @@ export default {
   name: 'TopView',
   data () {
     return {
-      dropdownFlag: false
+      dropdownFlag: false,
+      handleClick: 0
     }
   },
   props: {
@@ -114,13 +115,14 @@ export default {
       return this.getUserNotification[nid].type
     },
     onClickDropdown () {
-      console.log('clicked!!')
       if (this.dropdownFlag) {
-        const removeVal = {
-          currentUid: this.$currentUserId,
-          notificationIds: this.notificationIds
+        if (this.notificationIds) {
+          const removeVal = {
+            currentUid: this.$currentUserId,
+            notificationIds: this.notificationIds
+          }
+          this.removeNotification(removeVal)
         }
-        this.removeNotification(removeVal)
       }
       this.dropdownFlag = !this.dropdownFlag
     },

@@ -15,7 +15,9 @@
       </router-link>
       <router-link class="sidebar-anchor" :to ="'/notification'">
         <li class="menu-list">
-          <span class="menu">Notify</span><span class="arrow"/>
+          <span class="menu">Notify</span>
+          <span v-if="getUserNotification" class="badge bg-danger badge-custom">{{notificationCount}}</span>
+          <span class="arrow"/>
         </li>
       </router-link>
       <router-link class="sidebar-anchor" :to ="'/notification'">
@@ -34,6 +36,7 @@
 
 <script>
 import Profile from './Profile'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Sidebar',
@@ -43,6 +46,14 @@ export default {
   },
   components: {
     Profile
+  },
+  computed: {
+    ...mapGetters('notifications', [
+      'getUserNotification'
+    ]),
+    notificationCount () {
+      return (Object.keys((this.getUserNotification) || {}).slice(0, 10)).length
+    }
   }
 }
 </script>
