@@ -24,7 +24,7 @@ const notificationsModule = {
     getNotification: firebaseAction(({bindFirebaseRef, rootState}) => {
       bindFirebaseRef(`notifications`, notificationsRef, { wait: true })
     }),
-    removeNotification: firebaseAction((_, value) => {
+    removeNotifications: firebaseAction((_, value) => {
       const userNotificationsRef = notificationsRef.child(`${value.currentUid}`)
       for (const nid of value.notificationIds) {
         userNotificationsRef.child(nid).remove()

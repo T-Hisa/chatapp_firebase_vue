@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     ...mapActions('notifications', [
-      'removeNotification'
+      'removeNotifications'
     ]),
     async onClickSignOutBtn () {
       await this.$firebase.auth().signOut()
@@ -121,7 +121,7 @@ export default {
             currentUid: this.$currentUserId,
             notificationIds: this.notificationIds
           }
-          this.removeNotification(removeVal)
+          this.removeNotifications(removeVal)
         }
       }
       this.dropdownFlag = !this.dropdownFlag

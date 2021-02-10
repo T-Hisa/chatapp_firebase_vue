@@ -1,7 +1,7 @@
 <template>
   <div class="chat-whole-container">
     <div class="title-wrapper title-group">
-      グループ: <span class="name group-name">{{group.groupName}}</span>
+      グループ: <span class="name group-name">{{getGroupName}}</span>
     </div>
     <div class="member-whole-wrapper">
       メンバー:
@@ -14,7 +14,7 @@
       </ul>
     </div>
     <div class="chat-whole-wrapper">
-      <div v-for="chat in getGroupChatData(gid)" :key="chat.id">
+      <div v-for="chat in getChatData(gid)" :key="chat.id">
         <chat-self v-if="isMe(chat)"
           v-bind:photoURL="getPhotoURL(chat.uid)"
           v-bind:uid="chat.uid"
@@ -60,7 +60,8 @@ export default {
   mounted () {
     this.gid = this.$route.params.gid
     this.group = this.getGroupInfo(this.gid)
-    const memberIds = Object.keys(this.group.memberIds)
+    const group = this.group || {}
+    const memberIds = Object.keys(group.memberIds || {})
     this.members = this.getUsersInfo(memberIds)
   },
   computed: {
@@ -75,7 +76,11 @@ export default {
       'getUserInfo'
     ]),
     memberIds () {
-      return Object.keys(this.group.memberIds)
+      const group = this.group || {}
+      return Object.keys(group.memberIds || {})
+    },
+    getGroupName () {
+      return this.group && this.group.groupName || ''
     }
   },
   methods: {
@@ -87,6 +92,11 @@ export default {
     },
     getPhotoURL (uid) {
       return this.getUserInfo(uid) ? this.getUserInfo(uid).photoURL : null
+    },
+    getChatData (gid) {
+      const chatData = this.getGroupChatData(gid)
+      const chat = Object.keys((chatData || {})).reverse().map(value => chatData[value])
+      return chat
     },
     sample (member) {
       console.log('user', member)
