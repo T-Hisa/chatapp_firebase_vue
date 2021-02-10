@@ -1,5 +1,6 @@
 .sidebar {
   flex-basis: 20%;
+  max-width: 130px;
 
   .sidebar-ul {
     padding: 0;
@@ -8,27 +9,45 @@
      display: inline-block;
      width: 100%;
 
-      li {
+      .menu-list {
         text-align: center;
-        padding: 10px 0;
+        height: 80px;
         margin: 0 !important;
         width: 100%;
         background: azure;
         border-bottom: 4px solid #17a2b8;
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        position: relative;
 
         .menu {
           font-size: 25px;
           font-weight: 600;
           color: black;
 
-          .arrow {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            margin: 0 10px;
-            border-top: 4px solid #000;
-            border-right: 4px solid #000;
-            transform: rotate(45deg);
+          &.absolute-menu {
+            position: absolute;
+            left: -29px;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+
+        .arrow {
+          display: inline-block;
+          width: 18px;
+          height: 18px;
+          margin: 0 10px;
+          border-top: 4px solid #000;
+          border-right: 4px solid #000;
+          transform: rotate(45deg);
+
+          &.absolute-arrow {
+            position: absolute;
+            right: 9px;
           }
         }
       }

@@ -3,7 +3,7 @@
     <sidebar
       :key="redrawFlag"
     />
-    <div class="container relative-container">
+    <div class="relative-container">
       <router-view/>
     </div>
   </div>

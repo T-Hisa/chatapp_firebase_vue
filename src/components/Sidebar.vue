@@ -4,18 +4,23 @@
       <profile
       />
       <router-link class="sidebar-anchor" :to ="'/direct'">
-        <li class="">
-          <span class="menu">Direct<span class="arrow"/></span>
+        <li class="menu-list">
+          <span class="menu">Direct</span><span class="arrow"/>
         </li>
       </router-link>
-      <router-link class="sidebar-anchor" :to ="'/group'">
-        <li>
-          <span class="menu">Group<span class="arrow"/></span>
+      <router-link class="sidebar-anchor" :to ="'/groups'">
+        <li class="menu-list">
+          <span class="menu">Group</span><span class="arrow"/>
+        </li>
+      </router-link>
+      <router-link class="sidebar-anchor" :to ="'/creategroup'">
+        <li class="menu-list">
+          <span class="menu absolute-menu">Create Group</span><span class="arrow absolute-arrow"/>
         </li>
       </router-link>
       <router-link class="sidebar-anchor" :to ="'/notification'">
-        <li>
-          <span class="menu">Notify<span class="arrow"/></span>
+        <li class="menu-list">
+          <span class="menu">Notify</span><span class="arrow"/>
         </li>
       </router-link>
     </ul>

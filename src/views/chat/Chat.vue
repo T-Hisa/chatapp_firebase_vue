@@ -15,7 +15,7 @@ export default {
     }
   },
   mounted () {
-    console.log('Chat')
+    // console.log('Chat')
   },
   methods: {
     async onClick () {

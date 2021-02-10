@@ -49,9 +49,10 @@ export default {
         let sendData = {
           type: this.type,
           uid: this.$currentUserId,
-          partner: this.otherUserId,
           body: this.comment
         }
+        if (this.otherUserId) sendData['partner'] = this.otherUserId
+        if (this.groupId) sendData['gid'] = this.groupId
         this.sendChatData(sendData)
       } else {
         this.handleCommentError()

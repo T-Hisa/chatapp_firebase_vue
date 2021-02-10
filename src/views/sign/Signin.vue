@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <form class="wrapper form-container bg-skyblue" method="POST">
-      <span class="title inner-wrapper">Sign In</span>
+    <form class="form-container sign-form-container bg-skyblue" method="POST">
+      <span class="title-sign">Sign In</span>
       <div class="form-group form-wrapper">
         <label class="form-label" for="email">Eメール</label>
         <input class="form-control" id="email" type="text" v-model="email">
@@ -10,7 +10,7 @@
         <label class="form-label" for="password">パスワード</label>
         <input class="form-control" id="password" type="password" v-model="password">
       </div>
-      <button class="btn btn-light border-dark border register-btn" v-on:click="onClickSignIn">ログイン</button>
+      <a class="btn btn-outline-dark register-btn" v-on:click="onClickSignIn">ログイン</a>
     </form>
   </div>
 </template>
@@ -28,17 +28,19 @@ export default {
   },
   mounted () {
   },
+  computed: {
+  },
   methods: {
-    async onClickSignIn (e) {
+    onClickSignIn (e) {
       e.preventDefault()
-      try {
-        let { user } = await this.$firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+      this.$firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(userData => {
+        const { user } = userData
         if (user.displayName) this.$router.push('/home')
         else if (user.emailVerified) this.$router.push('/setup-profile')
         else this.$router.push('/confirm')
-      } catch (e) {
-        console.log('Error', e)
-      }
+      }).catch(e => {
+        alert('ログインできませんでした')
+      })
     }
   }
 }

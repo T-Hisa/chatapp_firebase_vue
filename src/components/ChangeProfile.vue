@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <form class="wrapper form-container bg-skyblue" method="POST">
-      <span class="title inner-wrapper">表示名</span>
+    <form class="wrapper sign-form-container form-container bg-skyblue" method="POST">
+      <span class="title profile-title">表示名</span>
       <div class="form-group form-wrapper">
         <label class="form-label" for="name">名前</label><span class="text-danger font-weight-bold" v-if="errorMessage">{{ errorMessage }}</span>
         <input @input="handleNameError" class="form-control" id="name" type="text" v-model="name">
@@ -32,7 +32,7 @@
 
 <script>
 import { required, maxLength } from 'vuelidate/lib/validators'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import EventBus from '@/event'
 
 export default {
@@ -40,11 +40,13 @@ export default {
   data () {
     return {
       originPhotoURL: '',
+      originPhotoFileRef: '',
       photoURL: '',
       name: '',
       imgUrl: '',
       image: File,
-      errorMessage: ''
+      errorMessage: '',
+      photoRef: ''
     }
   },
   validations: {
@@ -60,7 +62,15 @@ export default {
     if (this.$currentUser) {
       this.name = this.$currentUser.displayName
       this.originPhotoURL = this.$currentUser.photoURL
+      if (this.getUserInfo(this.$currentUserId)) {
+        this.originPhotoFileRef = this.getUserInfo(this.$currentUserId).photoRef
+      }
     }
+  },
+  computed: {
+    ...mapGetters('users/', [
+      'getUserInfo'
+    ])
   },
   methods: {
     ...mapActions('users/', [
@@ -88,12 +98,13 @@ export default {
       let updateValue = {
         uid: currentUserId,
         username: this.name,
-        photoURL: this.photoURL
+        photoURL: this.photoURL,
+        photoRef: this.photoRef
       }
+      this.registerProfileAction(updateValue)
       this.updateProfile(updateValue)
     },
     updateProfile (value) {
-      this.registerProfileAction(value)
       let updateValue = {
         displayName: value.username,
         photoURL: value.photoURL
@@ -112,11 +123,23 @@ export default {
         contentType: `image/${fileType}`
       }
       let saveFileName = `${baseFileName}-${currentUserId}.${fileType}`
-      let storageRef = this.$firebase.storage().ref(`images/${currentUserId}/${saveFileName}`)
-      return storageRef.put(this.image, metaData).then(snapshot => {
-        console.log('snapshot', snapshot)
-        return snapshot.ref.getDownloadURL()
+      this.photoRef = `images/${currentUserId}/${saveFileName}`
+      let storageRef = this.$firebase.storage().ref(this.photoRef)
+      let promises = []
+      promises.push(storageRef.put(this.image, metaData))
+      if (this.originPhotoFileRef) {
+        const deleteStorageRef = this.$firebase.storage().ref(this.originPhotoFileRef)
+        promises.push(deleteStorageRef.delete())
+      }
+      return Promise.all(promises).then(retVal => {
+        console.log('retVal', retVal)
+        console.log('url', retVal[0].ref)
+        return retVal[0].ref.getDownloadURL()
       })
+      // return storageRef.put(this.image, metaData).then(snapshot => {
+      //   console.log('snapshot', snapshot)
+      //   return snapshot.ref.getDownloadURL()
+      // })
     },
     onClickResetBtn () {
       window.URL.revokeObjectURL(this.imgUrl)

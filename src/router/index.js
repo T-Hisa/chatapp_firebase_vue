@@ -5,15 +5,20 @@ import Container from '@/containers/Container'
 
 import Home from '@/views/Home'
 import ProfileUpdate from '@/views/ProfileUpdate'
-import Group from '@/views/Group'
-import SelectUser from '@/views/SelectUser'
-import DirectMessage from '@/views/DirectMessage'
-import NotifyContainer from '@/views/Notification'
 
-import Signin from '@/views/Signin'
-import Signup from '@/views/Signup'
-import SetUpProfile from '@/views/SetUpProfile'
-import Confirm from '@/views/Confirm'
+import SelectGroup from '@/views/chat/SelectGroup'
+import GroupChat from '@/views/chat/GroupChat'
+import SelectUser from '@/views/chat/SelectUser'
+import DirectMessage from '@/views/chat/DirectMessage'
+
+import CreateGroup from '@/views/group/CreateGroup'
+
+import NotifyContainer from '@/views/notification/Notification'
+
+import Signin from '@/views/sign/Signin'
+import Signup from '@/views/sign/Signup'
+import SetUpProfile from '@/views/sign/SetUpProfile'
+import Confirm from '@/views/sign/Confirm'
 
 import validation from './routingValidation'
 // import Err from '@/containers/Error'
@@ -42,9 +47,19 @@ const router = new Router({
           component: ProfileUpdate
         },
         {
-          path: 'group',
-          name: 'Group',
-          component: Group
+          path: 'groups',
+          name: 'SelectGroup',
+          component: SelectGroup
+        },
+        {
+          path: 'groupchat/:gid',
+          name: 'GroupChat',
+          component: GroupChat
+        },
+        {
+          path: 'creategroup',
+          name: 'CreateGroup',
+          component: CreateGroup
         },
         {
           path: '/direct',

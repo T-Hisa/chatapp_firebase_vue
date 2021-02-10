@@ -25,6 +25,9 @@ const chatModule = {
         return state.chat.direct[currentUid][otherUid]
       }
       return {}
+    },
+    getGroupChatData: (state) => (gid) => {
+      return state.chat.groups[gid]
     }
     // getUserName: (state) => (id) => {
     //   console.log('debug in getter', id)
@@ -55,15 +58,16 @@ const chatModule = {
     // }),
     sendChatData: firebaseAction((_, value) => {
       let sendChatRefWithType
-      if (value.type === 'groups') {
+      let sendValue = {
+        body: value.body,
+        timestamp: new Date().getTime()
+      }
+      if (value.type === 'group') {
         sendChatRefWithType = chatRef.child(`groups/${value.gid}`)
+        sendValue['uid'] = value.uid
       } else {
         sendChatRefWithType = chatRef.child(`direct/${value.uid}/${value.partner}`)
-      }
-      const sendValue = {
-        body: value.body,
-        timestamp: new Date().getTime(),
-        which: 'me'
+        sendValue['which'] = 'me'
       }
       let newCommentKey = sendChatRefWithType.push().key
       sendChatRefWithType.child(newCommentKey).set(sendValue)

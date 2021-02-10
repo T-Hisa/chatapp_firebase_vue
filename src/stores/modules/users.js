@@ -20,8 +20,11 @@ const userModule = {
     getUsers: (state) => {
       return state.users
     },
-    getUserInfo: (state) => (id) => {
-      return state.users[id]
+    getUserInfo: (state) => (uid) => {
+      return state.users[uid]
+    },
+    getUsersInfo: (_, getters) => (uids) => {
+      return uids.map(uid => getters.getUserInfo(uid))
     },
     // getUserName: (state) => (id) => {
     //   console.log('debug in getter', id)
@@ -47,20 +50,18 @@ const userModule = {
     getUserInfoData: firebaseAction(({ bindFirestoreRef }) => {
     }),
     registerProfileAction: firebaseAction((_, value) => {
-      console.log('value in Action', value)
       const uid = value.uid
       let saveValue
       if (value.photoURL) {
         saveValue = {
           username: value.username,
           emailVerified: true,
-          photoURL: value.photoURL
+          photoURL: value.photoURL,
+          photoRef: value.photoRef
         }
       } else {
         saveValue = { username: value.username, emailVerified: true }
       }
-      console.log('saveValue', saveValue)
-      // usersRef.set(saveValue)
       usersRef.child(`${uid}`).update(saveValue)
     })
   }

@@ -1,20 +1,71 @@
-.direct-message-wrapper {
-  margin: 20px 0;
+.chat-whole-container {
   padding: 15px;
   background-color: aliceblue;
   height: 100%;
 
-  .direct {
+  .title-wrapper {
     text-align: center;
     width: 300px;
     margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    .userName {
+    &.title-group {
+      margin-bottom: 10px;
+    }
+
+    .name {
       font-weight: bold;
+    }
+
+    .group-name {
+      margin-left: 10px;
+    }
+
+    .user-wrapper {
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
     }
   }
 
-  .chat-whole-container {
+  img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+
+  .member-whole-wrapper {
+    display: flex;
+    align-items: center;
+    background: antiquewhite;
+    padding: 10px;
+    border-radius: 20px;
+    max-height: 50px;
+
+    .member-wrapper {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      margin-left: 10px;
+      flex-wrap: wrap;
+      overflow: scroll;
+      max-height: 50px;
+    }
+
+    .user-detail {
+      display: flex !important;
+      align-items: center;
+      font-weight: bold;
+      background: white;
+      padding: 5px;
+      border-radius: 10px;
+      margin: 2.5px !important;
+    }
+  }
+
+  .chat-whole-wrapper {
     height: calc(100vh - 200px);
     overflow: scroll;
 
@@ -87,11 +138,7 @@
     bottom: 0;
     display: flex;
     flex-direction: column;
-
-    .label-text {
-      font-size: 12px;
-      margin: 0;
-    }
+    margin-bottom: 10px;
 
     .chat-form-wrapper {
       display: flex;

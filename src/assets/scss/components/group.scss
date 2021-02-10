@@ -1,0 +1,25 @@
+.group-select-wrapper {
+  background-color: skyblue;
+  padding: 20px;
+
+  .group-title {
+    padding: 10px;
+    font-weight: bold;
+    margin-left: 15px;
+  }
+
+  .group-list {
+    display: block !important;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .group-wrapper {
+      margin: 20px !important;
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+    }
+  }
+}

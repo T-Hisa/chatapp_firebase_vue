@@ -1,9 +1,14 @@
 <template>
-  <div class="direct-message-wrapper">
-    <div @click="sample" class="direct">
-      ユーザー: <span class="userName">{{otherUserName}}</span>
+  <div class="chat-whole-container">
+    <div @click="sample" class="title-wrapper">
+      ユーザー:
+      <div class="user-wrapper">
+        <img v-if="otherUserPhotoURL" v-bind:src="otherUserPhotoURL" alt="サムネイル">
+        <img v-else src="../../assets/images/default.png" alt="サムネイル">
+        <span class="name">{{otherUserName}}</span>
+      </div>
     </div>
-    <div class="chat-whole-container">
+    <div class="chat-whole-wrapper">
       <div v-for="chat in getChatData" :key="chat.id">
         <chat-self v-if="isMe(chat)"
           v-bind:photoURL="photoURL"
@@ -17,10 +22,10 @@
         />
       </div>
     </div>
-  <chat-form
-    v-bind:otherUserId="otherUserId"
-    v-bind:type="'direct'"
-  />
+    <chat-form
+      v-bind:otherUserId="otherUserId"
+      v-bind:type="'direct'"
+    />
   </div>
 </template>
 

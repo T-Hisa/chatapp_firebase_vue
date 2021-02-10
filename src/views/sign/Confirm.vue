@@ -24,7 +24,7 @@ export default {
     // console.log(this.authState)
   },
   mounted () {
-    console.log('confirm mounteds')
+    // console.log('confirm mounteds')
   },
   methods: {
     onClickConfirmBtn () {
