@@ -6,41 +6,41 @@ const usersRef = db.ref('users')
 const userModule = {
   namespaced: true,
   state: () => ({
-    users: {
-      // '${userid}': {
-      // name: '',
-      // email: ''
-      // },
-      // `${userId}`: {
-      // }
-    }
+    users: {}
   }),
-  // state.users[userId]
   getters: {
     getUsers: (state) => {
       return state.users
     },
-    getUserInfo: (state) => (uid) => {
+    getUserInfo: (state) => uid => {
       return state.users[uid]
     },
-    getUsersInfo: (_, getters) => (uids) => {
+    getUsersInfo: (_, getters) => uids => {
       return uids.map(uid => getters.getUserInfo(uid))
     },
     getUserEmail: (state) => (id) => {
       return state.users[id].email
+    },
+    getOtherUserIds (state, getters, rootState, _) {
+      const otherUserIds = Object.keys(state.users).filter(uid => {
+        return uid !== rootState.currentUserId && getters.getUserInfo(uid).emailVerified
+      })
+      return otherUserIds
+    },
+    searchOtherUserIds: (state, getters, rootState) => searchParams => {
+      const {users} = state
+      const searchOtherUserIds = Object.keys(users).filter(uid => {
+        const username = users[uid].username
+        return username.indexOf(searchParams) > -1 && uid !== rootState.currentUserId &&
+                 getters.getUserInfo(uid).emailVerified
+      })
+      return searchOtherUserIds
     }
   },
   mutations: {
-    // state.users[uid].email = profile.email
-    // state.users[uid].name = profile.name
   },
   actions: {
-    // registerProfileAction (context, profile) {
-    //   console.log('value in action', profile)
-    //   context.commit('registerProfileMutation', profile)
-    // },
     getUsersData: firebaseAction(({ bindFirebaseRef }) => {
-      // console.log('getUsersData')
       bindFirebaseRef('users', usersRef, { wait: true })
     }),
     getUserInfoData: firebaseAction(({ bindFirestoreRef }) => {

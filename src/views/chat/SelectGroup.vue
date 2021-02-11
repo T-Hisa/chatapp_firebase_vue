@@ -1,25 +1,48 @@
 <template>
   <div class="group-select-wrapper">
     <span class="group-title">グループ選択</span>
+    <input type="text" v-model="searchParams" placeholder="グループ検索">
     <ul class="group-list-wrapper" v-if="getBelongGroupIds.length > 0">
-      <li class="group-list" v-for="gid of getBelongGroupIds" :key="gid.id">
-        <div data-bs-toggle="tooltip" data-bs-placement="top" v-bind:title="tooltipMessage(gid)" class="group-container">
-          <div @click="onClickGroup(gid)" class="group-wrapper">
-            <div class="group-name-wrapper">
-              <span class="group-name-label">グループ名</span>
-              <span class="group-name">{{ getGroupInfo(gid).groupName }}</span>
+      <template v-if="searchParams">
+        <li class="group-list" v-for="gid of getBelongAndSearchByName(searchParams)" :key="gid.id">
+          <div data-bs-toggle="tooltip" data-bs-placement="top" v-bind:title="tooltipMessage(gid)" class="group-container">
+            <div @click="onClickGroup(gid)" class="group-wrapper">
+              <div class="group-name-wrapper">
+                <span class="group-name-label">ああああ</span>
+                <span class="group-name">{{ getGroupInfo(gid).groupName }}</span>
+              </div>
+              <div class="group-member-wrapper">
+                <span class="member-name-label">メンバーリスト</span>
+                <span>{{displayMembersName(gid)}}</span>
+              </div>
             </div>
-            <div class="group-member-wrapper">
-              <span class="member-name-label">メンバーリスト</span>
-              <span>{{displayMembersName(gid)}}</span>
+            <div class="group-btn-wrapper">
+              <button @click="onClickEditBtn(gid)" class="group-action-btn btn btn-outline-dark">編集</button>
+              <button @click="onClickDeleteBtn(gid)" class="group-action-btn btn btn-outline-dark">削除</button>
             </div>
           </div>
-          <div class="group-btn-wrapper">
-            <button @click="onClickEditBtn(gid)" class="group-action-btn btn btn-outline-dark">編集</button>
-            <button @click="onClickDeleteBtn(gid)" class="group-action-btn btn btn-outline-dark">削除</button>
+        </li>
+      </template>
+      <template v-else>
+        <li class="group-list" v-for="gid of getBelongGroupIds" :key="gid.id">
+          <div data-bs-toggle="tooltip" data-bs-placement="top" v-bind:title="tooltipMessage(gid)" class="group-container">
+            <div @click="onClickGroup(gid)" class="group-wrapper">
+              <div class="group-name-wrapper">
+                <span class="group-name-label">グループ名</span>
+                <span class="group-name">{{ getGroupInfo(gid).groupName }}</span>
+              </div>
+              <div class="group-member-wrapper">
+                <span class="member-name-label">メンバーリスト</span>
+                <span>{{displayMembersName(gid)}}</span>
+              </div>
+            </div>
+            <div class="group-btn-wrapper">
+              <button @click="onClickEditBtn(gid)" class="group-action-btn btn btn-outline-dark">編集</button>
+              <button @click="onClickDeleteBtn(gid)" class="group-action-btn btn btn-outline-dark">削除</button>
+            </div>
           </div>
-        </div>
-      </li>
+        </li>
+      </template>
     </ul>
     <div class="group-title" v-else>所属しているグループはありません</div>
   </div>
@@ -32,6 +55,7 @@ export default {
   name: 'SelectGroup',
   data () {
     return {
+      searchParams: ''
     }
   },
   mounted () {
@@ -47,7 +71,8 @@ export default {
     ]),
     ...mapGetters('groups', [
       'getGroupIds',
-      'getGroupInfo'
+      'getGroupInfo',
+      'searchGroupIdsByName'
     ]),
     getBelongGroupIds () {
       return this.getGroupIds.filter(groupId => {
@@ -95,6 +120,13 @@ export default {
         }
       }
       return displayWord
+    },
+    getBelongAndSearchByName (searchParams) {
+      const searchIds = this.searchGroupIdsByName(searchParams)
+      return searchIds.filter(gid => {
+        const groupMembers = this.getGroupInfo(gid).memberIds || {}
+        return Object.keys(groupMembers).includes(this.$currentUserId)
+      })
     }
   }
 }

@@ -24,6 +24,14 @@ const groupsModule = {
     },
     getGroupInfo: (state) => gid => {
       return state.groups[gid]
+    },
+    searchGroupIdsByName: (state) => searchParams => {
+      const {groups} = state
+      const searchGroups = Object.keys(groups).filter(gid => {
+        const group = groups[gid]
+        return group.groupName.indexOf(searchParams) > -1 && !group.isDelete
+      })
+      return searchGroups
     }
   },
   mutations: {
