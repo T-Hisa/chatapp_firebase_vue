@@ -11,11 +11,6 @@
 <script>
 export default {
   name: 'Profile',
-  data () {
-    return {
-      // photoURL: ''
-    }
-  },
   computed: {
     photoURL () {
       if (this.$currentUser) return this.$currentUser.photoURL
@@ -23,8 +18,6 @@ export default {
     displayName () {
       if (this.$currentUser) return this.$currentUser.displayName
     }
-  },
-  methods: {
   }
 }
 </script>

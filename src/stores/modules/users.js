@@ -26,10 +26,6 @@ const userModule = {
     getUsersInfo: (_, getters) => (uids) => {
       return uids.map(uid => getters.getUserInfo(uid))
     },
-    // getUserName: (state) => (id) => {
-    //   console.log('debug in getter', id)
-    //   return state.users[id].name
-    // },
     getUserEmail: (state) => (id) => {
       return state.users[id].email
     }
@@ -49,7 +45,7 @@ const userModule = {
     }),
     getUserInfoData: firebaseAction(({ bindFirestoreRef }) => {
     }),
-    registerProfile: firebaseAction((context, value) => {
+    registerProfile: firebaseAction((_, value) => {
       const uid = value.uid
       let saveValue = {
         username: value.username,

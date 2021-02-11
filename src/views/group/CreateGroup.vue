@@ -69,20 +69,13 @@ export default {
       required
     }
   },
-  components: {
-  },
-  created () {
-  },
   mounted () {
     if (this.$route.params.gid) {
       this.gid = this.$route.params.gid
       const groupInfo = this.getGroupInfo(this.gid)
-      console.log('groupInfo', groupInfo)
       this.groupName = groupInfo.groupName
       this.selectedUserIds = Object.keys(groupInfo.memberIds).filter(uid => uid !== this.$currentUserId)
     }
-  },
-  updated () {
   },
   computed: {
     ...mapGetters('users', [

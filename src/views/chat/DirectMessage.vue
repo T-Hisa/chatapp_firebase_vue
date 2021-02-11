@@ -1,6 +1,6 @@
 <template>
   <div class="chat-whole-container">
-    <div @click="sample" class="title-wrapper">
+    <div class="title-wrapper">
       ユーザー:
       <div class="user-wrapper">
         <img v-if="otherUserPhotoURL" v-bind:src="otherUserPhotoURL" alt="サムネイル">
@@ -39,7 +39,6 @@ export default {
   name: 'DirectMessage',
   data () {
     return {
-      // isUserSelected: false,
       otherUserPhotoURL: '',
       otherUserName: '',
       otherUserId: '',
@@ -51,8 +50,6 @@ export default {
     ChatOther,
     ChatForm
   },
-  created () {
-  },
   mounted () {
     let uid = this.$route.params.uid
     let user = this.getUserInfo(uid)
@@ -61,8 +58,6 @@ export default {
       this.otherUserName = user.username
       this.otherUserPhotoURL = user.photoURL ? user.photoURL : ''
     }
-  },
-  updated () {
   },
   computed: {
     ...mapGetters('users', [
@@ -89,12 +84,6 @@ export default {
     },
     getPhotoURL (chat) {
       return chat.which === 'me' ? this.photoURL : this.otherUserPhotoURL
-    },
-    sample () {
-      let chatData = this.getDirectChatData({ currentUid: this.$currentUserId, otherUid: this.otherUserId })
-      console.log('chatData', chatData)
-      let reverse = chatData.reverse()
-      console.log('reverse', reverse)
     }
   }
 }

@@ -70,13 +70,6 @@ export default {
   components: {
     NotificationCard
   },
-  created () {
-  },
-  mounted () {
-    console.log('isPathSignin', this.isPathSignin)
-  },
-  updated () {
-  },
   computed: {
     ...mapGetters('users', [
       'getUserInfo'
@@ -93,7 +86,6 @@ export default {
       return !!(this.$currentUser && this.$currentUser.displayName)
     },
     notificationCount () {
-      console.log('notification', this.getUserNotification)
       return this.notificationIds.length
     },
     notificationIds () {
@@ -125,9 +117,6 @@ export default {
         }
       }
       this.dropdownFlag = !this.dropdownFlag
-    },
-    sample (nid) {
-      console.log('notificationDetail', this.getNotificationDetail(nid))
     }
   }
 }

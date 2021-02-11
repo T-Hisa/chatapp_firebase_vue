@@ -9,7 +9,7 @@
         <li v-for="memberId in memberIds" :key="memberId.id" class="user-detail">
           <img v-if="getPhotoURL(memberId)" v-bind:src="getPhotoURL(memberId)" alt="サムネイル">
           <img v-else src="../../assets/images/default.png" alt="サムネイル">
-          <div @click="sample(memberId)">{{ getUserName(memberId) }}</div>
+          <div>{{ getUserName(memberId) }}</div>
         </li>
       </ul>
     </div>
@@ -98,9 +98,6 @@ export default {
       const chatData = this.getGroupChatData(gid)
       const chat = Object.keys((chatData || {})).reverse().map(value => chatData[value])
       return chat
-    },
-    sample (member) {
-      console.log('user', member)
     }
   }
 }

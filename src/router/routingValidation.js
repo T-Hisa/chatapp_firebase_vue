@@ -5,9 +5,6 @@ function validation (to, next) {
   let isRequiredEmailValidation = to.matched.some(value => value.meta.isRequiredEmailValidation)
   let isRequiredAuth = to.matched.some(value => value.meta.isRequiredAuth)
   let isRequiredProfile = to.matched.some(value => value.meta.isRequiredProfile)
-  // if (to.path.includes('home')) {
-  //   next('./home')
-  // }
   if (isRequiredProfile) {
     if (currentUser) {
       if (currentUser.emailVerified) {
@@ -22,7 +19,7 @@ function validation (to, next) {
   } else if (isRequiredEmailValidation) {
     if (currentUser) {
       if (currentUser.emailVerified) {
-        if (currentUser.displayName) next('/home')
+        if (currentUser.displayName) next('/select-user')
         else next()
       } else {
         next('/confirm')
@@ -31,7 +28,7 @@ function validation (to, next) {
   } else if (isRequiredAuth) {
     if (currentUser) {
       if (currentUser.emailVerified) {
-        if (currentUser.displayName) next('/home')
+        if (currentUser.displayName) next('/select-user')
         else next('/setup-profile')
       } else {
         next()
@@ -42,7 +39,7 @@ function validation (to, next) {
   } else {
     if (currentUser) {
       if (currentUser.emailVerified) {
-        if (currentUser.displayName) next('/home')
+        if (currentUser.displayName) next('/select-user')
         else next('/setup-profile')
       } else {
         next('/confirm')

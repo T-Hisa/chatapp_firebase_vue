@@ -37,10 +37,6 @@ export default {
       minLength: minLength(6)
     }
   },
-  created () {
-  },
-  mounted () {
-  },
   computed: {
     computedValidEmail () {
       return !!this.email.match(/^[\w+\-.]+@[a-z\d\-.]+\.[a-z]+$/i)

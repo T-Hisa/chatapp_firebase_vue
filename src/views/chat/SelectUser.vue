@@ -11,18 +11,8 @@ import UserSelect from '@/components/UserSelect'
 
 export default {
   name: 'SelectUser',
-  data () {
-    return {
-    }
-  },
   components: {
     UserSelect
-  },
-  mounted () {
-  },
-  computed: {
-  },
-  methods: {
   }
 }
 </script>

@@ -20,12 +20,6 @@ export default {
     return {
     }
   },
-  created () {
-    // console.log(this.authState)
-  },
-  mounted () {
-    // console.log('confirm mounteds')
-  },
   methods: {
     onClickConfirmBtn () {
       this.$router.go({path: this.$router.currentRoute.path, force: true})

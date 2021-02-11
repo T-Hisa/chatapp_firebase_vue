@@ -42,7 +42,6 @@ export default {
   data () {
     return {
       originPhotoURL: '',
-      originPhotoFileRef: '',
       photoURL: '',
       name: '',
       imgUrl: '',
@@ -63,24 +62,16 @@ export default {
       maxLength: maxLength(8)
     }
   },
-  created () {
-  },
   mounted () {
     if (this.$currentUser) {
       this.name = this.$currentUser.displayName
       this.originPhotoURL = this.$currentUser.photoURL
-      const userInfo = this.getUserInfo(this.$currentUserId) || {}
-      this.originPhotoFileRef = userInfo.photoRef
     }
   },
   computed: {
     ...mapGetters('users/', [
       'getUserInfo'
     ])
-  },
-  updated () {
-    const userInfo = this.getUserInfo(this.$currentUserId) || {}
-    this.originPhotoFileRef = userInfo.photoRef
   },
   methods: {
     ...mapActions('users/', [
@@ -122,7 +113,7 @@ export default {
       }
       this.$currentUser.updateProfile(updateValue).then(() => {
         EventBus.$emit('redraw-flag')
-        this.$router.push('/home')
+        this.$router.push('/select-user')
       }).catch(err => {
         console.log(err)
         alert('予期せぬエラーが発生しました。ご一報ください')
@@ -139,8 +130,9 @@ export default {
       const storageRef = this.$firebase.storage().ref(this.photoRef)
       const promises = []
       promises.push(storageRef.put(this.image, metaData))
-      if (this.originPhotoFileRef) {
-        const deleteStorageRef = this.$firebase.storage().ref(this.originPhotoFileRef)
+      const photoRef = this.getUserInfo(this.$currentUserId).photoRef
+      if (photoRef) {
+        const deleteStorageRef = this.$firebase.storage().ref(photoRef)
         promises.push(deleteStorageRef.delete())
       }
       return Promise.all(promises).then(retVal => {

@@ -13,28 +13,10 @@
 <script>
 export default {
   name: 'ChatSelf',
-  data () {
-    return {
-      // otherUserPhotoURL: '',
-      // otherUserName: '',
-      // otherUserId: '',
-      // comment: ''
-    }
-  },
   props: {
     photoURL: String,
     uid: String,
     body: String
-  },
-  created () {
-  },
-  mounted () {
-  },
-  updated () {
-  },
-  computed: {
-  },
-  methods: {
   }
 }
 </script>

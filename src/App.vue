@@ -13,7 +13,6 @@
 </template>
 
 <script>
-// import Sidebar from '@/components/Sidebar'
 import TopView from '@/components/Top'
 import EventBus from '@/event'
 import { mapGetters } from 'vuex'
@@ -27,7 +26,6 @@ export default {
     }
   },
   components: {
-    // Sidebar,
     TopView
   },
   computed: {
@@ -62,5 +60,4 @@ export default {
 </script>
 <style lang="scss">
 @import "./assets/scss/main";
-// @import "./assets/scss/style";
 </style>

@@ -33,7 +33,6 @@ const groupsModule = {
       bindFirebaseRef('groups', groupsRef, { wait: true })
     }),
     updateGroup: firebaseAction((_, value) => {
-      console.log('update group')
       let updateGroupRef = groupsRef.child(value.gid)
       updateGroupRef.update(value.value)
     }),

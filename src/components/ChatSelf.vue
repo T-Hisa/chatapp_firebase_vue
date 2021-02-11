@@ -14,19 +14,11 @@
 
 export default {
   name: 'ChatSelf',
-  data () {
-    return {
-    }
-  },
   props: {
     photoURL: String,
     uid: String,
     body: String,
     chatId: String
-  },
-  mounted () {
-  },
-  methods: {
   }
 }
 </script>

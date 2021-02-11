@@ -4,7 +4,6 @@ import firebase from '@/firebase-setup'
 
 import Container from '@/containers/Container'
 
-import Home from '@/views/Home'
 import ProfileUpdate from '@/views/ProfileUpdate'
 
 import SelectGroup from '@/views/chat/SelectGroup'
@@ -34,16 +33,16 @@ const router = new Router({
     {
       path: '/',
       name: 'Container',
-      redirect: '/home',
+      redirect: '/select-user',
       component: Container,
       meta: {
         isRequiredProfile: true // isRequiredProfile は プロフィール設定したユーザーのみを通す
       },
       children: [
         {
-          path: '/home',
-          name: 'Home',
-          component: Home
+          path: 'select-user',
+          name: SelectUser,
+          component: SelectUser
         },
         {
           path: '/profile-update',
@@ -61,11 +60,6 @@ const router = new Router({
           component: GroupChat
         },
         {
-          path: 'direct',
-          name: SelectUser,
-          component: SelectUser
-        },
-        {
           path: 'direct/:uid',
           name: DirectMessage,
           component: DirectMessage
@@ -75,16 +69,6 @@ const router = new Router({
           name: NotifyContainer,
           component: NotifyContainer
         },
-        // {
-        //   path: 'user-info',
-        //   name: UserInfo,
-        //   component: UserInfo
-        // },
-        // {
-        //   path: 'user-detail/:uid',
-        //   name: UserDetail,
-        //   component: UserDetail
-        // },
         {
           path: 'creategroup',
           name: 'CreateGroup',
@@ -122,11 +106,6 @@ const router = new Router({
       path: '*',
       redirect: ''
     }
-    // {
-    //   path: '*',
-    //   name: 'Error',
-    //   component: Err
-    // }
   ]
 })
 
@@ -134,7 +113,6 @@ router.beforeEach((to, _, next) => {
   const currentUser = firebase.auth().currentUser
   if (currentUser) {
   }
-  console.log('routing start')
   validation(to, next)
 })
 

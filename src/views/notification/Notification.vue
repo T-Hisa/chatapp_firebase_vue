@@ -21,12 +21,6 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'NotifyContainer',
-  data () {
-    return {
-    }
-  },
-  mounted () {
-  },
   computed: {
     ...mapGetters('users', [
       'getUserInfo'
@@ -85,7 +79,6 @@ export default {
     },
     onClickNotice (nid) {
       const notice = this.getNotice(nid)
-      console.log('Notice', notice)
       switch (notice.type) {
         case 'chat-direct':
           this.$router.push(`/direct/${notice.fromId}`)
@@ -104,7 +97,7 @@ export default {
           this.$router.push('groups')
           break
         default:
-          console.log('not match')
+          alert('予期せぬエラーです')
           break
       }
     }
