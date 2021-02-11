@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import firebase from '@/firebase-setup'
-import store from '@/stores'
-
 
 import Container from '@/containers/Container'
 

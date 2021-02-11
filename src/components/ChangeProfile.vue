@@ -66,24 +66,28 @@ export default {
   created () {
   },
   mounted () {
-    console.log('mounted!!')
-    console.log('isUpdate?', this.isUpdate)
     if (this.$currentUser) {
       this.name = this.$currentUser.displayName
       this.originPhotoURL = this.$currentUser.photoURL
-      if (this.getUserInfo(this.$currentUserId)) {
-        this.originPhotoFileRef = this.getUserInfo(this.$currentUserId).photoRef
-      }
+      const userInfo = this.getUserInfo(this.$currentUserId) || {}
+      this.originPhotoFileRef = userInfo.photoRef
     }
   },
   computed: {
+    ...mapGetters([
+      'getDefaultImageURL'
+    ]),
     ...mapGetters('users/', [
       'getUserInfo'
     ])
   },
+  updated () {
+    const userInfo = this.getUserInfo(this.$currentUserId) || {}
+    this.originPhotoFileRef = userInfo.photoRef
+  },
   methods: {
     ...mapActions('users/', [
-      'registerProfileAction'
+      'registerProfile'
     ]),
     onClickSetProfile (e) {
       e.preventDefault()
@@ -107,10 +111,11 @@ export default {
       let updateValue = {
         uid: currentUserId,
         username: this.name,
-        photoURL: this.photoURL,
-        photoRef: this.photoRef
+        photoURL: this.photoURL
       }
-      this.registerProfileAction(updateValue)
+      updateValue['photoURL'] = this.photoURL || null
+      updateValue['photoRef'] = this.photoRef || null
+      this.registerProfile(updateValue)
       this.updateProfile(updateValue)
     },
     updateProfile (value) {
@@ -123,32 +128,27 @@ export default {
         this.$router.push('/home')
       }).catch(err => {
         console.log(err)
+        alert('予期せぬエラーが発生しました。ご一報ください')
       })
     },
     setPhotoUrl () {
-      let [ baseFileName, fileType ] = this.image.name.split('.')
-      let currentUserId = this.$currentUser.uid
-      let metaData = {
+      const [ baseFileName, fileType ] = this.image.name.split('.')
+      const currentUserId = this.$currentUser.uid
+      const metaData = {
         contentType: `image/${fileType}`
       }
-      let saveFileName = `${baseFileName}-${currentUserId}.${fileType}`
+      const saveFileName = `${baseFileName}-${currentUserId}.${fileType}`
       this.photoRef = `images/${currentUserId}/${saveFileName}`
-      let storageRef = this.$firebase.storage().ref(this.photoRef)
-      let promises = []
+      const storageRef = this.$firebase.storage().ref(this.photoRef)
+      const promises = []
       promises.push(storageRef.put(this.image, metaData))
       if (this.originPhotoFileRef) {
         const deleteStorageRef = this.$firebase.storage().ref(this.originPhotoFileRef)
         promises.push(deleteStorageRef.delete())
       }
       return Promise.all(promises).then(retVal => {
-        console.log('retVal', retVal)
-        console.log('url', retVal[0].ref)
         return retVal[0].ref.getDownloadURL()
       })
-      // return storageRef.put(this.image, metaData).then(snapshot => {
-      //   console.log('snapshot', snapshot)
-      //   return snapshot.ref.getDownloadURL()
-      // })
     },
     onClickResetBtn () {
       window.URL.revokeObjectURL(this.imgUrl)

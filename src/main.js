@@ -9,14 +9,12 @@ import Vuelidate from 'vuelidate'
 import store from './stores'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-console.log('firebase', firebase)
-console.log('environment', process.env)
+
 Vue.use(Vuex)
 Vue.use(BootstrapVue)
 Vue.use(Vuelidate)
 Vue.config.productionTip = false
 Vue.use(VueI18n)
-
 // const messages = {
 //   ja: {
 //   }
@@ -51,23 +49,3 @@ firebase.auth().onAuthStateChanged(user => {
     template: '<App/>'
   })
 })
-
-// let initPromises = []
-// let initFirebaseAuth = firebase.auth().onAuthStateChanged
-// initPromises.push(initFirebaseAuth)
-// initPromises.push(storeInitPromises)
-// Promise.all(initPromises).then((value) => {
-//   console.log('value', value)
-//   console.log('storeInitCompleted!!')
-//   new Vue({
-//     el: '#app',
-//     // i18n: i18n,
-//     router,
-//     store,
-//     components: { App },
-//     template: '<App/>'
-//     // updated () {
-//     //   if (firebase.auth().currentUser)
-//     // }
-//   })
-// })

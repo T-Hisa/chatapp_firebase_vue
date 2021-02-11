@@ -49,18 +49,13 @@ const userModule = {
     }),
     getUserInfoData: firebaseAction(({ bindFirestoreRef }) => {
     }),
-    registerProfileAction: firebaseAction((_, value) => {
+    registerProfile: firebaseAction((context, value) => {
       const uid = value.uid
-      let saveValue
-      if (value.photoURL) {
-        saveValue = {
-          username: value.username,
-          emailVerified: true,
-          photoURL: value.photoURL,
-          photoRef: value.photoRef
-        }
-      } else {
-        saveValue = { username: value.username, emailVerified: true }
+      let saveValue = {
+        username: value.username,
+        emailVerified: true,
+        photoURL: value.photoURL,
+        photoRef: value.photoRef
       }
       usersRef.child(`${uid}`).update(saveValue)
     })
