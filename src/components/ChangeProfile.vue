@@ -74,9 +74,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'getDefaultImageURL'
-    ]),
     ...mapGetters('users/', [
       'getUserInfo'
     ])
