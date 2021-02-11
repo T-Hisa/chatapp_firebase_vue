@@ -85,13 +85,19 @@ export default {
     },
     onClickNotice (nid) {
       const notice = this.getNotice(nid)
+      console.log('Notice', notice)
       switch (notice.type) {
         case 'chat-direct':
           this.$router.push(`/direct/${notice.fromId}`)
           break
         case 'chat-groups':
-        case 'entry-grpup':
-          this.$router.push(`/groupchat/${notice.fromId}`)
+        case 'entry-group':
+          const group = this.getGroupInfo(notice.fromId)
+          if (group.isDelete) {
+            this.$router.push({name: 'SelectGroup', params: { groupName: group.groupName }})
+          } else {
+            this.$router.push(`/groupchat/${notice.fromId}`)
+          }
           break
         case 'leave-grpup':
         case 'delete-group':
@@ -103,7 +109,7 @@ export default {
       }
     }
   },
-  beforeDestroy () {
+  destroyed () {
     const removeValue = {
       notificationIds: this.notificationIds,
       currentUid: this.$currentUserId

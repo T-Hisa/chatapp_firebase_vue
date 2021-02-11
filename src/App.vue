@@ -9,7 +9,6 @@
       <router-view
       />
     </div>
-    <div @click="sample">sample</div>
   </div>
 </template>
 
@@ -37,8 +36,6 @@ export default {
       'getUserInfo'
     ])
   },
-  created () {
-  },
   mounted () {
     this.isUserPropsSet = !!(this.$currentUser && this.$currentUser.displayName)
     this.isPathSignin = this.$route.name === 'Signin'
@@ -50,8 +47,6 @@ export default {
     this.isPathSignin = this.$route.name === 'Signin'
     this.isUserPropsSet = !!(this.$currentUser && this.$currentUser.displayName)
   },
-  watch: {
-  },
   methods: {
     redrawTopView () {
       this.redrawFlag++
@@ -59,16 +54,6 @@ export default {
     handleClickEvent () {
       if (this.$refs.top.dropdownFlag) {
         this.$refs.top.onClickDropdown()
-      }
-    },
-    sample () {
-      console.log('getUsers', this.getUsers)
-      for (let user in this.getUsers) {
-        console.log('user', user)
-        console.log('user.id', user.id)
-        console.log('user.id', Object.keys(this.getUsers))
-        console.log('userInfo', this.getUserInfo(user))
-        console.log('userInfo.photoURL', this.getUserInfo(user).photoURL)
       }
     }
   }

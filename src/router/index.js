@@ -135,8 +135,6 @@ const router = new Router({
 router.beforeEach((to, _, next) => {
   const currentUser = firebase.auth().currentUser
   if (currentUser) {
-    // store.dispatch('setCurrentUid', currentUser.uid)
-    // store.dispatch('notifications/getNotification')
   }
   console.log('routing start')
   validation(to, next)

@@ -10,8 +10,9 @@ const notificationsModule = {
   },
   getters: {
     getUserNotification: (state, _, __, rootGetters) => {
-      const currentUserId = rootGetters.currentUid
-      return state.notifications[currentUserId]
+      const currentUserId = rootGetters.getCurrentUid
+      const notifications = state.notifications || {}
+      return notifications[currentUserId]
     },
     getNotificationDetail: (state, _, rootState) => nid => {
       const { currentUserId } = rootState
@@ -21,7 +22,7 @@ const notificationsModule = {
   mutations: {
   },
   actions: {
-    getNotification: firebaseAction(({bindFirebaseRef, rootState}) => {
+    getNotification: firebaseAction(({bindFirebaseRef}) => {
       bindFirebaseRef(`notifications`, notificationsRef, { wait: true })
     }),
     removeNotifications: firebaseAction((_, value) => {

@@ -13,17 +13,12 @@ const auth = functions.auth;
 // const auth = functions.auth;
 
 // これより関数を定義
-exports.addMessage = functions.https.onCall(() => {
-  console.log("Hello, World!");
-  console.log("function config", functions.config());
-  return "message";
-});
-
-// exports.onUserCreate = db.ref("users").onCreate(() => {
-//   // console.log("snapshot", snapshot);
-//   // console.log("context", context);
-//   console.log("invoked!!");
+// exports.addMessage = functions.https.onCall(() => {
+//   console.log("Hello, World!");
+//   console.log("function config", functions.config());
+//   return "message";
 // });
+
 exports.onCreateUser = auth.user().onCreate((user) => {
   console.log("userCreated!");
   const usersRef = adminDb.ref("users");
@@ -37,13 +32,13 @@ exports.onCreateUser = auth.user().onCreate((user) => {
 
 exports.
     onCreateDirectChat = db.ref("/chat/direct/{userId}/{partnerId}/{chatId}")
-        .onCreate((change, context) => {
+        .onCreate((snapshot, context) => {
           console.log("onCreateDirectChat!!");
-          const value = change.after.val();
+          const value = snapshot.val();
           if (value.which === "you") {
             return null;
           }
-          console.log("change", JSON.stringify(change));
+          console.log("snapshot.val()", value);
           console.log("context", JSON.stringify(context));
           const {userId, partnerId, chatId} = context.params;
           const {body, timestamp} = value;
@@ -96,6 +91,14 @@ const notify = (type, params) => {
   });
 };
 
+const writeUsersGroupIds = (uid, gid, type) => {
+  if (type === "remove") {
+    return adminDb.ref(`users/${uid}/groupIds/${gid}`).remove();
+  } else {
+    return adminDb.ref(`users/${uid}/groupIds/${gid}`).set(0);
+  }
+};
+
 exports.onWriteGroup = db.ref("groups/{groupId}").onWrite((change, context) => {
   console.log("onWriteGroup!");
   const {uid} = context.auth;
@@ -110,6 +113,7 @@ exports.onWriteGroup = db.ref("groups/{groupId}").onWrite((change, context) => {
   const promises = [];
   if (!isDeletePhysical) {
     if (isDelete) {
+      promises.push(writeUsersGroupIds(uid, groupId, "remove"));
       for (const prevMemberId of prevMemberIds) {
         if (prevMemberId !== uid) {
           const notifyParams = {
@@ -117,9 +121,11 @@ exports.onWriteGroup = db.ref("groups/{groupId}").onWrite((change, context) => {
             toId: prevMemberId,
           };
           promises.push(notify("delete-group", notifyParams));
+          promises.push(writeUsersGroupIds(prevMemberId, groupId, "remove"));
         }
       }
     } else {
+      promises.push(writeUsersGroupIds(uid, groupId, "set"));
       for (const aftMemberId of aftMemberIds) {
         if (!(aftMemberId === uid || prevMemberIds.includes(aftMemberId))) {
           const notifyParams = {
@@ -127,6 +133,7 @@ exports.onWriteGroup = db.ref("groups/{groupId}").onWrite((change, context) => {
             toId: aftMemberId,
           };
           promises.push(notify("entry-group", notifyParams));
+          promises.push(writeUsersGroupIds(aftMemberId, groupId, "set"));
         }
       }
       for (const prevMemberId of prevMemberIds) {
@@ -136,6 +143,7 @@ exports.onWriteGroup = db.ref("groups/{groupId}").onWrite((change, context) => {
             toId: prevMemberId,
           };
           promises.purhs(notify("leave-group", notifyParams));
+          promises.push(writeUsersGroupIds(prevMemberId, groupId, "remove"));
         }
       }
     }

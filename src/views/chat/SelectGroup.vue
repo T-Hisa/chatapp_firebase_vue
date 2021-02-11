@@ -34,6 +34,12 @@ export default {
     return {
     }
   },
+  mounted () {
+    if (this.$route.params.groupName) {
+      const groupName = this.$route.params.groupName
+      alert(`グループ${groupName}は削除されました。`)
+    }
+  },
   computed: {
     ...mapGetters('users', [
       'getUserInfo',
