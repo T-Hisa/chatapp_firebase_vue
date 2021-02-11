@@ -1,5 +1,7 @@
 <template>
-  <change-profile />
+  <change-profile
+    v-bind:isUpdate="true"
+   />
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
   <div class='notify-dropdown'>
-    <div @click="onClickNotify" class="type-wrapper">
+    <div @click="clickAction" class="type-wrapper">
       {{displayWord}}
     </div>
   </div>
@@ -13,6 +13,8 @@ export default {
   name: 'NotificationCard',
   data () {
     return {
+      displayWord: '',
+      clickAction: Function
     }
   },
   props: {
@@ -23,6 +25,37 @@ export default {
   created () {
   },
   mounted () {
+    let fromName = ''
+    switch (this.type) {
+      case 'chat-irect':
+        fromName = this.getUserInfo(this.fromId).username
+        this.displayWord = fromName + ' さんからチャットが届いています。'
+        this.clickAction = () => this.$router.push(`direct/${this.fromId}`)
+        break
+      case 'chat-groups':
+        fromName = this.getGroupInfo(this.fromId).groupName
+        this.displayWord = fromName + ' でチャットがありました。'
+        this.clickAction = () => this.$router.push(`groupchat/${this.fromId}`)
+        break
+      case 'entry-group':
+        fromName = this.getGroupInfo(this.fromId).groupName
+        this.displayWord = fromName + ' のグループに参加しました。'
+        this.clickAction = () => this.$router.push(`groupchat/${this.fromId}`)
+        break
+      case 'leave-group':
+        fromName = this.getGroupInfo(this.fromId).groupName
+        this.displayWord = fromName + ' のグループから退出しました。'
+        this.clickAction = () => this.$router.push('groups')
+        break
+      case 'delete-group':
+        const group = this.getGroupInfo(this.fromId) || {}
+        fromName = group.groupName || ''
+        this.displayWord = fromName + ' のグループが削除されました。'
+        this.clickAction = () => this.$router.push('groups')
+        break
+      default:
+        break
+    }
   },
   updated () {
   },
@@ -32,46 +65,9 @@ export default {
     ]),
     ...mapGetters('groups', [
       'getGroupInfo'
-    ]),
-    ...mapGetters('notifications', [
-      'getUserNotification',
-      'getNotificationDetail'
-    ]),
-    fromName () {
-      switch (this.type) {
-        case 'direct':
-          return this.getUserInfo(this.fromId).username
-        case 'groups':
-          return this.getGroupInfo(this.fromId).groupName
-        default:
-          return ''
-      }
-    },
-    displayWord () {
-      const name = this.fromName
-      switch (this.type) {
-        case 'direct':
-          return name + ' さんからチャットが届いています。'
-        case 'groups':
-          return name + ' でチャットがありました。'
-        default:
-          return ''
-      }
-    }
+    ])
   },
   methods: {
-    onClickNotify () {
-      switch (this.type) {
-        case 'direct':
-          this.$router.push(`/direct/${this.fromId}`)
-          break
-        case 'groups':
-          this.$router.push(`/groupchat/${this.fromId}`)
-          break
-        default:
-          return {}
-      }
-    }
   }
 }
 </script>

@@ -9,8 +9,8 @@ const notificationsModule = {
     notifications: {}
   },
   getters: {
-    getUserNotification: (state, _, rootState) => {
-      const { currentUserId } = rootState
+    getUserNotification: (state, _, __, rootGetters) => {
+      const currentUserId = rootGetters.currentUid
       return state.notifications[currentUserId]
     },
     getNotificationDetail: (state, _, rootState) => nid => {

@@ -27,3 +27,18 @@
 .none-style {
   display: inline-block;
 }
+
+.user-detail-container {
+  margin: 10px;
+  padding: 10px;
+
+  .user-profile-title {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+
+    .user-profile-name {
+      text-align: center;
+    }
+  }
+}

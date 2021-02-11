@@ -10,14 +10,14 @@
               <span class="group-name">{{ getGroupInfo(gid).groupName }}</span>
             </div>
             <div class="group-member-wrapper">
-              <!-- <li v-for="memberId in getGroupMemberIds(gid)" :key="memberId.id">
-                {{ getUserInfo(memberId).username }}
-              </li> -->
               <span class="member-name-label">メンバーリスト</span>
               <span>{{displayMembersName(gid)}}</span>
             </div>
           </div>
-          <button @click="onClickEditBtn(gid)" class="group-edit-btn btn btn-outline-dark">編集</button>
+          <div class="group-btn-wrapper">
+            <button @click="onClickEditBtn(gid)" class="group-action-btn btn btn-outline-dark">編集</button>
+            <button @click="onClickDeleteBtn(gid)" class="group-action-btn btn btn-outline-dark">削除</button>
+          </div>
         </div>
       </li>
     </ul>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'SelectGroup',
@@ -50,15 +50,24 @@ export default {
     }
   },
   methods: {
+    ...mapActions('groups', [
+      'deleteGroup'
+    ]),
     onClickGroup (gid) {
       this.$router.push(`groupchat/${gid}`)
     },
+    onClickDeleteBtn (gid) {
+      const groupName = this.getGroupInfo(gid).groupName
+      const message = confirm(`対象のグループ${groupName}を削除します。よろしいですか？`)
+      if (message) {
+        this.deleteGroup(gid)
+      }
+    },
     onClickEditBtn (gid) {
-      console.log('clicked!!')
       this.$router.push({ name: `CreateGroup`, params: { gid: gid } })
     },
     getGroupMemberIds (gid) {
-      return Object.keys(this.getGroupInfo(gid).memberIds)
+      return Object.keys(this.getGroupInfo(gid).memberIds).filter(uid => uid !== this.$currentUserId)
     },
     getMembersName (gid) {
       const usersInfo = this.getUsersInfo(this.getGroupMemberIds(gid))

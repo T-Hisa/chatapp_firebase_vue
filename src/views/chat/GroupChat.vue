@@ -80,7 +80,8 @@ export default {
       return Object.keys(group.memberIds || {})
     },
     getGroupName () {
-      return this.group && this.group.groupName || ''
+      const group = this.group || {}
+      return group.groupName || ''
     }
   },
   methods: {

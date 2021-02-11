@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import firebase from '@/firebase-setup'
+import store from '@/stores'
+
 
 import Container from '@/containers/Container'
 
@@ -14,6 +17,9 @@ import DirectMessage from '@/views/chat/DirectMessage'
 import CreateGroup from '@/views/group/CreateGroup'
 
 import NotifyContainer from '@/views/notification/Notification'
+
+// import UserInfo from '@/views/users/UserInfo'
+// import UserDetail from '@/views/users/UserDetail'
 
 import Signin from '@/views/sign/Signin'
 import Signup from '@/views/sign/Signup'
@@ -57,24 +63,34 @@ const router = new Router({
           component: GroupChat
         },
         {
-          path: 'creategroup',
-          name: 'CreateGroup',
-          component: CreateGroup
-        },
-        {
-          path: '/direct',
+          path: 'direct',
           name: SelectUser,
           component: SelectUser
         },
         {
-          path: '/direct/:uid',
+          path: 'direct/:uid',
           name: DirectMessage,
           component: DirectMessage
         },
         {
-          path: '/notification',
+          path: 'notification',
           name: NotifyContainer,
           component: NotifyContainer
+        },
+        // {
+        //   path: 'user-info',
+        //   name: UserInfo,
+        //   component: UserInfo
+        // },
+        // {
+        //   path: 'user-detail/:uid',
+        //   name: UserDetail,
+        //   component: UserDetail
+        // },
+        {
+          path: 'creategroup',
+          name: 'CreateGroup',
+          component: CreateGroup
         }
       ]
     },
@@ -117,6 +133,11 @@ const router = new Router({
 })
 
 router.beforeEach((to, _, next) => {
+  const currentUser = firebase.auth().currentUser
+  if (currentUser) {
+    // store.dispatch('setCurrentUid', currentUser.uid)
+    // store.dispatch('notifications/getNotification')
+  }
   console.log('routing start')
   validation(to, next)
 })

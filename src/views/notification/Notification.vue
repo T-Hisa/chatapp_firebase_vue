@@ -3,13 +3,9 @@
     <template v-if="getUserNotification">
       <div v-for="nid in notificationIds" :key="nid.id">
         <div @click="onClickNotice(nid)" class="notification-wrapper">
-          <div v-if="getType(nid) === 'direct'">
-            <span class="display-name-in-notice">{{displayUserName(nid)}}</span>
-            <span>さんからチャットが届いています。</span>
-          </div>
-          <div v-else>
-            <span class="display-name-in-notice">{{displayGroupName(nid)}}</span>
-            <span>でチャットがありました。</span>
+          <div>
+            <span class="display-name-in-notice">{{displayName(nid)}}</span>
+            <span>{{displayWord(nid)}}</span>
           </div>
         </div>
       </div>
@@ -30,7 +26,6 @@ export default {
     }
   },
   mounted () {
-    console.log('mounted in Notice')
   },
   computed: {
     ...mapGetters('users', [
@@ -51,30 +46,56 @@ export default {
     ...mapActions('notifications', [
       'removeNotifications'
     ]),
-    getType (nid) {
-      const notice = this.getNotificationDetail(nid)
-      return notice.type
+    getNotice (nid) {
+      return this.getNotificationDetail(nid)
     },
-    displayUserName (nid) {
-      const notice = this.getNotificationDetail(nid)
-      const user = this.getUserInfo(notice.fromId)
-      return user.username
+    getGroupName (gid) {
+      return this.getGroupInfo(gid) || {}
     },
-    displayGroupName (nid) {
-      const notice = this.getNotificationDetail(nid)
-      const group = this.getGroupInfo(notice.fromId)
-      console.log('group', group)
-      return group.groupName
+    displayName (nid) {
+      const notice = this.getNotice(nid)
+      switch (notice.type) {
+        case 'chat-direct':
+          return this.getUserInfo(notice.fromId).username
+        case 'chat-groups':
+        case 'entry-group':
+        case 'leave-group':
+        case 'delete-group':
+          return this.getGroupName(notice.fromId).groupName || ''
+        default:
+          return ''
+      }
+    },
+    displayWord (nid) {
+      const notice = this.getNotice(nid)
+      switch (notice.type) {
+        case 'chat-direct':
+          return ' さんからチャットが届いています'
+        case 'chat-groups':
+          return ' でチャットがありました。'
+        case 'entry-group':
+          return ' のグループに参加しました。'
+        case 'leave-group':
+          return ' のグループから退出しました。'
+        case 'delete-group':
+          return ' のグループが削除されました。'
+        default:
+          return ''
+      }
     },
     onClickNotice (nid) {
-      const notice = this.getNotificationDetail(nid)
-      const {type} = notice
-      switch (type) {
-        case 'direct':
+      const notice = this.getNotice(nid)
+      switch (notice.type) {
+        case 'chat-direct':
           this.$router.push(`/direct/${notice.fromId}`)
           break
-        case 'groups':
+        case 'chat-groups':
+        case 'entry-grpup':
           this.$router.push(`/groupchat/${notice.fromId}`)
+          break
+        case 'leave-grpup':
+        case 'delete-group':
+          this.$router.push('groups')
           break
         default:
           console.log('not match')

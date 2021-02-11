@@ -35,57 +35,58 @@ exports.onCreateUser = auth.user().onCreate((user) => {
   return usersRef.update(saveVal);
 });
 
-exports.onWriteDirectChat = db.ref("/chat/direct/{userId}/{partnerId}/{chatId}")
-    .onWrite((change, context) => {
-      console.log("onWriteDirectChat!!");
-      const value = change.after.val();
-      if (value.which === "you") {
-        return null;
-      }
-      console.log("change", JSON.stringify(change));
-      console.log("context", JSON.stringify(context));
-      const {userId, partnerId, chatId} = context.params;
-      const {body, timestamp} = value;
-      const saveVal = {
-        body,
-        timestamp,
-        which: "you",
-      };
-      const promises = [];
-      const notifyParams = {
-        fromId: userId,
-        toId: partnerId,
-      };
-      promises.push(notifyChat("direct", notifyParams));
-      // promises.push(notifyChat("direct", context.params));
-      const pairChatRef = adminDb
-          .ref(`/chat/direct/${partnerId}/${userId}/${chatId}`);
-      promises.push(pairChatRef.set(saveVal));
-      return Promise.all(promises);
-    });
+exports.
+    onCreateDirectChat = db.ref("/chat/direct/{userId}/{partnerId}/{chatId}")
+        .onCreate((change, context) => {
+          console.log("onCreateDirectChat!!");
+          const value = change.after.val();
+          if (value.which === "you") {
+            return null;
+          }
+          console.log("change", JSON.stringify(change));
+          console.log("context", JSON.stringify(context));
+          const {userId, partnerId, chatId} = context.params;
+          const {body, timestamp} = value;
+          const saveVal = {
+            body,
+            timestamp,
+            which: "you",
+          };
+          const promises = [];
+          const notifyParams = {
+            fromId: userId,
+            toId: partnerId,
+          };
+          promises.push(notify("chat-direct", notifyParams));
+          // promises.push(notifyChat("direct", context.params));
+          const pairChatRef = adminDb
+              .ref(`/chat/direct/${partnerId}/${userId}/${chatId}`);
+          promises.push(pairChatRef.set(saveVal));
+          return Promise.all(promises);
+        });
 
-exports.onWriteGroupsChat = db.ref("chat/groups/{groupId}/{chatId}")
-    .onWrite((_, context) => {
-      console.log("onWriteDirectChat!!");
+exports.onCreateGroupsChat = db.ref("chat/groups/{groupId}/{chatId}")
+    .onCreate((_, context) => {
+      console.log("onCreateDirectChat!!");
       const {uid} = context.auth;
       const {groupId} = context.params;
       const promises = [];
       return adminDb.ref(`groups/${groupId}`).once("value", (snapshot) => {
         const value = snapshot.val();
         const {memberIds} = value;
-        for (const memberId of Object.keys(memberIds)
-            .filter((id) => id !== uid)) {
+        for (const memberId of Object.keys(memberIds)) {
+          if (memberId === uid) break;
           const notifyParams = {
             toId: memberId,
             fromId: groupId,
           };
-          promises.push(notifyChat("groups", notifyParams));
+          promises.push(notify("chat-groups", notifyParams));
         }
         return Promise.all(promises);
       });
     });
 
-const notifyChat = (type, params) => {
+const notify = (type, params) => {
   const {fromId, toId} = params;
   const notifyRef = adminDb.ref(`notifications/${toId}`);
   const newNotifyKey = notifyRef.push().key;
@@ -94,3 +95,50 @@ const notifyChat = (type, params) => {
     fromId,
   });
 };
+
+exports.onWriteGroup = db.ref("groups/{groupId}").onWrite((change, context) => {
+  console.log("onWriteGroup!");
+  const {uid} = context.auth;
+  const prevVal = change.before.val() || {};
+  const aftVal = change.after.val() || {};
+  const prevMemberIds = Object.keys((prevVal.memberIds || {}));
+  const aftMemberIds = Object.keys((aftVal.memberIds || {}));
+  let isDeletePhysical = false;
+  if (aftMemberIds.length === 0) isDeletePhysical = true;
+  const {isDelete} = aftVal;
+  const {groupId} = context.params;
+  const promises = [];
+  if (!isDeletePhysical) {
+    if (isDelete) {
+      for (const prevMemberId of prevMemberIds) {
+        if (prevMemberId !== uid) {
+          const notifyParams = {
+            fromId: groupId,
+            toId: prevMemberId,
+          };
+          promises.push(notify("delete-group", notifyParams));
+        }
+      }
+    } else {
+      for (const aftMemberId of aftMemberIds) {
+        if (!(aftMemberId === uid || prevMemberIds.includes(aftMemberId))) {
+          const notifyParams = {
+            fromId: groupId,
+            toId: aftMemberId,
+          };
+          promises.push(notify("entry-group", notifyParams));
+        }
+      }
+      for (const prevMemberId of prevMemberIds) {
+        if (!(aftMemberIds.includes(prevMemberId) || prevMemberId === uid)) {
+          const notifyParams = {
+            fromId: groupId,
+            toId: prevMemberId,
+          };
+          promises.purhs(notify("leave-group", notifyParams));
+        }
+      }
+    }
+  }
+  return Promise.all(promises);
+});

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <form class="wrapper sign-form-container form-container bg-skyblue" method="POST">
-      <span class="title profile-title">表示名</span>
+      <span class="title profile-title">プロフィール設定</span>
       <div class="form-group form-wrapper">
         <label class="form-label" for="name">名前</label><span class="text-danger font-weight-bold" v-if="errorMessage">{{ errorMessage }}</span>
         <input @input="handleNameError" class="form-control" id="name" type="text" v-model="name">
@@ -10,7 +10,9 @@
         <div>
           <label for="photoURL" style="font-weight: bold;" class="file-label">
             <i class="fas fa-portrait fa-2x" style="padding: 10px;"></i>
-            <span style="margin: auto 0;">サムネイル設定（※ 設定しない場合は下のデフォルトのものになります。)</span>
+            <span style="margin: auto 0;">サムネイル設定
+              <span v-if="!(isUpdate || imgUrl)">（※ 設定しない場合は下のデフォルトのものになります。)</span>
+            </span>
           </label>
           <input type="file" accept="image/*" @change="onSelectProfilePhoto" id="photoURL" style="display: none;"/>
           <p class="img-wrapper">
@@ -49,6 +51,12 @@ export default {
       photoRef: ''
     }
   },
+  props: {
+    'isUpdate': {
+      type: Boolean,
+      default: false
+    }
+  },
   validations: {
     name: {
       required,
@@ -59,6 +67,7 @@ export default {
   },
   mounted () {
     console.log('mounted!!')
+    console.log('isUpdate?', this.isUpdate)
     if (this.$currentUser) {
       this.name = this.$currentUser.displayName
       this.originPhotoURL = this.$currentUser.photoURL

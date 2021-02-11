@@ -1,10 +1,16 @@
 .user-select-wrapper {
   background-color: lightskyblue;
-  padding: 20px 15px;
+  padding: 15px;
   font-size: 24px;
   color: white;
   font-weight: bold;
   text-align: center;
+
+  .user-title {
+    display: block;
+    font-size: 14px;
+    color: black;
+  }
 
   .user-select-list {
     padding: 0;

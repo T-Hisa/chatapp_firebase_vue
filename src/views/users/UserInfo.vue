@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <user-select
-      v-bind:type="'DM'"
+      v-bind:type="'info'"
     />
   </div>
 </template>
@@ -10,19 +10,14 @@
 import UserSelect from '@/components/UserSelect'
 
 export default {
-  name: 'SelectUser',
+  name: 'UserInfo',
   data () {
-    return {
-    }
+    return {}
   },
   components: {
     UserSelect
   },
-  mounted () {
-  },
   computed: {
-  },
-  methods: {
   }
 }
 </script>
