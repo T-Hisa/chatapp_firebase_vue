@@ -18,8 +18,22 @@
     .user-select-title {
       font-size: 24px;
     }
+
+    .user-search-field-wrapper {
+      text-align: center;
+
+      .user-search-field {
+        border-radius: 5px;
+        width: 60%;
+      }
+    }
   }
 
+  .no-user {
+    margin: 30px 0;
+    color: black;
+    padding-top: 20px;
+  }
 
   .user-select-list {
     padding: 0;

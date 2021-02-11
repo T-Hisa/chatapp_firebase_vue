@@ -1,8 +1,8 @@
 <template>
   <div class="group-select-wrapper">
-    <span class="group-title">グループ選択</span>
-    <input type="text" v-model="searchParams" placeholder="グループ検索">
-    <div class="group-title" v-if="getBelongGroupIds.length === 0">所属しているグループはありません</div>
+    <span class="group-title">{{$t('groups.select_group')}}</span>
+    <input type="text" class="group-search-field" v-model="searchParams" v-bind:placeholder="$t('groups.search_group')">
+    <div class="group-title" v-if="getBelongGroupIds.length === 0">{{$t('groups.no_belonging_group')}}</div>
     <ul class="group-list-wrapper" v-else-if="getGroupIdsFlexiblly().length > 0">
       <li class="group-list" v-for="gid of getGroupIdsFlexiblly()" :key="gid.id">
         <group
@@ -10,7 +10,7 @@
         />
       </li>
     </ul>
-    <div class="group-title" v-else>検索にヒットしたグループはありません。</div>
+    <div class="group-title" v-else>{{$t('groups.no_search_hit_group')}}</div>
   </div>
 </template>
 
@@ -31,7 +31,7 @@ export default {
   mounted () {
     if (this.$route.params.groupName) {
       const groupName = this.$route.params.groupName
-      alert(`グループ${groupName}は削除されました。`)
+      alert(this.$t('groups.already_group_deleted', { groupName }))
     }
   },
   computed: {

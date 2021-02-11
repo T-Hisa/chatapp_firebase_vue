@@ -3,42 +3,26 @@
     <div class="user-select-wrapper bg-lightskyblue">
       <div class="user-select-title-wrapper">
         <span class="user-title">{{displayTitle}}</span>
-        <span class="user-select-title">ユーザー選択</span>
-        <input type="text" placeholder="ユーザー検索" v-model="searchParams">
+        <span class="user-select-title">{{$t('select_user.select_user')}}</span>
+        <span class="user-search-field-wrapper">
+          <input class="user-search-field" type="text" v-bind:placeholder="$t('select_user.search_user')" v-model="searchParams">
+        </span>
       </div>
-      <ul class="user-select-list">
-        <template v-if="searchParams">
-          <li v-for="uid of searchOtherUserIds(searchParams)" :key="uid.id" class="user-info-wrapper">
-            <div @click="onClickUser(uid)">
-              <div class="user-wrapper">
-                <img v-if="getUserInfo(uid).photoURL" v-bind:src="getUserInfo(uid).photoURL" alt="サムネイル">
-                <img v-else src="../assets/images/default.png" alt="サムネイル">
-                <div class="user-info">
-                  {{ getUserInfo(uid).username }}
-                </div>
-              </div>
-            </div>
-          </li>
-        </template>
-        <template v-else>
-          <li v-for="uid of getOtherUserIds" :key="uid.id" class="user-info-wrapper">
-            <div @click="onClickUser(uid)">
-              <div class="user-wrapper">
-                <img v-if="getUserInfo(uid).photoURL" v-bind:src="getUserInfo(uid).photoURL" alt="サムネイル">
-                <img v-else src="../assets/images/default.png" alt="サムネイル">
-                <div class="user-info">
-                  {{ getUserInfo(uid).username }}
-                </div>
-              </div>
-            </div>
-          </li>
-        </template>
+      <div class="no-user" v-if="!getOtherUserIds">{{$t('select_user.no_user')}}</div>
+      <div class="no-user" v-else-if="getOtherUserIdsFlexiblly(searchParams).length === 0">{{$t('select_user.no_search_hit_user')}}</div>
+      <ul v-else class="user-select-list">
+        <li v-for="uid of getOtherUserIdsFlexiblly(searchParams)" :key="uid.id" class="user-info-wrapper">
+          <user
+            v-bind:uid="uid"
+          />
+        </li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+import User from '@/components/User'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -48,7 +32,9 @@ export default {
       searchParams: ''
     }
   },
-  props: ['type'],
+  components: {
+    User
+  },
   computed: {
     ...mapGetters('users', [
       'getUsers',
@@ -60,7 +46,8 @@ export default {
       return Object.keys(this.getUsers)
     },
     displayTitle () {
-      return this.type === 'DM' ? 'ダイレクトメッセージ' : 'ユーザー情報'
+      return this.$t('select_user.direct_message')
+      // return this.type === 'DM' ? this.$t('select_user.direct_message') : this.$t('select_user.user_info')
     }
   },
   methods: {
@@ -69,6 +56,14 @@ export default {
         this.$router.push(`direct/${uid}`)
       } else {
         this.$router.push(`user-detail/${uid}`)
+      }
+    },
+    getOtherUserIdsFlexiblly () {
+      const params = this.searchParams
+      if (params) {
+        return this.searchOtherUserIds(params)
+      } else {
+        return this.getOtherUserIds
       }
     }
   }

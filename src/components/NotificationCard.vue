@@ -25,32 +25,35 @@ export default {
   created () {
   },
   mounted () {
-    let fromName = ''
+    let name = ''
     switch (this.type) {
       case 'chat-irect':
-        fromName = this.getUserInfo(this.fromId).username
-        this.displayWord = fromName + ' さんからチャットが届いています。'
+        name = this.getUserInfo(this.fromId).username
+        this.displayWord = this.$t('notify.directchat_notify', {name})
         this.clickAction = () => this.$router.push(`direct/${this.fromId}`)
         break
       case 'chat-groups':
-        fromName = this.getGroupInfo(this.fromId).groupName
-        this.displayWord = fromName + ' でチャットがありました。'
+        name = this.getGroupInfo(this.fromId).groupName
+        this.displayWord = this.$t('notify.groupchat_notify', {name})
         this.clickAction = () => this.$router.push(`groupchat/${this.fromId}`)
         break
       case 'entry-group':
-        fromName = this.getGroupInfo(this.fromId).groupName
-        this.displayWord = fromName + ' のグループに参加しました。'
-        this.clickAction = () => this.$router.push(`groupchat/${this.fromId}`)
+        let group = this.getGroupInfo(this.fromId)
+        name = group.groupName
+        this.displayWord = this.$t('notify.entry_group_notify', {name})
+        this.clickAction = group.isDeleted
+          ? () => this.$router.push(`groupchat/${this.fromId}`)
+          : () => this.$router.push({name: 'SelectGroup', params: { groupName: group.groupName }})
         break
       case 'leave-group':
-        fromName = this.getGroupInfo(this.fromId).groupName
-        this.displayWord = fromName + ' のグループから退出しました。'
+        name = this.getGroupInfo(this.fromId).groupName
+        this.displayWord = this.$t('notify.leave_group_notify', {name})
         this.clickAction = () => this.$router.push('groups')
         break
       case 'delete-group':
-        const group = this.getGroupInfo(this.fromId) || {}
-        fromName = group.groupName || ''
-        this.displayWord = fromName + ' のグループが削除されました。'
+        group = this.getGroupInfo(this.fromId) || {}
+        name = group.groupName || ''
+        this.displayWord = this.$t('notify.delete_group_notify', {name})
         this.clickAction = () => this.$router.push('groups')
         break
       default:

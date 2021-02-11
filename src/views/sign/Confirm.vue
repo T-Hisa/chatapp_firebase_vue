@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <div class="wrapper">
-      <p>入力されたメールアドレスに認証用URLを送信しました。</p>
-      <p>メールアドレスを誤って登録した場合は、お手数をおかけしますが再登録をお願いします。</p>
-      <p>※ その際は同じメールアドレスでは登録できません。</p>
+      <p>{{$t('confirm.sent_mail_for_authentication')}}</p>
+      <p>{{$t('confirm.begging_reregister')}}</p>
+      <p>{{$t('confirm.mail_caution')}}</p>
     </div>
     <div class="btn-container">
-      <button class='simple-btn' @click="onClickResendBtn">メール再送信</button>
-      <button class='simple-btn' @click="onClickReregisterBtn">再登録する</button>
-      <button class='simple-btn' @click="onClickConfirmBtn">確認したらここをクリック（更新）</button>
+      <button class='simple-btn' @click="onClickResendBtn">{{$t('confirm.resend_mail')}}</button>
+      <button class='simple-btn' @click="onClickReregisterBtn">{{$t('confirm.action_reregister')}}</button>
+      <button class='simple-btn' @click="onClickConfirmBtn">{{$t('confirm.begging_click')}}</button>
     </div>
   </div>
 </template>

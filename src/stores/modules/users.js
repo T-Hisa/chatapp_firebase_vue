@@ -23,7 +23,7 @@ const userModule = {
     },
     getOtherUserIds (state, getters, rootState, _) {
       const otherUserIds = Object.keys(state.users).filter(uid => {
-        return uid !== rootState.currentUserId && getters.getUserInfo(uid).emailVerified
+        return uid !== rootState.currentUserId && getters.getUserInfo(uid).username
       })
       return otherUserIds
     },

@@ -1,14 +1,14 @@
 <template>
   <div class="chat-whole-container">
     <div class="title-wrapper title-group">
-      グループ: <span class="name group-name">{{getGroupName}}</span>
+      {{$t('chat.group')}}<span class="name group-name">{{getGroupName}}</span>
     </div>
     <div class="member-whole-wrapper">
-      メンバー:
+      {{$t('chat.member')}}
       <ul class="member-wrapper">
         <li v-for="memberId in memberIds" :key="memberId.id" class="user-detail">
-          <img v-if="getPhotoURL(memberId)" v-bind:src="getPhotoURL(memberId)" alt="サムネイル">
-          <img v-else src="../../assets/images/default.png" alt="サムネイル">
+          <img v-if="getPhotoURL(memberId)" v-bind:src="getPhotoURL(memberId)" v-bind:alt="$t('utils.thumbnail')">
+          <img v-else src="../../assets/images/default.png" v-bind:alt="$t('utils.thumbnail')">
           <div>{{ getUserName(memberId) }}</div>
         </li>
       </ul>

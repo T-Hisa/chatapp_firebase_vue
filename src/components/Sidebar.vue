@@ -5,24 +5,24 @@
       />
       <router-link class="sidebar-anchor" :to ="'/direct'">
         <li class="menu-list">
-          <span class="menu">Direct</span><span class="arrow"/>
+          <span class="menu">{{$t('sidebar.direct')}}</span><span class="arrow"/>
         </li>
       </router-link>
       <router-link class="sidebar-anchor" :to ="'/groups'">
         <li class="menu-list">
-          <span class="menu">Group</span><span class="arrow"/>
+          <span class="menu">{{$t('sidebar.group')}}</span><span class="arrow"/>
         </li>
       </router-link>
       <router-link class="sidebar-anchor" :to ="'/notification'">
         <li class="menu-list">
-          <span class="menu">Notify</span>
+          <span class="menu">{{$t('sidebar.notify')}}</span>
           <span v-if="getUserNotification" class="badge bg-danger badge-custom">{{notificationCount}}</span>
           <span class="arrow"/>
         </li>
       </router-link>
       <router-link class="sidebar-anchor" :to ="'/creategroup'">
         <li class="menu-list">
-          <span class="menu absolute-menu">Create Group</span><span class="arrow absolute-arrow"/>
+          <span class="menu">{{$t('sidebar.create_group')}}</span><span class="arrow"/>
         </li>
       </router-link>
     </ul>

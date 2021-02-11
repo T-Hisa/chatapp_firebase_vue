@@ -9,11 +9,7 @@
             <i class="fas fa-angle-down"></i>
           </span>
           <div class="notify-detail-wrapper bg-info" v-bind:class="{ active: dropdownFlag }" >
-            <div
-                v-for="nid in notificationIds"
-                :key="nid.id"
-            >
-              <!-- <div class="notify-wrapper"> -->
+            <div v-for="nid in notificationIds" :key="nid.id">
               <notification-card
                 v-bind:nid="nid"
                 v-bind:fromId="getFromId(nid)"
@@ -21,23 +17,22 @@
               />
             </div>
           </div>
-          <!-- </div> -->
         </div>
         <ul v-if="isUserPropsSet" class="top-btn-wrapper navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="#" @click="onClickSignOutBtn">Sign Out</a>
+            <a class="nav-link" href="#" @click="onClickSignOutBtn">{{$t('top.sign_out')}}</a>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/profile-update">プロフィール変更</router-link>
+            <router-link class="nav-link" to="/profile-update">{{$t('top.edit_profile')}}</router-link>
           </li>
         </ul>
       </div>
       <div v-else-if="$currentUser">
-        <a @click="onClickSignOutBtn">Sign Out</a>
+        <a @click="onClickSignOutBtn">{{$t('top.sign_out')}}</a>
       </div>
       <div v-else>
-        <router-link v-if="isPathSignin" class="f-black" to="/signup">Sign Up</router-link>
-        <router-link v-else class="f-black" to="/signin">Sign In</router-link>
+        <router-link v-if="isPathSignin" class="f-black" to="/signup">{{$t('top.sign_up')}}</router-link>
+        <router-link v-else class="f-black" to="/signin">{{$t('top.sign_in')}}</router-link>
       </div>
       <!-- <div v-if="$currentUser" class="" >
       </div>

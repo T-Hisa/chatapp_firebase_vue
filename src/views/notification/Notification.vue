@@ -4,14 +4,13 @@
       <div v-for="nid in notificationIds" :key="nid.id">
         <div @click="onClickNotice(nid)" class="notification-wrapper">
           <div>
-            <span class="display-name-in-notice">{{displayName(nid)}}</span>
             <span>{{displayWord(nid)}}</span>
           </div>
         </div>
       </div>
     </template>
     <div v-else class="no-notice">
-      通知はありません。
+      {{$t('notify.no_notification')}}
     </div>
   </div>
 </template>
@@ -62,17 +61,23 @@ export default {
     },
     displayWord (nid) {
       const notice = this.getNotice(nid)
+      let name = ''
       switch (notice.type) {
         case 'chat-direct':
-          return ' さんからチャットが届いています'
+          name = this.getUserInfo(notice.fromId).username
+          return this.$t('notify.directchat_notify', {name})
         case 'chat-groups':
-          return ' でチャットがありました。'
+          name = this.getGroupName(notice.fromId).groupName || ''
+          return this.$t('notify.groupchat_notify', {name})
         case 'entry-group':
-          return ' のグループに参加しました。'
+          name = this.getGroupName(notice.fromId).groupName || ''
+          return this.$t('notify.entry_group_notify', {name})
         case 'leave-group':
-          return ' のグループから退出しました。'
+          name = this.getGroupName(notice.fromId).groupName || ''
+          return this.$t('notify.leave_group_notify', {name})
         case 'delete-group':
-          return ' のグループが削除されました。'
+          name = this.getGroupName(notice.fromId).groupName || ''
+          return this.$t('notify.delete_group_notify', {name})
         default:
           return ''
       }
@@ -97,7 +102,7 @@ export default {
           this.$router.push('groups')
           break
         default:
-          alert('予期せぬエラーです')
+          alert(this.$t('notify.happening_error'))
           break
       }
     }

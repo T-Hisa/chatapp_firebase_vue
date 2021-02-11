@@ -1,21 +1,21 @@
 <template>
   <div class="container">
     <form class="sign-form-container form-container bg-skyblue" method="POST">
-      <span class="title-sign">Sign Up</span>
+      <span class="title-sign">{{$t('sign.sign_up')}}</span>
       <div class="form-group form-wrapper">
-        <label class="form-label" for="email">Eメール
-          <span v-if="computedEmailEmpty" class="text-danger label-text">※Eメールを入力してください</span>
-          <span v-else-if="!computedValidEmail" class="text-danger label-text">※Eメールを正しい形式で入力してください</span>
+        <label class="form-label" for="email">{{$t('sign.e_mail')}}
+          <span v-if="computedEmailEmpty" class="text-danger label-text">{{$t('sign.begging_email')}}</span>
+          <span v-else-if="!computedValidEmail" class="text-danger label-text">{{$t('sign.begging_correct_email')}}</span>
         </label>
         <input class="form-control" id="email" type="text" v-model="email">
       </div>
       <div class="form-group form-wrapper">
-        <label class="form-label" for="password">パスワード
-          <span v-if="!registerablePassword" class="text-danger label-text">※パスワードは6文字以内で入力してください</span>
+        <label class="form-label" for="password">{{$t('sign.password')}}
+          <span v-if="!registerablePassword" class="text-danger label-text">{{$t('sign.begging_correct_password')}}</span>
         </label>
         <input class="form-control" id="password" type="password" v-model="password">
       </div>
-      <a class="btn btn-outline-dark register-btn" v-bind:class="{disabled: disableJudge}" v-on:click="onClickSignUp">登録</a>
+      <a class="btn btn-outline-dark register-btn" v-bind:class="{disabled: disableJudge}" v-on:click="onClickSignUp">{{$t('sign.sign_up')}}</a>
     </form>
   </div>
 </template>
@@ -63,7 +63,7 @@ export default {
           userData.user.sendEmailVerification()
           this.$router.push('/confirm')
         }).catch(e => {
-          alert('このメールアドレスは既に登録されています')
+          alert(this.$t('sign.already_registered_email'))
         })
       }
     }

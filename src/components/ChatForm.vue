@@ -4,7 +4,7 @@
     <!-- <label for="chat"></label> -->
     <div class="chat-form-wrapper">
       <textarea class="chat-form" ref="textarea" @input="onInputTextarea" name="chat" id="chat" rows="1" v-model="comment"></textarea>
-      <button @click="onClickSendBtn" class="btn btn-info chat-submit-btn">送信</button>
+      <button @click="onClickSendBtn" class="btn btn-info chat-submit-btn">{{$t('chat.submit')}}</button>
     </div>
   </div>
 </template>

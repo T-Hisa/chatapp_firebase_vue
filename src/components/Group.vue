@@ -2,17 +2,17 @@
   <div data-bs-toggle="tooltip" data-bs-placement="top" v-bind:title="tooltipMessage(gid)" class="group-container">
     <div @click="onClickGroup(gid)" class="group-wrapper">
       <div class="group-name-wrapper">
-        <span class="group-name-label">グループ名</span>
+        <span class="group-name-label">{{$t('groups.group_name')}}</span>
         <span class="group-name">{{ getGroupInfo(gid).groupName }}</span>
       </div>
       <div class="group-member-wrapper">
-        <span class="member-name-label">メンバーリスト</span>
+        <span class="member-name-label">{{$t('groups.member_list')}}</span>
         <span>{{displayMembersName(gid)}}</span>
       </div>
     </div>
     <div class="group-btn-wrapper">
-      <button @click="onClickEditBtn(gid)" class="group-action-btn btn btn-outline-dark">編集</button>
-      <button @click="onClickDeleteBtn(gid)" class="group-action-btn btn btn-outline-dark">削除</button>
+      <button @click="onClickEditBtn(gid)" class="group-action-btn btn btn-outline-dark">{{$t('groups.edit')}}</button>
+      <button @click="onClickDeleteBtn(gid)" class="group-action-btn btn btn-outline-dark">{{$t('groups.delete')}}</button>
     </div>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
     },
     onClickDeleteBtn (gid) {
       const groupName = this.getGroupInfo(gid).groupName
-      const message = confirm(`対象のグループ『${groupName}』を削除します。よろしいですか？`)
+      const message = confirm(this.$t('groups.confirm_delete', { groupName }))
       if (message) {
         this.deleteGroup(gid)
       }

@@ -33,15 +33,6 @@
           font-size: 25px;
           font-weight: 600;
           color: black;
-
-          &.absolute-menu {
-            position: absolute;
-            left: -29px;
-
-            &:hover {
-              text-decoration: underline;
-            }
-          }
         }
 
         .arrow {
@@ -52,11 +43,6 @@
           border-top: 4px solid #000;
           border-right: 4px solid #000;
           transform: rotate(45deg);
-
-          &.absolute-arrow {
-            position: absolute;
-            right: 9px;
-          }
         }
       }
     }

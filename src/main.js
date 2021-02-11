@@ -7,6 +7,7 @@ import BootstrapVue from 'bootstrap-vue'
 import VueI18n from 'vue-i18n'
 import Vuelidate from 'vuelidate'
 import store from './stores'
+import messages from '@/i18n'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -15,14 +16,11 @@ Vue.use(BootstrapVue)
 Vue.use(Vuelidate)
 Vue.config.productionTip = false
 Vue.use(VueI18n)
-// const messages = {
-//   ja: {
-//   }
-// }
-// let i18n = new VueI18n({
-//   locale: 'ja',
-//   messages: messages
-// })
+
+const i18n = new VueI18n({
+  locale: 'ja',
+  messages
+})
 
 /* eslint-disable no-new */
 // let promise = new Promise(resolve, reject) {
@@ -41,7 +39,7 @@ firebase.auth().onAuthStateChanged(user => {
 
   new Vue({
     el: '#app',
-    // i18n: i18n,
+    i18n,
     router,
     store,
     components: { App },
