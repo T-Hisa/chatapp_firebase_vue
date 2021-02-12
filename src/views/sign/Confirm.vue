@@ -30,7 +30,6 @@ export default {
     },
     async onClickReregisterBtn () {
       await this.$firebase.auth().signOut()
-      this.$router.go(-1) || this.$router.push('/signin')
     }
   }
 }

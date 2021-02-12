@@ -19,7 +19,7 @@ function validation (to, next) {
   } else if (isRequiredEmailValidation) {
     if (currentUser) {
       if (currentUser.emailVerified) {
-        if (currentUser.displayName) next('/select-user')
+        if (currentUser.displayName) next('/direct')
         else next()
       } else {
         next('/confirm')
@@ -28,7 +28,7 @@ function validation (to, next) {
   } else if (isRequiredAuth) {
     if (currentUser) {
       if (currentUser.emailVerified) {
-        if (currentUser.displayName) next('/select-user')
+        if (currentUser.displayName) next('/direct')
         else next('/setup-profile')
       } else {
         next()
@@ -39,7 +39,7 @@ function validation (to, next) {
   } else {
     if (currentUser) {
       if (currentUser.emailVerified) {
-        if (currentUser.displayName) next('/select-user')
+        if (currentUser.displayName) next('/direct')
         else next('/setup-profile')
       } else {
         next('/confirm')

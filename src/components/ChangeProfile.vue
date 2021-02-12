@@ -21,7 +21,7 @@
               <img v-else-if="originPhotoURL" v-bind:src="originPhotoURL" v-bind:alt="$t('utils.thumbnail')">
               <span class="reset-btn" v-on:click="onClickResetBtn">{{$t('profile.cancel')}}</span>
             </span>
-            <img v-else src="../assets/images/default.png" v-bind:alt="$t('utils.thumbnail')" width="100px" height="100px" >
+            <img v-else src="@/assets/images/default.png" v-bind:alt="$t('utils.thumbnail')" width="100px" height="100px" >
           </p>
         </div>
       </div>
@@ -113,10 +113,10 @@ export default {
       }
       this.$currentUser.updateProfile(updateValue).then(() => {
         EventBus.$emit('redraw-flag')
-        this.$router.push('/select-user')
+        this.$router.push('/direct')
       }).catch(err => {
         console.log(err)
-        alert('予期せぬエラーが発生しました。ご一報ください')
+        alert(this.$t('notify.happening_error'))
       })
     },
     setPhotoUrl () {

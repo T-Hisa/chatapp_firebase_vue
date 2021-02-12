@@ -8,7 +8,7 @@
       <ul class="member-wrapper">
         <li v-for="memberId in memberIds" :key="memberId.id" class="user-detail">
           <img v-if="getPhotoURL(memberId)" v-bind:src="getPhotoURL(memberId)" v-bind:alt="$t('utils.thumbnail')">
-          <img v-else src="../../assets/images/default.png" v-bind:alt="$t('utils.thumbnail')">
+          <img v-else src="@/assets/images/default.png" v-bind:alt="$t('utils.thumbnail')">
           <div>{{ getUserName(memberId) }}</div>
         </li>
       </ul>

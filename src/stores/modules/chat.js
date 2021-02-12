@@ -13,7 +13,7 @@ const chatModule = {
   }),
   getters: {
     getDirectChatData: (state, _, __, rootGetters) => (otherUid) => {
-      const currentUid = rootGetters.getCurrentUid
+      const currentUid = rootGetters.getCurrentUserId
       if (state.chat.direct && state.chat.direct[currentUid] && state.chat.direct[currentUid][otherUid]) {
         return state.chat.direct[currentUid][otherUid]
       }

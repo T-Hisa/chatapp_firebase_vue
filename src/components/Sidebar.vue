@@ -8,7 +8,7 @@
           <span class="menu">{{$t('sidebar.direct')}}</span><span class="arrow"/>
         </li>
       </router-link>
-      <router-link class="sidebar-anchor" :to ="'/groups'">
+      <router-link class="sidebar-anchor" :to ="'/groupchat'">
         <li class="menu-list">
           <span class="menu">{{$t('sidebar.group')}}</span><span class="arrow"/>
         </li>

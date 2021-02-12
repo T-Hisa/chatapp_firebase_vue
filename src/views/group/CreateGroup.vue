@@ -15,7 +15,7 @@
             <div>
               <div class="member-wrapper">
                 <img v-if="getUserInfo(uid).photoURL" v-bind:src="getUserInfo(uid).photoURL" alt="サムネイル">
-                <img v-else src="../../assets/images/default.png" alt="サムネイル">
+                <img v-else src="@/assets/images/default.png" alt="サムネイル">
                 <div class="member-info">
                   {{ getUserInfo(uid).username }}
                 </div>
@@ -32,7 +32,7 @@
             <div @click="onClicKUser(uid)">
               <div class="member-wrapper">
                 <img v-if="getUserInfo(uid).photoURL" v-bind:src="getUserInfo(uid).photoURL" alt="サムネイル">
-                <img v-else src="../../assets/images/default.png" alt="サムネイル">
+                <img v-else src="@/assets/images/default.png" alt="サムネイル">
                 <div class="member-info">
                   {{ getUserInfo(uid).username }}
                 </div>

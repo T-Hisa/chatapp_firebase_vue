@@ -10,7 +10,7 @@ const notificationsModule = {
   },
   getters: {
     getUserNotification: (state, _, __, rootGetters) => {
-      const currentUserId = rootGetters.getCurrentUid
+      const currentUserId = rootGetters.getCurrentUserId
       const notifications = state.notifications || {}
       return notifications[currentUserId]
     },

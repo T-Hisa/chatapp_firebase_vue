@@ -27,7 +27,7 @@ export default {
   mounted () {
     let name = ''
     switch (this.type) {
-      case 'chat-irect':
+      case 'chat-direct':
         name = this.getUserInfo(this.fromId).username
         this.displayWord = this.$t('notify.directchat_notify', {name})
         this.clickAction = () => this.$router.push(`direct/${this.fromId}`)

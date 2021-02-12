@@ -22,7 +22,7 @@ export default {
   data () {
     return {
       isPathSignin: false,
-      redrawFlag: 0
+      redrawFlag: false
     }
   },
   components: {
@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     redrawTopView () {
-      this.redrawFlag++
+      this.redrawFlag = !this.redrawFlag
     },
     handleClickEvent () {
       if (this.$refs.top.dropdownFlag) {

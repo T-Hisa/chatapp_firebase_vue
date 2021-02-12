@@ -4,7 +4,7 @@
       {{$t('chat.user')}}
       <div class="user-wrapper">
         <img v-if="otherUserPhotoURL" v-bind:src="otherUserPhotoURL" v-bind:alt="$t('utils.thumbnail')">
-        <img v-else src="../../assets/images/default.png" v-bind:alt="$t('utils.thumbnail')">
+        <img v-else src="@/assets/images/default.png" v-bind:alt="$t('utils.thumbnail')">
         <span class="name">{{otherUserName}}</span>
       </div>
     </div>

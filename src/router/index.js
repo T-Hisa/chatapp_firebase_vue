@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import firebase from '@/firebase-setup'
 
 import Container from '@/containers/Container'
 
@@ -33,14 +32,14 @@ const router = new Router({
     {
       path: '/',
       name: 'Container',
-      redirect: '/select-user',
+      redirect: '/direct',
       component: Container,
       meta: {
         isRequiredProfile: true // isRequiredProfile は プロフィール設定したユーザーのみを通す
       },
       children: [
         {
-          path: 'select-user',
+          path: 'direct',
           name: SelectUser,
           component: SelectUser
         },
@@ -50,7 +49,7 @@ const router = new Router({
           component: ProfileUpdate
         },
         {
-          path: 'groups',
+          path: 'groupchat',
           name: 'SelectGroup',
           component: SelectGroup
         },
@@ -104,15 +103,12 @@ const router = new Router({
     },
     {
       path: '*',
-      redirect: ''
+      redirect: '/direct'
     }
   ]
 })
 
 router.beforeEach((to, _, next) => {
-  const currentUser = firebase.auth().currentUser
-  if (currentUser) {
-  }
   validation(to, next)
 })
 

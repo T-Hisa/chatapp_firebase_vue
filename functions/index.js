@@ -1,26 +1,17 @@
 // 諸々初期化処理
-// const dbInstance = require("./dbInstance");
+const dbInstance = require("./dbInstance");
 const functions = require("firebase-functions");
+const serviceAccount = require("./serviceAccount.json");
 const admin = require("firebase-admin");
 const adminConfig = JSON.parse(process.env.FIREBASE_CONFIG);
-const serviceAccount = require("./serviceAccount.json");
 adminConfig.credential = admin.credential.cert(serviceAccount);
 const adminApp = admin.initializeApp(adminConfig);
-const db = functions.database;
-// const db = functions.database.instance(dbInstance);
+// const db = functions.database;
+const db = functions.database.instance(dbInstance);
 const adminDb = adminApp.database();
 const auth = functions.auth;
-// const auth = functions.auth;
-
-// これより関数を定義
-// exports.addMessage = functions.https.onCall(() => {
-//   console.log("Hello, World!");
-//   console.log("function config", functions.config());
-//   return "message";
-// });
 
 exports.onCreateUser = auth.user().onCreate((user) => {
-  console.log("userCreated!");
   const usersRef = adminDb.ref("users");
   const saveVal = {};
   const uid = user.uid;
@@ -33,7 +24,8 @@ exports.onCreateUser = auth.user().onCreate((user) => {
 exports.
     onCreateDirectChat = db.ref("/chat/direct/{userId}/{partnerId}/{chatId}")
         .onCreate((snapshot, context) => {
-          console.log("onCreateDirectChat!!");
+          console.log("snapshot", JSON.stringify(snapshot));
+          console.log("context", JSON.stringify(context));
           const value = snapshot.val();
           if (value.which === "you") {
             return null;
@@ -62,7 +54,7 @@ exports.
 
 exports.onCreateGroupsChat = db.ref("chat/groups/{groupId}/{chatId}")
     .onCreate((_, context) => {
-      console.log("onCreateDirectChat!!");
+      console.log("context", JSON.stringify(context));
       const {uid} = context.auth;
       const {groupId} = context.params;
       const promises = [];
@@ -100,7 +92,8 @@ const writeUsersGroupIds = (uid, gid, type) => {
 };
 
 exports.onWriteGroup = db.ref("groups/{groupId}").onWrite((change, context) => {
-  console.log("onWriteGroup!");
+  console.log("chage", JSON.stringify(change));
+  console.log("context", JSON.stringify(context));
   const {uid} = context.auth;
   const prevVal = change.before.val() || {};
   const aftVal = change.after.val() || {};

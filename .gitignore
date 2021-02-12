@@ -21,7 +21,6 @@ package-lock.json
 src/firebase-init.js
 .firebaserc
 firebase.json
-**/chat-app-db*
 **/serviceAccount*
 **/firebaseConfig*
 **/dbInstance*

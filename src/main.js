@@ -2,6 +2,7 @@ import Vue from 'vue'
 import firebase from './firebase-setup'
 import App from './App'
 import router from './router'
+import routeAroundSign from './router/routeAroundSign'
 import Vuex from 'vuex'
 import BootstrapVue from 'bootstrap-vue'
 import VueI18n from 'vue-i18n'
@@ -27,11 +28,12 @@ const i18n = new VueI18n({
 //   firebase.initializeApp(firebaseConfig)
 // }
 firebase.auth().onAuthStateChanged(user => {
+  routeAroundSign(user)
   if (user) {
+    console.log('currentUser', user)
     Vue.prototype.$currentUser = user
     Vue.prototype.$currentUserId = user.uid
-    store.dispatch('setCurrentUid', user.uid)
-    store.dispatch('notifications/getNotification')
+    store.dispatch('setCurrentUserId', user.uid)
   } else {
     Vue.prototype.$currentUser = null
     Vue.prototype.$currentUserId = null

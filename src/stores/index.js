@@ -22,7 +22,7 @@ const store = new Vuex.Store({
     currentUserId: ''
   },
   getters: {
-    getCurrentUid: (state) => {
+    getCurrentUserId: (state) => {
       return state.currentUserId
     },
     sampleGetter: (state, getters, rootState, rootGetters) => (id) => {
@@ -36,7 +36,7 @@ const store = new Vuex.Store({
     sampleMutation (state, n) {
       state.count += n // 後者の場合 n.amount でアクセス可
     },
-    setCurrentUid (state, uid) {
+    setCurrentUserId (state, uid) {
       state.currentUserId = uid
     }
     // [SOME_MUTATION] (state) {
@@ -45,8 +45,8 @@ const store = new Vuex.Store({
   },
   actions: {
     // store.dispatch('sampleAction') で実行
-    setCurrentUid (context, uid) {
-      context.commit('setCurrentUid', uid)
+    setCurrentUserId (context, uid) {
+      context.commit('setCurrentUserId', uid)
     },
     sampleAction (context, n) {
       context.commit('sampleMutation', n)
@@ -58,6 +58,7 @@ const store = new Vuex.Store({
   // strict: process.env.NODE_ENV === 'development'
 })
 
+store.dispatch('notifications/getNotification')
 store.dispatch('users/getUsersData')
 store.dispatch('chat/getChatData')
 store.dispatch('groups/getGroups')

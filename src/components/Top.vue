@@ -1,7 +1,7 @@
 <template>
   <div class='header bg-info'>
     <b-navbar class="custom-nav-bar" toggleable="lg" type="dark" variant="info">
-      <span class="title">ChatApp</span>
+      <span class="title">My Chat</span>
       <div v-if="$currentUser && $currentUser.displayName" class='flex-display'>
         <div v-if="$currentUser && $currentUser.displayName" @click="onClickDropdown" class="notify-display-wrapper">
           <i class="fas fa-bell custom-font"></i>
@@ -9,7 +9,7 @@
             <i class="fas fa-angle-down"></i>
           </span>
           <div class="notify-detail-wrapper bg-info" v-bind:class="{ active: dropdownFlag }" >
-            <div v-for="nid in notificationIds" :key="nid.id">
+            <div v-for="nid in displayNotificationIds" :key="nid.id">
               <notification-card
                 v-bind:nid="nid"
                 v-bind:fromId="getFromId(nid)"
@@ -34,12 +34,6 @@
         <router-link v-if="isPathSignin" class="f-black" to="/signup">{{$t('top.sign_up')}}</router-link>
         <router-link v-else class="f-black" to="/signin">{{$t('top.sign_in')}}</router-link>
       </div>
-      <!-- <div v-if="$currentUser" class="" >
-      </div>
-      <div v-else>
-        <router-link v-if="isPathSignin" class="f-black" to="/signup">Sign Up</router-link>
-        <router-link v-else class="f-black" to="/signin">Sign In</router-link>
-      </div> -->
     </b-navbar>
   </div>
 </template>
@@ -81,10 +75,18 @@ export default {
       return !!(this.$currentUser && this.$currentUser.displayName)
     },
     notificationCount () {
-      return this.notificationIds.length
+      const length = this.notificationIds.length
+      if (this.notificationIds.length > 10) {
+        return '10＋'
+      }
+      return length
     },
     notificationIds () {
-      return Object.keys((this.getUserNotification) || {}).slice(0, 10)
+      return Object.keys((this.getUserNotification) || {})
+    },
+    displayNotificationIds () {
+      console.log('nids', this.notificationIds)
+      return this.notificationIds.slice(0, 10)
     }
   },
   methods: {
@@ -93,7 +95,6 @@ export default {
     ]),
     async onClickSignOutBtn () {
       await this.$firebase.auth().signOut()
-      this.$router.go(-1) || this.$router.push('/signin')
     },
     getFromId (nid) {
       return this.getUserNotification[nid].fromId
@@ -102,6 +103,7 @@ export default {
       return this.getUserNotification[nid].type
     },
     onClickDropdown () {
+      console.log('this.displayNotificationIds', this.displayNotificationIds)
       if (this.dropdownFlag) {
         if (this.notificationIds) {
           const removeVal = {

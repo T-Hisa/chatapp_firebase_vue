@@ -27,12 +27,7 @@ export default {
   methods: {
     onClickSignIn (e) {
       e.preventDefault()
-      this.$firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(userData => {
-        const { user } = userData
-        if (user.displayName) this.$router.push('/select-user')
-        else if (user.emailVerified) this.$router.push('/setup-profile')
-        else this.$router.push('/confirm')
-      }).catch(e => {
+      this.$firebase.auth().signInWithEmailAndPassword(this.email, this.password).catch(() => {
         alert(this.$t('sign.cant_sign_in'))
       })
     }

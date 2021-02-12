@@ -61,7 +61,6 @@ export default {
       if (this.registerableEmail && this.registerablePassword) {
         this.$firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(userData => {
           userData.user.sendEmailVerification()
-          this.$router.push('/confirm')
         }).catch(e => {
           alert(this.$t('sign.already_registered_email'))
         })
