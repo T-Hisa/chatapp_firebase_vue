@@ -1,17 +1,17 @@
 <template>
   <div class="container">
     <form class="wrapper sign-form-container form-container bg-skyblue" method="POST">
-      <span class="title profile-title">{{$t(profile.set_profile)}}</span>
+      <span class="title profile-title">{{$t('profile.set_profile')}}</span>
       <div class="form-group form-wrapper">
-        <label class="form-label" for="name">{{$t(profile.name)}}</label><span class="text-danger font-weight-bold" v-if="errorMessage">{{ errorMessage }}</span>
+        <label class="form-label" for="name">{{$t('profile.name')}}</label><span class="text-danger font-weight-bold" v-if="errorMessage">{{ errorMessage }}</span>
         <input @input="handleNameError" class="form-control" id="name" type="text" v-model="name">
       </div>
       <div class="form-group form-wrapper">
         <div>
           <label for="photoURL" style="font-weight: bold;" class="file-label">
             <i class="fas fa-portrait fa-2x" style="padding: 10px;"></i>
-            <span style="margin: auto 0;">{{$t(profile.set_thumbnail)}}
-              <span v-if="!(isUpdate || imgUrl)">{{$t(profile.caution_default_thumbnail)}}</span>
+            <span style="margin: auto 0;">{{$t('profile.set_thumbnail')}}
+              <span v-if="!(isUpdate || imgUrl)">{{$t('profile.caution_default_thumbnail')}}</span>
             </span>
           </label>
           <input type="file" accept="image/*" @change="onSelectProfilePhoto" id="photoURL" style="display: none;"/>
@@ -19,14 +19,14 @@
             <span class="img-wrapper" v-if="imgUrl || originPhotoURL">
               <img v-if="imgUrl" v-bind:src="imgUrl" v-bind:alt="$t('utils.thumbnail')">
               <img v-else-if="originPhotoURL" v-bind:src="originPhotoURL" v-bind:alt="$t('utils.thumbnail')">
-              <span class="reset-btn" v-on:click="onClickResetBtn">{{$t(profile.cancel)}}</span>
+              <span class="reset-btn" v-on:click="onClickResetBtn">{{$t('profile.cancel')}}</span>
             </span>
             <img v-else src="../assets/images/default.png" v-bind:alt="$t('utils.thumbnail')" width="100px" height="100px" >
           </p>
         </div>
       </div>
       <div class="btn-wrapper">
-        <button class="btn btn-light border-dark border profile-register-btn" v-on:click="onClickSetProfile">{{$t(profile.set_profile)}}</button>
+        <button class="btn btn-light border-dark border profile-register-btn" v-on:click="onClickSetProfile">{{$t('profile.set_profile')}}</button>
       </div>
     </form>
   </div>

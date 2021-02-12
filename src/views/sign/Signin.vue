@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <form class="form-container sign-form-container bg-skyblue" method="POST">
-      <span class="title-sign">{{$t('sign.sign_in')}}n</span>
+      <span class="title-sign">{{$t('sign.sign_in')}}</span>
       <div class="form-group form-wrapper">
         <label class="form-label" for="email">{{$t('sign.e_mail')}}</label>
         <input class="form-control" id="email" type="text" v-model="email">
