@@ -42,7 +42,8 @@ const messages = {
       member_list: 'memberlist',
       edit: 'Edit',
       delete: 'Delete',
-      confirm_delete: "Now we're deleting the group '{groupName}'. OK?"
+      confirm_delete: "Now we're deleting the group '{groupName}'. OK?",
+      begging_group_name: 'Please enter group name.'
     },
     confirm: {
       sent_mail_for_authentication: 'Send a Email for registered Email Adress',
@@ -120,7 +121,8 @@ const messages = {
       member_list: 'メンバーリスト',
       edit: '編集',
       delete: '削除',
-      confirm_delete: '対象のグループ『{groupName}』を削除します。よろしいですか？'
+      confirm_delete: '対象のグループ『{groupName}』を削除します。よろしいですか？',
+      begging_group_name: 'グループ名を入力してください'
     },
     confirm: {
       sent_mail_for_authentication: '入力されたメールアドレスに認証用URLを送信しました。',

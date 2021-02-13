@@ -26,6 +26,7 @@ export default {
   },
   mounted () {
     let name = ''
+    let group = {}
     switch (this.type) {
       case 'chat-direct':
         name = this.getUserInfo(this.fromId).username
@@ -33,28 +34,31 @@ export default {
         this.clickAction = () => this.$router.push(`direct/${this.fromId}`)
         break
       case 'chat-groups':
-        name = this.getGroupInfo(this.fromId).groupName
+        group = this.getGroupInfo(this.fromId) || {}
+        name = group.groupName
         this.displayWord = this.$t('notify.groupchat_notify', {name})
-        this.clickAction = () => this.$router.push(`groupchat/${this.fromId}`)
+        this.clickAction = group.isDeleted
+          ? () => this.$router.push(`groupchat/${this.fromId}`)
+          : () => this.$router.push({ name: 'SelectGroup', params: { groupName: name}})
         break
       case 'entry-group':
-        let group = this.getGroupInfo(this.fromId)
+        group = this.getGroupInfo(this.fromId) || {}
         name = group.groupName
         this.displayWord = this.$t('notify.entry_group_notify', {name})
         this.clickAction = group.isDeleted
           ? () => this.$router.push(`groupchat/${this.fromId}`)
-          : () => this.$router.push({name: 'SelectGroup', params: { groupName: group.groupName }})
+          : () => this.$router.push({name: 'SelectGroup', params: { groupName: name }})
         break
       case 'leave-group':
         name = this.getGroupInfo(this.fromId).groupName
         this.displayWord = this.$t('notify.leave_group_notify', {name})
-        this.clickAction = () => this.$router.push('groups')
+        this.clickAction = () => this.$router.push('groupchat')
         break
       case 'delete-group':
         group = this.getGroupInfo(this.fromId) || {}
         name = group.groupName || ''
         this.displayWord = this.$t('notify.delete_group_notify', {name})
-        this.clickAction = () => this.$router.push('groups')
+        this.clickAction = () => this.$router.push('groupchat')
         break
       default:
         break

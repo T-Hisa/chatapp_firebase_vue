@@ -143,3 +143,21 @@ exports.onWriteGroup = db.ref("groups/{groupId}").onWrite((change, context) => {
   }
   return Promise.all(promises);
 });
+
+// pubsub は 無料枠を超えてしまうので、記述だけ。
+// 毎月1日 0時0分 毎に isDelete フラグがついたGroupの物理削除を行う関数。
+
+// exports.deleteGroupsPhisically =
+//   functions.pubsub.schedule("0 0 1 * *").onRun(() => {
+//   adminDb.ref("groups").once("value", (snapshot) => {
+//     const groups = snapshot.val();
+//     const promises = [];
+//     for (const gid of Object.keys(groups)) {
+//       if (groups[gid].isDelete) {
+//         const deleteGroupRef = adminDb.ref(`groups/${gid}`);
+//         promises.push(deleteGroupRef.remove());
+//       }
+//     }
+//     return Promise.all(promises);
+//   });
+// });

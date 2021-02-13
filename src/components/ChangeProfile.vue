@@ -120,24 +120,28 @@ export default {
       })
     },
     setPhotoUrl () {
-      const [ baseFileName, fileType ] = this.image.name.split('.')
+      const imageNameArray = this.image.name.split('.')
+      const fileType = imageNameArray.pop()
+      const saveImageName = `profilePhoto.${fileType}`
       const currentUserId = this.$currentUser.uid
       const metaData = {
         contentType: `image/${fileType}`
       }
-      const saveFileName = `${baseFileName}-${currentUserId}.${fileType}`
-      this.photoRef = `images/${currentUserId}/${saveFileName}`
+      this.photoRef = `images/${currentUserId}/${saveImageName}`
       const storageRef = this.$firebase.storage().ref(this.photoRef)
-      const promises = []
-      promises.push(storageRef.put(this.image, metaData))
-      const photoRef = this.getUserInfo(this.$currentUserId).photoRef
-      if (photoRef) {
-        const deleteStorageRef = this.$firebase.storage().ref(photoRef)
-        promises.push(deleteStorageRef.delete())
-      }
-      return Promise.all(promises).then(retVal => {
-        return retVal[0].ref.getDownloadURL()
+      // const promises = []
+      // promises.push(storageRef.put(this.image, metaData))
+      return storageRef.put(this.image, metaData).then(retVal => {
+        return retVal.ref.getDownloadURL()
       })
+      // const photoRef = this.getUserInfo(this.$currentUserId).photoRef
+      // if (photoRef) {
+      //   const deleteStorageRef = this.$firebase.storage().ref(photoRef)
+      //   promises.push(deleteStorageRef.delete())
+      // }
+      // return Promise.all(promises).then(retVal => {
+      //   return retVal[0].ref.getDownloadURL()
+      // })
     },
     onClickResetBtn () {
       window.URL.revokeObjectURL(this.imgUrl)

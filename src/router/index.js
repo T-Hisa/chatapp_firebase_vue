@@ -39,14 +39,19 @@ const router = new Router({
       },
       children: [
         {
+          path: '/profile-update',
+          name: 'ProfileUpdate',
+          component: ProfileUpdate
+        },
+        {
           path: 'direct',
           name: SelectUser,
           component: SelectUser
         },
         {
-          path: '/profile-update',
-          name: 'ProfileUpdate',
-          component: ProfileUpdate
+          path: 'direct/:uid',
+          name: DirectMessage,
+          component: DirectMessage
         },
         {
           path: 'groupchat',
@@ -57,11 +62,6 @@ const router = new Router({
           path: 'groupchat/:gid',
           name: 'GroupChat',
           component: GroupChat
-        },
-        {
-          path: 'direct/:uid',
-          name: DirectMessage,
-          component: DirectMessage
         },
         {
           path: 'notification',

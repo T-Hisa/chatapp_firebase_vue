@@ -99,7 +99,7 @@ export default {
           break
         case 'leave-grpup':
         case 'delete-group':
-          this.$router.push('groups')
+          this.$router.push('groupchat')
           break
         default:
           alert(this.$t('notify.happening_error'))

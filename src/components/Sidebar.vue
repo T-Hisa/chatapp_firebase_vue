@@ -47,7 +47,7 @@ export default {
       'getUserNotification'
     ]),
     notificationCount () {
-      return (Object.keys((this.getUserNotification) || {}).slice(0, 10)).length
+      return (Object.keys((this.getUserNotification) || {})).length
     }
   }
 }

@@ -1,6 +1,7 @@
 import router from './index'
 
 const routeAroundSign = user => {
+  console.log('currentRoute', router.currentRoute)
   if (user) {
     if (router.currentRoute.path !== '/direct') {
       if (user.displayName) router.push('/direct')

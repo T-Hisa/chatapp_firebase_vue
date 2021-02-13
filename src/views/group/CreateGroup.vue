@@ -123,13 +123,13 @@ export default {
         } else {
           this.createGroup(value)
         }
-        this.$router.push('/groups')
+        this.$router.push('/groupchat')
       } else {
-        alert('グループ名を入力してください')
+        alert(this.$t('groups.begging_group_name'))
       }
     },
     onClickCancelBtn () {
-      this.$router.go(-1) || this.$router.push('/groups')
+      this.$router.go(-1) || this.$router.push('/groupchat')
     }
   }
 }
