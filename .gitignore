@@ -25,3 +25,6 @@ firebase.json
 **/firebaseConfig*
 **/dbInstance*
 function-*
+sample*
+.firebase*
+**/settings.js

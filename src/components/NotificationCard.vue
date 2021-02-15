@@ -39,7 +39,7 @@ export default {
         this.displayWord = this.$t('notify.groupchat_notify', {name})
         this.clickAction = group.isDeleted
           ? () => this.$router.push(`groupchat/${this.fromId}`)
-          : () => this.$router.push({ name: 'SelectGroup', params: { groupName: name}})
+          : () => this.$router.push({name: 'SelectGroup', params: { groupName: name }})
         break
       case 'entry-group':
         group = this.getGroupInfo(this.fromId) || {}
