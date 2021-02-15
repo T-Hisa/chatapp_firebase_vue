@@ -62,6 +62,15 @@ a:hover {
       }
     }
 
+    .select-locale-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    .dropdown-menu.show {
+      min-width: 0px !important;
+    }
+
     .top-btn-wrapper {
       display: flex;
       align-items: center;

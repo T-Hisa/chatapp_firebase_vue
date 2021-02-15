@@ -7,5 +7,6 @@ require('dotenv').config()
 // console.log('prodEnv', prodEnv)
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
+  PROJECT: JSON.stringify(process.env.PROJECT),
   GOOGLE_APPLICATION_CREDENTIALS: JSON.stringify(process.env.GOOGLE_APPLICATION_CREDENTIALS)
 })

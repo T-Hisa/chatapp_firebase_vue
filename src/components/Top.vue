@@ -18,6 +18,20 @@
             </div>
           </div>
         </div>
+        <div>
+          <b-dropdown
+            id="dropdown-1" size="sm" variant="outline-light" v-bind:text="$t('top.select_locale')"
+            class="m-md-2 select-locale-wrapper"
+          >
+            <b-dropdown-item @click="onClickSelectLocale('en')">{{$t('top.english')}}</b-dropdown-item>
+            <b-dropdown-item @click="onClickSelectLocale('ja')">{{$t('top.japanese')}}</b-dropdown-item>
+          </b-dropdown>
+        </div>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
         <ul v-if="isUserPropsSet" class="top-btn-wrapper navbar-nav">
           <li class="nav-item">
             <a class="nav-link" href="#" @click="onClickSignOutBtn">{{$t('top.sign_out')}}</a>
@@ -93,6 +107,9 @@ export default {
     ...mapActions('notifications', [
       'removeNotifications'
     ]),
+    ...mapActions('users', [
+      'setLocale'
+    ]),
     async onClickSignOutBtn () {
       await this.$firebase.auth().signOut()
     },
@@ -114,6 +131,10 @@ export default {
         }
       }
       this.dropdownFlag = !this.dropdownFlag
+    },
+    onClickSelectLocale (lang) {
+      this.$changeLocale(lang)
+      this.setLocale(lang)
     }
   }
 }

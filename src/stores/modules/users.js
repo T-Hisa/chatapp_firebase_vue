@@ -18,9 +18,6 @@ const userModule = {
     getUsersInfo: (_, getters) => uids => {
       return uids.map(uid => getters.getUserInfo(uid))
     },
-    getUserEmail: (state) => (id) => {
-      return state.users[id].email
-    },
     getOtherUserIds (state, getters, rootState, _) {
       const otherUserIds = Object.keys(state.users).filter(uid => {
         return uid !== rootState.currentUserId && getters.getUserInfo(uid).username
@@ -43,8 +40,6 @@ const userModule = {
     getUsersData: firebaseAction(({ bindFirebaseRef }) => {
       bindFirebaseRef('users', usersRef, { wait: true })
     }),
-    getUserInfoData: firebaseAction(({ bindFirestoreRef }) => {
-    }),
     registerProfile: firebaseAction((_, value) => {
       const uid = value.uid
       let saveValue = {
@@ -53,7 +48,11 @@ const userModule = {
         photoURL: value.photoURL,
         photoRef: value.photoRef
       }
-      usersRef.child(`${uid}`).update(saveValue)
+      usersRef.child(uid).update(saveValue)
+    }),
+    setLocale: firebaseAction((context, value) => {
+      const uid = context.rootState.currentUserId
+      usersRef.child(uid).update({lang: value})
     })
   }
 }

@@ -51,15 +51,15 @@ const store = new Vuex.Store({
     sampleAction (context, n) {
       context.commit('sampleMutation', n)
     },
-    catchFire (context) {
+    initStore () {
       this.dispatch('users/getUsersData')
+      this.dispatch('notifications/getNotification')
+      this.dispatch('chat/getChatData')
+      this.dispatch('groups/getGroups')
     }
   }
-  // strict: process.env.NODE_ENV === 'development'
 })
 
-store.dispatch('notifications/getNotification')
-store.dispatch('users/getUsersData')
-store.dispatch('chat/getChatData')
-store.dispatch('groups/getGroups')
+store.dispatch('initStore')
+export const initFunc = () => store.dispatch('initStore')
 export default store

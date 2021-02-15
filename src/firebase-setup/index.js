@@ -4,10 +4,15 @@ import 'firebase/auth'
 import 'firebase/database'
 import 'firebase/functions'
 import 'firebase/storage'
-// import 'firebase/firestore'
 import firebaseConfig from './firebaseConfig'
 
-firebase.initializeApp(firebaseConfig)
+let projectName = process.env.PROJECT
+if (!firebaseConfig.hasOwnProperty(projectName)) {
+  projectName = 'default' // どのプロジェクトにもマッチしなかったらsample のプロジェクトに。
+}
+const config = firebaseConfig[projectName]
+
+firebase.initializeApp(config)
 
 Vue.prototype.$firebase = firebase
 Vue.prototype.$currentUser = firebase.auth().currentUser
