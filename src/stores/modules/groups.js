@@ -29,12 +29,10 @@ const groupsModule = {
       const {groups} = state
       const searchGroups = Object.keys(groups).filter(gid => {
         const group = groups[gid]
-        return group.groupName.indexOf(searchParams) > -1 && !group.isDelete
+        return !group.isDelete && group.groupName.indexOf(searchParams) > -1
       })
       return searchGroups
     }
-  },
-  mutations: {
   },
   actions: {
     getGroups: firebaseAction(({ bindFirebaseRef }) => {

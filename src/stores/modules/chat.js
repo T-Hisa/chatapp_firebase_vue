@@ -23,8 +23,6 @@ const chatModule = {
       return state.chat.groups[gid]
     }
   },
-  mutations: {
-  },
   actions: {
     getChatData: firebaseAction(({ bindFirebaseRef }) => {
       bindFirebaseRef('chat', chatRef, { wait: true })

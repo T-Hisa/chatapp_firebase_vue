@@ -18,7 +18,7 @@ const userModule = {
     getUsersInfo: (_, getters) => uids => {
       return uids.map(uid => getters.getUserInfo(uid))
     },
-    getOtherUserIds (state, getters, rootState, _) {
+    getOtherUserIds (state, getters, rootState) {
       const otherUserIds = Object.keys(state.users).filter(uid => {
         return uid !== rootState.currentUserId && getters.getUserInfo(uid).username
       })
@@ -27,14 +27,12 @@ const userModule = {
     searchOtherUserIds: (state, getters, rootState) => searchParams => {
       const {users} = state
       const searchOtherUserIds = Object.keys(users).filter(uid => {
-        const username = users[uid].username
+        const username = users[uid].username || ''
         return username.indexOf(searchParams) > -1 && uid !== rootState.currentUserId &&
                  getters.getUserInfo(uid).emailVerified
       })
       return searchOtherUserIds
     }
-  },
-  mutations: {
   },
   actions: {
     getUsersData: firebaseAction(({ bindFirebaseRef }) => {

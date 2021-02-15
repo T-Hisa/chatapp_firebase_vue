@@ -62,9 +62,14 @@ a:hover {
       }
     }
 
-    .select-locale-wrapper {
+    .select-locale-container {
       display: flex;
       align-items: center;
+
+      .select-locale-wrapper {
+        display: flex;
+        align-items: center;
+      }
     }
 
     .dropdown-menu.show {

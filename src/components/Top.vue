@@ -18,7 +18,7 @@
             </div>
           </div>
         </div>
-        <div>
+        <div class="select-locale-container">
           <b-dropdown
             id="dropdown-1" size="sm" variant="outline-light" v-bind:text="$t('top.select_locale')"
             class="m-md-2 select-locale-wrapper"
@@ -134,7 +134,6 @@ export default {
     },
     onClickSelectLocale (lang) {
       this.$changeLocale(lang)
-      this.setLocale(lang)
     }
   }
 }

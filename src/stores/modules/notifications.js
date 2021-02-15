@@ -19,8 +19,6 @@ const notificationsModule = {
       return state.notifications[currentUserId][nid]
     }
   },
-  mutations: {
-  },
   actions: {
     getNotification: firebaseAction(({bindFirebaseRef}) => {
       bindFirebaseRef(`notifications`, notificationsRef, { wait: true })
@@ -31,8 +29,6 @@ const notificationsModule = {
         userNotificationsRef.child(nid).remove()
       }
     })
-    // getUserInfoData: firebaseAction(({ bindFirestoreRef }) => {
-    // })
   }
 }
 

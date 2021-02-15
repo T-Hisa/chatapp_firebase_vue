@@ -7,12 +7,10 @@ import Vuex from 'vuex'
 import BootstrapVue from 'bootstrap-vue'
 import VueI18n from 'vue-i18n'
 import Vuelidate from 'vuelidate'
-import store, { initFunc } from './stores'
+import store from './stores'
 import settings from '@/config/settings'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-
-console.log('ENV', process.env)
 
 Vue.use(Vuex)
 Vue.use(BootstrapVue)
@@ -20,18 +18,12 @@ Vue.use(Vuelidate)
 Vue.config.productionTip = false
 Vue.use(VueI18n)
 
-// const i18n = new VueI18n({
-//   locale: 'ja',
-//   messages: settings.messages
-// })
-// console.log('settigns', settings)
 const i18n = new VueI18n({
   locale: 'ja',
   messages: settings.messages
 })
-const changeLocale = (val) => {
-  i18n.locale = val
-}
+
+const changeLocale = (val) => { i18n.locale = val }
 Vue.prototype.$changeLocale = changeLocale
 
 firebase.auth().onAuthStateChanged(user => {
