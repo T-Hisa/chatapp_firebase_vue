@@ -51,8 +51,8 @@ export default {
     ChatForm
   },
   mounted () {
-    let uid = this.$route.params.uid
-    let user = this.getUserInfo(uid)
+    const uid = this.$route.params.uid
+    const user = this.getUserInfo(uid)
     this.otherUserId = uid
     if (user) {
       this.otherUserName = user.username
@@ -67,14 +67,14 @@ export default {
       'getDirectChatData'
     ]),
     getChatData () {
-      let chatData = this.getDirectChatData(this.otherUserId)
-      let chat = Object.keys(chatData).reverse().map(value => {
+      const chatData = this.getDirectChatData(this.otherUserId)
+      const chat = Object.keys(chatData).reverse().map(value => {
         return chatData[value]
       })
       return chat
     },
     photoURL () {
-      let photoURL = (this.$currentUser && this.$currentUser.photoURL) ? this.$currentUser.photoURL : ''
+      const photoURL = (this.$currentUser && this.$currentUser.photoURL) ? this.$currentUser.photoURL : ''
       return photoURL
     }
   },

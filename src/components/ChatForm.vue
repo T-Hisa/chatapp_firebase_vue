@@ -46,7 +46,7 @@ export default {
     },
     onClickSendBtn () {
       if (this.$v.comment.required) {
-        let sendData = {
+        const sendData = {
           type: this.type,
           uid: this.$currentUserId,
           body: this.comment

@@ -40,7 +40,7 @@ const userModule = {
     }),
     registerProfile: firebaseAction((_, value) => {
       const uid = value.uid
-      let saveValue = {
+      const saveValue = {
         username: value.username,
         emailVerified: true,
         photoURL: value.photoURL,

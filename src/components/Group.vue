@@ -57,7 +57,7 @@ export default {
     displayMembersName (gid) {
       let displayWord = ''
       const memberIds = this.getGroupMemberIds(gid)
-      for (let memberId of memberIds) {
+      for (const memberId of memberIds) {
         const word = '・' + this.getUserInfo(memberId).username
         displayWord += word
         if (displayWord.length > 16) {

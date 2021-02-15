@@ -1,10 +1,10 @@
 import firebase from '../firebase-setup'
 
 function validation (to, next) {
-  let currentUser = firebase.auth().currentUser
-  let isRequiredEmailValidation = to.matched.some(value => value.meta.isRequiredEmailValidation)
-  let isRequiredAuth = to.matched.some(value => value.meta.isRequiredAuth)
-  let isRequiredProfile = to.matched.some(value => value.meta.isRequiredProfile)
+  const currentUser = firebase.auth().currentUser
+  const isRequiredEmailValidation = to.matched.some(value => value.meta.isRequiredEmailValidation)
+  const isRequiredAuth = to.matched.some(value => value.meta.isRequiredAuth)
+  const isRequiredProfile = to.matched.some(value => value.meta.isRequiredProfile)
   if (isRequiredProfile) {
     if (currentUser) {
       if (currentUser.emailVerified) {

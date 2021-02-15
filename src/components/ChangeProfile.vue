@@ -94,9 +94,9 @@ export default {
       }
     },
     updateProfileTask () {
-      let currentUserId = this.$currentUser.uid
+      const currentUserId = this.$currentUser.uid
       if (this.originPhotoURL && !this.photoURL) this.photoURL = this.originPhotoURL
-      let updateValue = {
+      const updateValue = {
         uid: currentUserId,
         username: this.name,
         photoURL: this.photoURL
@@ -107,7 +107,7 @@ export default {
       this.updateProfile(updateValue)
     },
     updateProfile (value) {
-      let updateValue = {
+      const updateValue = {
         displayName: value.username,
         photoURL: value.photoURL
       }
@@ -129,19 +129,9 @@ export default {
       }
       this.photoRef = `images/${currentUserId}/${saveImageName}`
       const storageRef = this.$firebase.storage().ref(this.photoRef)
-      // const promises = []
-      // promises.push(storageRef.put(this.image, metaData))
       return storageRef.put(this.image, metaData).then(retVal => {
         return retVal.ref.getDownloadURL()
       })
-      // const photoRef = this.getUserInfo(this.$currentUserId).photoRef
-      // if (photoRef) {
-      //   const deleteStorageRef = this.$firebase.storage().ref(photoRef)
-      //   promises.push(deleteStorageRef.delete())
-      // }
-      // return Promise.all(promises).then(retVal => {
-      //   return retVal[0].ref.getDownloadURL()
-      // })
     },
     onClickResetBtn () {
       window.URL.revokeObjectURL(this.imgUrl)
@@ -156,7 +146,7 @@ export default {
     },
     onSelectProfilePhoto (e) {
       if (this.image) window.URL.revokeObjectURL(this.imgUrl)
-      let file = e.target.files[0]
+      const file = e.target.files[0]
       this.image = file
       this.imgUrl = window.URL.createObjectURL(file)
     }

@@ -40,7 +40,7 @@ const chatModule = {
         sendChatRefWithType = chatRef.child(`direct/${value.uid}/${value.partner}`)
         sendValue['which'] = 'me'
       }
-      let newCommentKey = sendChatRefWithType.push().key
+      const newCommentKey = sendChatRefWithType.push().key
       sendChatRefWithType.child(newCommentKey).set(sendValue)
     })
   }

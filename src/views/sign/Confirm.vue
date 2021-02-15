@@ -25,7 +25,7 @@ export default {
       this.$router.go({path: this.$router.currentRoute.path, force: true})
     },
     onClickResendBtn () {
-      let currentUser = this.$currentUser
+      const currentUser = this.$currentUser
       currentUser.sendEmailVerification()
     },
     async onClickReregisterBtn () {

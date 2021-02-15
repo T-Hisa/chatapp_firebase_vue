@@ -39,11 +39,11 @@ const groupsModule = {
       bindFirebaseRef('groups', groupsRef, { wait: true })
     }),
     updateGroup: firebaseAction((_, value) => {
-      let updateGroupRef = groupsRef.child(value.gid)
+      const updateGroupRef = groupsRef.child(value.gid)
       updateGroupRef.update(value.value)
     }),
     createGroup: firebaseAction((_, value) => {
-      let newGroupKey = groupsRef.push().key
+      const newGroupKey = groupsRef.push().key
       groupsRef.child(newGroupKey).set(value)
     }),
     deleteGroup: firebaseAction((_, gid) => {

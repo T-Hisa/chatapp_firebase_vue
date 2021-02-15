@@ -86,7 +86,7 @@ export default {
       'getGroupInfo'
     ]),
     getOtherUserIds () {
-      let otherUserIds = Object.keys(this.getUsers).filter(uid => {
+      const otherUserIds = Object.keys(this.getUsers).filter(uid => {
         return uid !== this.$currentUserId && this.getUserInfo(uid).emailVerified && !this.selectedUserIds.includes(uid)
       })
       return otherUserIds
@@ -101,7 +101,7 @@ export default {
       this.selectedUserIds.push(uid)
     },
     onClickDeleteBtn (uid) {
-      let index = this.selectedUserIds.indexOf(uid)
+      const index = this.selectedUserIds.indexOf(uid)
       this.selectedUserIds.splice(index, 1)
     },
     onClickCreateGroupBtn () {
@@ -110,7 +110,7 @@ export default {
           groupName: this.groupName,
           memberIds: {}
         }
-        for (let memberId of this.selectedUserIds) {
+        for (const memberId of this.selectedUserIds) {
           value['memberIds'][memberId] = 0
         }
         value['memberIds'][this.$currentUserId] = 0
