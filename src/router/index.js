@@ -14,16 +14,12 @@ import CreateGroup from '@/views/group/CreateGroup'
 
 import NotifyContainer from '@/views/notification/Notification'
 
-// import UserInfo from '@/views/users/UserInfo'
-// import UserDetail from '@/views/users/UserDetail'
-
 import Signin from '@/views/sign/Signin'
 import Signup from '@/views/sign/Signup'
 import SetUpProfile from '@/views/sign/SetUpProfile'
 import Confirm from '@/views/sign/Confirm'
 
 import validation from './routingValidation'
-// import Err from '@/containers/Error'
 
 Vue.use(Router)
 

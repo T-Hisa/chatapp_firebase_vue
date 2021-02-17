@@ -6,9 +6,9 @@ service firebase.storage {
       allow write: if request.auth.uid == userId
       						  && request.resource.contentType.matches('image/.*');
     }
-    match /{projectName}/{settingFile} {
-      allow read;
-      allow create;
+    match /{projectName}/settings.js {
+      allow read: if true;
+      allow create: if true;
       allow update, delete: if false;
     }
   }

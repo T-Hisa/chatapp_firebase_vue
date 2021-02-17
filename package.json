@@ -16,7 +16,11 @@
     "dev:default": "cross-env PROJECT=default webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "build:default": "cross-env PROJECT=default node build/build.js",
     "dev-build:develop": "cross-env PROJECT=develop node ./setup-storage.js",
-    "dev:develop": "cross-env PROJECT=develop webpack-dev-server --inline --progress --config build/webpack.dev.conf.js"
+    "dev:develop": "cross-env PROJECT=develop webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "build:develop": "cross-env PROJECT=develop node build/build.js",
+    "dev-build:production_": "cross-env PROJECT=production_1 node ./setup-storage.js",
+    "dev:production_1": "cross-env PROJECT=production_1 webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "build:production_1": "cross-env PROJECT=production_1 node build/build.js"
   },
   "dependencies": {
     "@firebase/app": "^0.6.14",

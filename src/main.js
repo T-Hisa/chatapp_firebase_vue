@@ -39,7 +39,7 @@ firebase.auth().onAuthStateChanged(user => {
     Vue.prototype.$currentUserId = null
   }
 
-  new Vue({
+  const appVue = new Vue({
     el: '#app',
     i18n,
     router,
@@ -47,4 +47,6 @@ firebase.auth().onAuthStateChanged(user => {
     components: { App },
     template: '<App/>'
   })
+
+  appVue.$mount('#app')
 })
