@@ -78,10 +78,6 @@ export default {
       'getUserNotification',
       'getNotificationDetail'
     ]),
-    isPathConfirm () {
-      const flag = this.$route.path.includes('confirm')
-      return flag
-    },
     isUserPropsSet () {
       return !!(this.$currentUser && this.$currentUser.displayName)
     },

@@ -17,7 +17,6 @@ import NotifyContainer from '@/views/notification/Notification'
 import Signin from '@/views/sign/Signin'
 import Signup from '@/views/sign/Signup'
 import SetUpProfile from '@/views/sign/SetUpProfile'
-import Confirm from '@/views/sign/Confirm'
 
 import validation from './routingValidation'
 
@@ -82,19 +81,11 @@ const router = new Router({
       component: Signup
     },
     {
-      path: '/confirm',
-      name: 'Confirm',
-      component: Confirm,
-      meta: {
-        isRequiredAuth: true // isRequiredAuth は ユーザー登録(but yet メール認証) のユーザのみ通す
-      }
-    },
-    {
       path: '/setup-profile',
       name: 'SetUpProfile',
       component: SetUpProfile,
       meta: {
-        isRequiredEmailValidation: true // isRequiredEmailValidation は、ユーザ登録・メール認証を終えたユーザのみ通す
+        isRequiredAuth: true // isRequiredEmailValidation は、ユーザ登録・メール認証を終えたユーザのみ通す
       }
     },
     {
@@ -105,6 +96,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, _, next) => {
+  console.log('to', to)
   validation(to, next)
 })
 

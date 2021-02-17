@@ -147,8 +147,10 @@ export default {
     onSelectProfilePhoto (e) {
       if (this.image) window.URL.revokeObjectURL(this.imgUrl)
       const file = e.target.files[0]
-      this.image = file
-      this.imgUrl = window.URL.createObjectURL(file)
+      if (file) {
+        this.image = file
+        this.imgUrl = window.URL.createObjectURL(file)
+      }
     }
   }
 }

@@ -29,7 +29,7 @@ const userModule = {
       const searchOtherUserIds = Object.keys(users).filter(uid => {
         const username = users[uid].username || ''
         return username.indexOf(searchParams) > -1 && uid !== rootState.currentUserId &&
-                 getters.getUserInfo(uid).emailVerified
+                 getters.getUserInfo(uid).username
       })
       return searchOtherUserIds
     }
@@ -42,7 +42,6 @@ const userModule = {
       const uid = value.uid
       const saveValue = {
         username: value.username,
-        emailVerified: true,
         photoURL: value.photoURL,
         photoRef: value.photoRef
       }

@@ -87,7 +87,7 @@ export default {
     ]),
     getOtherUserIds () {
       const otherUserIds = Object.keys(this.getUsers).filter(uid => {
-        return uid !== this.$currentUserId && this.getUserInfo(uid).emailVerified && !this.selectedUserIds.includes(uid)
+        return uid !== this.$currentUserId && this.getUserInfo(uid).username && !this.selectedUserIds.includes(uid)
       })
       return otherUserIds
     }
