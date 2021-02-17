@@ -59,9 +59,7 @@ export default {
     onClickSignUp (e) {
       e.preventDefault()
       if (this.registerableEmail && this.registerablePassword) {
-        this.$firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(userData => {
-          userData.user.sendEmailVerification()
-        }).catch(e => {
+        this.$firebase.auth().createUserWithEmailAndPassword(this.email, this.password).catch(e => {
           alert(this.$t('sign.already_registered_email'))
         })
       }
