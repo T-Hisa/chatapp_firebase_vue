@@ -96,7 +96,6 @@ const router = new Router({
 })
 
 router.beforeEach((to, _, next) => {
-  console.log('to', to)
   validation(to, next)
 })
 
