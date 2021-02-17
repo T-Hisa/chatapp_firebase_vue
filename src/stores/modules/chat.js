@@ -20,7 +20,8 @@ const chatModule = {
       return {}
     },
     getGroupChatData: (state) => (gid) => {
-      return state.chat.groups[gid]
+      const groups = state.chat.groups || {}
+      return groups[gid]
     }
   },
   actions: {

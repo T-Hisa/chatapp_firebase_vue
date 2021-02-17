@@ -45,11 +45,7 @@ export default {
   data () {
     return {
       gid: '',
-      group: {
-        groupName: '',
-        memberIds: []
-      },
-      members: []
+      group: {}
     }
   },
   components: {
@@ -60,9 +56,6 @@ export default {
   mounted () {
     this.gid = this.$route.params.gid
     this.group = this.getGroupInfo(this.gid)
-    const group = this.group || {}
-    const memberIds = Object.keys(group.memberIds || {})
-    this.members = this.getUsersInfo(memberIds)
   },
   computed: {
     ...mapGetters('groups', [
@@ -72,7 +65,6 @@ export default {
       'getGroupChatData'
     ]),
     ...mapGetters('users', [
-      'getUsersInfo',
       'getUserInfo'
     ]),
     memberIds () {
