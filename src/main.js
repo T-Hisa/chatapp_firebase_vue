@@ -30,9 +30,9 @@ firebase.auth().onAuthStateChanged(user => {
   routeAroundSign(user)
 
   if (user) {
-    console.log('currentUser', user)
     Vue.prototype.$currentUser = user
     Vue.prototype.$currentUserId = user.uid
+    store.dispatch('initStore')
     store.dispatch('setCurrentUserId', user.uid)
   } else {
     Vue.prototype.$currentUser = null

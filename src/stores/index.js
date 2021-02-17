@@ -44,5 +44,4 @@ const store = new Vuex.Store({
   }
 })
 
-store.dispatch('initStore')
 export default store

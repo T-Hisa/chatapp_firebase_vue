@@ -35,7 +35,6 @@ export default {
     ])
   },
   mounted () {
-    console.log('this', this)
     this.isUserPropsSet = !!(this.$currentUser && this.$currentUser.displayName)
     this.isPathSignin = this.$route.name === 'Signin'
     EventBus.$on('redraw-flag', () => {

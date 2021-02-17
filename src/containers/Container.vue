@@ -27,7 +27,6 @@ export default {
   },
   mounted () {
     EventBus.$on('redraw-flag', () => {
-      console.log('catch redrawFlag in Container')
       this.redrawFlag++
     })
   }

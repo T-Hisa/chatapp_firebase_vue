@@ -55,6 +55,10 @@
     position: relative;
   }
 
+  a:hover {
+    cursor: pointer;
+  }
+
   .label-text {
     font-size: 12px;
     margin: 0;
