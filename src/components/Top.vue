@@ -76,23 +76,21 @@ export default {
     ]),
     ...mapGetters('notifications', [
       'getUserNotification',
-      'getNotificationDetail'
+      'getNotificationDetail',
+      'getNotificationIds'
     ]),
     isUserPropsSet () {
       return !!(this.$currentUser && this.$currentUser.displayName)
     },
     notificationCount () {
-      const length = this.notificationIds.length
-      if (this.notificationIds.length > 10) {
+      const length = this.getNotificationIds.length
+      if (this.getNotificationIds.length > 10) {
         return '10＋'
       }
       return length
     },
-    notificationIds () {
-      return Object.keys((this.getUserNotification) || {})
-    },
     displayNotificationIds () {
-      return this.notificationIds.slice(0, 10)
+      return this.getNotificationIds.slice(0, 10)
     }
   },
   methods: {
@@ -113,10 +111,10 @@ export default {
     },
     onClickDropdown () {
       if (this.dropdownFlag) {
-        if (this.notificationIds) {
+        if (this.getNotificationIds) {
           const removeVal = {
             currentUid: this.$currentUserId,
-            notificationIds: this.notificationIds
+            notificationIds: this.getNotificationIds
           }
           this.removeNotifications(removeVal)
         }

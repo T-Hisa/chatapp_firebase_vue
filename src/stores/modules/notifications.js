@@ -17,6 +17,9 @@ const notificationsModule = {
     getNotificationDetail: (state, _, rootState) => nid => {
       const { currentUserId } = rootState
       return state.notifications[currentUserId][nid]
+    },
+    getNotificationIds: (_, getters) => {
+      return Object.keys(getters.getUserNotification || {})
     }
   },
   actions: {

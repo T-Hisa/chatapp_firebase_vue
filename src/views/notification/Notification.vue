@@ -1,7 +1,7 @@
 <template>
   <div class="notification-container">
     <template v-if="getUserNotification">
-      <div v-for="nid in notificationIds" :key="nid.id">
+      <div v-for="nid in getNotificationIds" :key="nid.id">
         <div @click="onClickNotice(nid)" class="notification-wrapper">
           <div>
             <span>{{displayWord(nid)}}</span>
@@ -29,11 +29,9 @@ export default {
     ]),
     ...mapGetters('notifications', [
       'getUserNotification',
-      'getNotificationDetail'
-    ]),
-    notificationIds () {
-      return Object.keys((this.getUserNotification) || {})
-    }
+      'getNotificationDetail',
+      'getNotificationIds'
+    ])
   },
   methods: {
     ...mapActions('notifications', [
@@ -109,7 +107,7 @@ export default {
   },
   destroyed () {
     const removeValue = {
-      notificationIds: this.notificationIds,
+      notificationIds: this.getNotificationIds,
       currentUid: this.$currentUserId
     }
     this.removeNotifications(removeValue)

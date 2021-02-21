@@ -28,7 +28,7 @@
       <div class="whole-member-list">
         <p class="member-title">メンバー選択</p>
         <ul class="member-list-container">
-          <li v-for="uid of getOtherUserIds" :key="uid.id" class="member-list-wrapper">
+          <li v-for="uid of getNotBelongUserIds" :key="uid.id" class="member-list-wrapper">
             <div @click="onClicKUser(uid)">
               <div class="member-wrapper">
                 <img v-if="getUserInfo(uid).photoURL" v-bind:src="getUserInfo(uid).photoURL" alt="サムネイル">
@@ -80,16 +80,14 @@ export default {
   computed: {
     ...mapGetters('users', [
       'getUsers',
-      'getUserInfo'
+      'getUserInfo',
+      'getOtherUserIds'
     ]),
     ...mapGetters('groups', [
       'getGroupInfo'
     ]),
-    getOtherUserIds () {
-      const otherUserIds = Object.keys(this.getUsers).filter(uid => {
-        return uid !== this.$currentUserId && this.getUserInfo(uid).username && !this.selectedUserIds.includes(uid)
-      })
-      return otherUserIds
+    getNotBelongUserIds () {
+      return this.getOtherUserIds.filter(uid => !this.selectedUserIds.includes(uid))
     }
   },
   methods: {
